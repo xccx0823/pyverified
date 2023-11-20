@@ -1,13 +1,13 @@
 from typing import Union, Dict
 
 from pyverify.exc import Error, VerifyError
-from pyverify.rule import RuleBase
+from pyverify.rule.base import RuleBase
 
 
 class Verify:
     """校验"""
 
-    def __init__(self, data: Union[dict, list, set, tuple], rules: Dict[RuleBase], *, many: bool = False):
+    def __init__(self, data: Union[dict, list, set, tuple], rules: Dict[str, RuleBase], *, many: bool = False):
         #: 需要校验的数据
         self.data = data
 
