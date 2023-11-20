@@ -13,7 +13,7 @@ class Bool(RuleBase):
     """
     default: Union[bool, Unset] = unset
     required: bool = False
-    raise_value: bool = True
+    raiseValue: bool = True
 
 
 @dataclass
@@ -39,8 +39,8 @@ class String(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
-    min_length: Union[int, None] = None
-    max_length: Union[int, None] = None
+    minLength: Union[int, None] = None
+    maxLength: Union[int, None] = None
     regex: Union[str, None] = None
     enum: Union[List[str], None] = None
     dest: bool = False
@@ -48,6 +48,10 @@ class String(RuleBase):
     split: Union[str, None] = None
     startswith: Union[str, None] = None
     endswith: Union[str, None] = None
+    unStartswith: Union[str, None] = None
+    unEndswith: Union[str, None] = None
+    include: Union[str, None] = None
+    exclude: Union[str, None] = None
 
 
 @dataclass
