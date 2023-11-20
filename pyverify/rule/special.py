@@ -1,4 +1,5 @@
 import ipaddress
+from dataclasses import dataclass
 from typing import Union
 
 from pyverify._unset import Unset, unset
@@ -11,6 +12,7 @@ TEL_REGEX = ''
 ADDR_REGEX = ''
 
 
+@dataclass
 class Email(RuleBase):
     """
     email
@@ -19,6 +21,7 @@ class Email(RuleBase):
     required: bool = False
 
 
+@dataclass
 class IPv4(RuleBase):
     """
     ipv4
@@ -35,6 +38,7 @@ class IPv4(RuleBase):
             return False
 
 
+@dataclass
 class IPv6(RuleBase):
     """
     ipv6
@@ -51,6 +55,7 @@ class IPv6(RuleBase):
             return False
 
 
+@dataclass
 class Tel(RuleBase):
     """
     telephone
@@ -59,6 +64,7 @@ class Tel(RuleBase):
     required: bool = False
 
 
+@dataclass
 class Json(RuleBase):
     """
     json
@@ -68,6 +74,7 @@ class Json(RuleBase):
     cls = None
 
 
+@dataclass
 class Addr(RuleBase):
     """
     address
