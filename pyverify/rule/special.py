@@ -6,8 +6,6 @@ from pyverify._unset import Unset, unset
 from pyverify.rule.base import RuleBase
 
 EMAIL_REGEX = ''
-IPV4_REGEX = r'^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$'
-IPV6_REGEX = ''
 TEL_REGEX = ''
 ADDR_REGEX = ''
 
