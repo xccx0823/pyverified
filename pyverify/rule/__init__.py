@@ -21,7 +21,6 @@ TYPE_MAPPING: Dict[Any, Callable] = {
 
 
 def f(t, **kwargs):
-    """定义方式的一种，让每行变的精简一点"""
     if t in TYPE_MAPPING:
         return TYPE_MAPPING[t](**kwargs)
     else:
