@@ -98,11 +98,11 @@ class DateTime(RuleBase):
     default: Union[datetime, Unset] = unset
     required: bool = False
     fmt: str = '%Y-%m-%d %H:%M:%S'
-    ge: Union[datetime, None] = None
-    gte: Union[datetime, None] = None
-    lt: Union[datetime, None] = None
-    lte: Union[datetime, None] = None
-    enum: Union[List[datetime], None] = None
+    ge: Union[datetime, str, None] = None
+    gte: Union[datetime, str, None] = None
+    lt: Union[datetime, str, None] = None
+    lte: Union[datetime, str, None] = None
+    enum: Union[List[datetime], List[str], None] = None
 
 
 @dataclass
@@ -121,11 +121,11 @@ class Date(RuleBase):
     default: Union[date, Unset] = unset
     required: bool = False
     fmt: str = '%Y-%m-%d'
-    ge: Union[date, None] = None
-    gte: Union[date, None] = None
-    lt: Union[date, None] = None
-    lte: Union[date, None] = None
-    enum: Union[List[date], None] = None
+    ge: Union[date, str, None] = None
+    gte: Union[date, str, None] = None
+    lt: Union[date, str, None] = None
+    lte: Union[date, str, None] = None
+    enum: Union[List[date], List[str], None] = None
 
 
 @dataclass
