@@ -1,13 +1,13 @@
 import ipaddress
 from dataclasses import dataclass
+from email.utils import parseaddr
 from typing import Union
+from urllib.parse import urlparse
+
+import phonenumbers
 
 from pyverify._unset import Unset, unset
 from pyverify.rule.base import RuleBase
-
-EMAIL_REGEX = ''
-TEL_REGEX = ''
-ADDR_REGEX = ''
 
 
 @dataclass
@@ -17,6 +17,11 @@ class Email(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+
+    @staticmethod
+    def is_email(e_mail: str):
+        _, email_address = parseaddr(e_mail)
+        return '@' in email_address
 
 
 @dataclass
@@ -60,6 +65,15 @@ class Tel(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+    region: str = 'CN'
+
+    @staticmethod
+    def is_tel(phone_number: str, region: str):
+        try:
+            parsed_number = phonenumbers.parse(phone_number, region)
+            return phonenumbers.is_valid_number(parsed_number)
+        except phonenumbers.NumberParseException:
+            return False
 
 
 @dataclass
@@ -79,6 +93,14 @@ class Addr(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+
+    @staticmethod
+    def is_addr(address):
+        try:
+            parsed_url = urlparse(address)
+            return all([parsed_url.scheme, parsed_url.netloc])
+        except ValueError:
+            return False
 
 
 email = Email
