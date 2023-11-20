@@ -11,7 +11,12 @@ TYPE_MAPPING: Dict[Any, Callable] = {
     bool: bol,
     date: dt,
     datetime: dtime,
-    dict: flat
+    dict: flat,
+    'email': email,
+    'ipv4': ipv4,
+    'ipv6': ipv6,
+    'telephone': tel,
+    'addr': addr,
 }
 
 
@@ -19,15 +24,5 @@ def f(t, **kwargs):
     """定义方式的一种，让每行变的精简一点"""
     if t in TYPE_MAPPING:
         return TYPE_MAPPING[t](**kwargs)
-    elif t == 'email':
-        return email(**kwargs)
-    elif t == 'ipv4':
-        return ipv4(**kwargs)
-    elif t == 'ipv6':
-        return ipv6(**kwargs)
-    elif t == 'telephone':
-        return tel(**kwargs)
-    elif t == 'addr':
-        return addr(**kwargs)
     else:
         raise TypeError(f"The type of the rule is not defined: {t}")
