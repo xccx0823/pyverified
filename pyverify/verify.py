@@ -14,18 +14,24 @@ class Verify:
 
         #: 如果设置为True，则标识需要校验的数据是forloop的数据
         if many:
+            verify_data = []
             for _data in data:
-                self.verify(_data, rules)
+                verify_data.append(self.verify(_data, rules))
         else:
-            self.verify(data, rules)
+            verify_data = self.verify(data, rules)
+
+        self.params = verify_data
 
     def verify(self, data: Union[dict, list, set, tuple], rules: Dict[str, RuleBase]):
 
         verify_data = {}
 
-        for key, rule in rules:
+        for key, rule in rules.items():
             # 通过反射获取对应的值
-            value = getattr(data, key, unset)
+            if isinstance(data, dict):
+                value = data.get(key, unset)
+            else:
+                value = getattr(data, key, unset)
 
             # 嵌套结构处理，触发递归解析结果
             if isinstance(rule, Flat):

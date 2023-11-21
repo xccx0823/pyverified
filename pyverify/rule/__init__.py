@@ -20,7 +20,7 @@ TYPE_MAPPING: Dict[Any, Callable] = {
 }
 
 
-def f(t, **kwargs):
+def F(t, **kwargs):  # noqa
     if t in TYPE_MAPPING:
         return TYPE_MAPPING[t](**kwargs)
     else:
