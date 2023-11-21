@@ -20,8 +20,10 @@ class Email(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+    allow_none: bool = True
 
     def parse(self, key: str, value: str) -> str:
+        value = self.common_rules_verify(key, value)
         if not self.is_email(value):
             raise ValidationError(msg.VerifyMessage.email.format(key=key, value=value))
         return value
@@ -39,8 +41,10 @@ class IPv4(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+    allow_none: bool = True
 
     def parse(self, key: str, value: str) -> str:
+        value = self.common_rules_verify(key, value)
         if not self.is_ipv4(value):
             raise ValidationError(msg.VerifyMessage.ipv4.format(key=key, value=value))
         return value
@@ -61,8 +65,10 @@ class IPv6(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+    allow_none: bool = True
 
     def parse(self, key: str, value: str) -> str:
+        value = self.common_rules_verify(key, value)
         if not self.is_ipv6(value):
             raise ValidationError(msg.VerifyMessage.ipv6.format(key=key, value=value))
         return value
@@ -83,9 +89,11 @@ class Tel(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+    allow_none: bool = True
     region: str = 'CN'
 
     def parse(self, key: str, value: str) -> str:
+        value = self.common_rules_verify(key, value)
         if not self.is_tel(value):
             raise ValidationError(msg.VerifyMessage.telephone.format(key=key, value=value, region=self.region))
         return value
@@ -105,6 +113,7 @@ class Json(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+    allow_none: bool = True
     cls = None
 
     def json_loads(self, json_string):
@@ -118,8 +127,10 @@ class Addr(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+    allow_none: bool = True
 
     def parse(self, key: str, value: str) -> str:
+        value = self.common_rules_verify(key, value)
         if not self.is_addr(value):
             raise ValidationError(msg.VerifyMessage.address.format(key=key, value=value))
         return value
