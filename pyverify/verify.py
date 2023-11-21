@@ -27,7 +27,7 @@ class Verify:
         verify_data = {}
 
         for key, rule in rules.items():
-            # 通过反射获取对应的值
+            # 不为字典时，通过反射获取对应的值
             if isinstance(data, dict):
                 value = data.get(key, unset)
             else:

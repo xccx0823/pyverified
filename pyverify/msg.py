@@ -7,7 +7,7 @@ class VerifyMessage:
     address = '当前参数字符串并不是链接地址'
 
     required = '当前参数是必须的'
-    allow_none = '当前参数不能为None'
+    allow_none = '当前参数不能为空字符串或None值'
 
     @classmethod
     def reload(cls, clss):

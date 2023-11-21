@@ -18,7 +18,7 @@ class RuleBase:
 
     def verify_allow_none(self, key: str, value: Any):
         """校验参数是否可以为None"""
-        if not self.allow_none and value in (None, unset):  # noqa
+        if not self.allow_none and value in (None, unset, ''):  # noqa
             raise ValidationError(msg.VerifyMessage.allow_none.format(key=key, value=value))
 
         # 当allow_none为True时，value如果时unset，则替换为None
@@ -29,7 +29,7 @@ class RuleBase:
 
     def set_default_value(self, value: Any):
         """设置默认值"""
-        if isinstance(value, Unset) and self.default is not None:  # noqa
+        if value in (unset, None, '') and self.default is not unset:  # noqa
             value = self.default  # noqa
         return value
 
