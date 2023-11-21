@@ -1,4 +1,5 @@
 import ipaddress
+import json
 from dataclasses import dataclass
 from email.utils import parseaddr
 from typing import Union
@@ -6,7 +7,9 @@ from urllib.parse import urlparse
 
 import phonenumbers
 
+from pyverify import msg
 from pyverify._unset import Unset, unset
+from pyverify.exc import ValidationError
 from pyverify.rule.base import RuleBase
 
 
@@ -67,10 +70,13 @@ class Tel(RuleBase):
     required: bool = False
     region: str = 'CN'
 
-    @staticmethod
-    def is_tel(phone_number: str, region: str):
+    def parse(self, key: str, value: str):
+        if not self.is_tel(value):
+            raise ValidationError(msg.VerifyMessage.telephone_msg.format(key=key, value=value, region=self.region))
+
+    def is_tel(self, telephone_number: str):
         try:
-            parsed_number = phonenumbers.parse(phone_number, region)
+            parsed_number = phonenumbers.parse(telephone_number, self.region)
             return phonenumbers.is_valid_number(parsed_number)
         except phonenumbers.NumberParseException:
             return False
@@ -84,6 +90,9 @@ class Json(RuleBase):
     default: Union[str, Unset] = unset
     required: bool = False
     cls = None
+
+    def json_loads(self, json_string):
+        json.loads(json_string, cls=self.cls)
 
 
 @dataclass
