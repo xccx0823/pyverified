@@ -1,7 +1,7 @@
 from typing import Any
 
 from pyverify import msg
-from pyverify._unset import Unset
+from pyverify._unset import Unset, unset
 from pyverify.exc import ValidationError
 
 
@@ -18,7 +18,7 @@ class RuleBase:
 
     def verify_allow_none(self, key: str, value: Any):
         """校验参数是否可以为None"""
-        if not self.allow_none and value is None:  # noqa
+        if not self.allow_none and value in (None, unset):  # noqa
             raise ValidationError(msg.VerifyMessage.allow_none.format(key=key, value=value))
 
         # 当allow_none为True时，value如果时unset，则替换为None
