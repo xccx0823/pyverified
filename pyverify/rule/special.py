@@ -21,6 +21,10 @@ class Email(RuleBase):
     default: Union[str, Unset] = unset
     required: bool = False
 
+    def parse(self, key: str, value: str):
+        if not self.is_email(value):
+            raise ValidationError(msg.VerifyMessage.email.format(key=key, value=value))
+
     @staticmethod
     def is_email(e_mail: str):
         _, email_address = parseaddr(e_mail)
@@ -34,6 +38,10 @@ class IPv4(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+
+    def parse(self, key: str, value: str):
+        if not self.is_ipv4(value):
+            raise ValidationError(msg.VerifyMessage.ipv4.format(key=key, value=value))
 
     @staticmethod
     def is_ipv4(address: str) -> bool:
@@ -51,6 +59,10 @@ class IPv6(RuleBase):
     """
     default: Union[str, Unset] = unset
     required: bool = False
+
+    def parse(self, key: str, value: str):
+        if not self.is_ipv6(value):
+            raise ValidationError(msg.VerifyMessage.ipv6.format(key=key, value=value))
 
     @staticmethod
     def is_ipv6(address: str) -> bool:
@@ -72,7 +84,7 @@ class Tel(RuleBase):
 
     def parse(self, key: str, value: str):
         if not self.is_tel(value):
-            raise ValidationError(msg.VerifyMessage.telephone_msg.format(key=key, value=value, region=self.region))
+            raise ValidationError(msg.VerifyMessage.telephone.format(key=key, value=value, region=self.region))
 
     def is_tel(self, telephone_number: str):
         try:
