@@ -8,4 +8,4 @@ class NewMsg:
 
 msg.VerifyMessage.reload(NewMsg)
 
-Tel().parse('tel', None)
+Tel().parse('tel', '123456')

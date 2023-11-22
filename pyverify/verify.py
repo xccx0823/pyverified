@@ -35,6 +35,9 @@ class Verify:
 
             # 嵌套结构处理，触发递归解析结果
             if isinstance(rule, Flat):
+
+                # TODO:处理flat类型的规则
+
                 if Flat.multi:
                     for _value in value:
                         verify_data[key] = self.verify(_value, rule.subset)
