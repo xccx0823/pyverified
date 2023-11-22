@@ -1,5 +1,5 @@
 from pyverify import msg
-from pyverify.rule.special import Tel
+from pyverify.rules.special import Tel
 
 
 class NewMsg:
