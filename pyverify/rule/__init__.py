@@ -11,7 +11,7 @@ TYPE_MAPPING: Dict[Any, Callable] = {
     bool: bol,
     date: dt,
     datetime: dtime,
-    dict: flat,
+    'flat': flat,
     'email': email,
     'ipv4': ipv4,
     'ipv6': ipv6,

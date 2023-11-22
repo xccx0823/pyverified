@@ -149,12 +149,14 @@ class Flat(RuleBase):
     :param allow_none: 是否允许为None
     :param subset: 子规则结构
     :param multi: 当为True时表示验证数据为列表嵌套字典，当为False时是单个字典
+    :param dest: 直接获取下级结构的所有信息，不校验
     """
     subset: dict
     default: Union[date, Unset] = unset
     required: bool = False
     allow_none: bool = True
     multi: bool = False
+    dest: bool = False
 
 
 char = String
