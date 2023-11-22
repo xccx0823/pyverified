@@ -11,10 +11,10 @@ class Bool(RuleBase):
     """
     bool
 
-    :param default: 默认值
-    :param required: 是否是必须的
-    :param allow_none: 是否允许为None
-    :param convert: 是否转变 ture，false 这种字符串为布尔类型
+    :param default: indicates the default value
+    :param required: Whether it is required
+    :param allow_none: indicates whether None is allowed
+    :param convert: Whether to convert true, false The string is of Boolean type
     """
     default: Union[bool, Unset] = unset
     required: bool = False
@@ -27,12 +27,12 @@ class Number(RuleBase):
     """
     int/float
 
-    :param default: 默认值
-    :param required: 是否是必须的
-    :param allow_none: 是否允许为None
-    :param ge/gte/lt/lte: 数值大小比较
-    :param enum: 枚举
-    :param digits: 保留小数位数
+    :param default: indicates the default value
+    :param required: Whether it is required
+    :param allow_none: indicates whether None is allowed
+    :param ge/gte/lt/lte: Compares the value size
+    :param enum: enumeration
+    :param digits: indicates the number of digits reserved
     """
     default: Union[int, float, Unset] = unset
     required: bool = False
@@ -50,20 +50,20 @@ class String(RuleBase):
     """
     str
 
-    :param default: 默认值
-    :param required: 是否是必须的
-    :param allow_none: 是否允许为None
-    :param minLength/maxLength: 字符串长度限制
-    :param regex: 字符串正则规则匹配
-    :param enum: 枚举
-    :param trim: 去除字符串左右两边空格
-    :param split: 按照指定字符或字符串切割字符串
-    :param startswith: 字符串必须以指定字符或字符串开头
-    :param endswith: 字符串必须以指定字符或字符串结尾
-    :param unStartswith: 字符串不能以指定字符或字符串结尾
-    :param unEndswith: 字符串不能以指定字符或字符串结尾
-    :param include: 字符串必须包含指定字符或字符串
-    :param exclude: 字符串必须不包含指定字符或字符串
+    :param default: indicates the default value
+    :param required: Whether it is required
+    :param allow_none: indicates whether None is allowed
+    :param minLength/maxLength: indicates the string length limit
+    :param regex: matches the string regular rule
+    :param enum: enumeration
+    :param trim: Removes the Spaces on the left and right sides of the string
+    :param split: Split the string according to the specified character or string
+    :param startswith: The string must start with the specified character or string
+    :param endswith: The string must end with the specified character or string
+    :param unStartswith: The string cannot end with a specified character or string
+    :param unEndswith: The string cannot end with a specified character or string
+    :param include: The string must contain the specified character or string
+    :param exclude: The character string must exclude the specified character or string
     """
     default: Union[str, Unset] = unset
     required: bool = False
@@ -87,12 +87,12 @@ class DateTime(RuleBase):
     """
     datetime
 
-    :param default: 默认值
-    :param required: 是否是必须的
-    :param allow_none: 是否允许为None
-    :param fmt: 日期格式
-    :param ge/gte/lt/lte: 日期大小比较
-    :param enum: 日期枚举
+    :param default: indicates the default value
+    :param required: Whether it is required
+    :param allow_none: indicates whether None is allowed
+    :param fmt: date format
+    :param ge/gte/lt/lte: date size comparison
+    :param enum: Date enumeration
     """
     default: Union[datetime, Unset] = unset
     required: bool = False
@@ -110,12 +110,12 @@ class Date(RuleBase):
     """
     date
 
-    :param default: 默认值
-    :param required: 是否是必须的
-    :param allow_none: 是否允许为None
-    :param fmt: 日期格式
-    :param ge/gte/lt/lte: 日期大小比较
-    :param enum: 日期枚举
+    :param default: indicates the default value
+    :param required: Whether it is required
+    :param allow_none: indicates whether None is allowed
+    :param fmt: date format
+    :param ge/gte/lt/lte: date size comparison
+    :param enum: Date enumeration
     """
     default: Union[date, Unset] = unset
     required: bool = False
@@ -133,11 +133,11 @@ class Struct(RuleBase):
     """
     dict/list
 
-    :param required: 是否是必须的
-    :param allow_none: 是否允许为None
-    :param subset: 子规则结构
-    :param multi: 当为True时表示验证数据为列表嵌套字典，当为False时是单个字典
-    :param dest: 直接获取下级结构的所有信息，不校验
+    :param required: Whether it is required
+    :param allow_none: indicates whether None is allowed
+    :param subset: rule structure
+    :param multi: When True, the validation data is a list nested dictionary, when False, a single dictionary
+    :param dest: indicates that all information about a subordinate structure is obtained without verification
     """
     subset: dict
     default: Union[date, Unset] = unset
