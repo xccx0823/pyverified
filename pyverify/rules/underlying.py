@@ -11,8 +11,6 @@ class Bool(RuleBase):
     """
     bool
 
-    python内置数据类型
-
     :param default: 默认值
     :param required: 是否是必须的
     :param allow_none: 是否允许为None
@@ -28,8 +26,6 @@ class Bool(RuleBase):
 class Number(RuleBase):
     """
     int/float
-
-    python内置数据类型
 
     :param default: 默认值
     :param required: 是否是必须的
@@ -53,8 +49,6 @@ class Number(RuleBase):
 class String(RuleBase):
     """
     str
-
-    python内置数据类型
 
     :param default: 默认值
     :param required: 是否是必须的
@@ -93,8 +87,6 @@ class DateTime(RuleBase):
     """
     datetime
 
-    python日期模块数据类型
-
     :param default: 默认值
     :param required: 是否是必须的
     :param allow_none: 是否允许为None
@@ -118,8 +110,6 @@ class Date(RuleBase):
     """
     date
 
-    python日期模块数据类型
-
     :param default: 默认值
     :param required: 是否是必须的
     :param allow_none: 是否允许为None
@@ -142,8 +132,6 @@ class Date(RuleBase):
 class Struct(RuleBase):
     """
     dict/list
-
-    嵌套结构
 
     :param required: 是否是必须的
     :param allow_none: 是否允许为None

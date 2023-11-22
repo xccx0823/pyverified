@@ -6,18 +6,18 @@ from pyverify.exc import ValidationError
 
 
 class RuleBase:
-    """规则类型基类"""
+    """Rule base class"""
 
     def parse(self, key: str, value: Any):
         raise NotImplementedError("parse hasn't been implemented yet.")
 
     def verify_required(self, key: str, value: Any):
-        """校验参数是否有缺失"""
+        """Check whether parameters are missing"""
         if self.required and isinstance(value, Unset):  # noqa
             raise ValidationError(msg.VerifyMessage.required.format(key=key, value=value))
 
     def verify_allow_none(self, key: str, value: Any):
-        """校验参数是否可以为None"""
+        """Check whether the parameter can be None"""
         if not self.allow_none and value in (None, unset, ''):  # noqa
             raise ValidationError(msg.VerifyMessage.allow_none.format(key=key, value=value))
 
@@ -28,7 +28,7 @@ class RuleBase:
         return value
 
     def set_default_value(self, value: Any):
-        """设置默认值"""
+        """Set a default value"""
         if value in (unset, None, '') and self.default is not unset:  # noqa
             value = self.default  # noqa
         return value

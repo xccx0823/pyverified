@@ -1,3 +1,3 @@
 class ValidationError(Exception):
-    """规则校验失败异常类"""
+    """Rule check failure exception class"""
     pass

@@ -1,5 +1,5 @@
 class Unset:
-    """未设置的值"""
+    """Unset value"""
 
     def __bool__(self):
         return False

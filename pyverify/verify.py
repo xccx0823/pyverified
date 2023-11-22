@@ -1,8 +1,10 @@
 from typing import Union, Dict
 
 from pyverify._unset import unset
+from pyverify.exc import ValidationError
 from pyverify.rules.base import RuleBase
 from pyverify.rules.underlying import Struct
+from pyverify.msg import VerifyMessage
 
 
 class Verify:
@@ -15,6 +17,10 @@ class Verify:
         #: 如果设置为True，则标识需要校验的数据是forloop的数据
         if many:
             verify_data = []
+
+            if isinstance(data, (list, set, tuple)):
+                raise ValidationError(VerifyMessage.many)
+
             for _data in data:
                 verify_data.append(self.verify(_data, rules))
         else:
@@ -39,6 +45,10 @@ class Verify:
                 # TODO:处理flat类型的规则
 
                 if rule.multi:
+
+                    if isinstance(value, (list, set, tuple)):
+                        raise ValidationError(VerifyMessage.many)
+
                     for _value in value:
                         verify_data[key] = self.verify(_value, rule.subset)
                 else:

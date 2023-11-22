@@ -1,13 +1,14 @@
 class VerifyMessage:
-    """校验异常信息"""
-    email = '当前参数字符串并不是邮箱'
-    telephone = '当前参数字符串并不是电话号码'
-    ipv4 = '当前参数字符串并不是ipv4地址'
-    ipv6 = '当前参数字符串并不是ipv6地址'
-    address = '当前参数字符串并不是链接地址'
+    """Define check exception information"""
+    email = 'The current parameter string is not a mailbox'
+    telephone = 'The current parameter string is not a phone number'
+    ipv4 = 'The current parameter string is not an ipv4 address'
+    ipv6 = 'The current parameter string is not an ipv6 address'
+    address = 'The current parameter string is not the link address'
 
-    required = '当前参数是必须的'
-    allow_none = '当前参数不能为空字符串或None值'
+    required = 'The current parameter is required'
+    allow_none = 'The current argument cannot be an empty string or None value'
+    many = 'You set mang to True, but the type of the check data is not list or set or tuple.'
 
     @classmethod
     def reload(cls, clss):
