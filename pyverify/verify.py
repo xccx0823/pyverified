@@ -17,7 +17,7 @@ class Verify:
         if many:
             verify_data = []
 
-            if isinstance(data, (list, set, tuple)):
+            if not isinstance(data, (list, set, tuple)):
                 raise ValidationError(VerifyMessage.many)
 
             for _data in data:

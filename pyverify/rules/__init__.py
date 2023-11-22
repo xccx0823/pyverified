@@ -11,12 +11,12 @@ TYPE_MAPPING: Dict[Any, Callable] = {
     bool: bol,
     date: dt,
     datetime: dtime,
-    'struct': struct,
-    'email': email,
-    'ipv4': ipv4,
-    'ipv6': ipv6,
-    'telephone': tel,
-    'addr': addr,
+    struct: struct,
+    email: email,
+    ipv4: ipv4,
+    ipv6: ipv6,
+    tel: tel,
+    addr: addr,
 }
 
 
@@ -24,4 +24,4 @@ def rule(t, **kwargs):
     if t in TYPE_MAPPING:
         return TYPE_MAPPING[t](**kwargs)
     else:
-        raise TypeError(f"The type of the rule is not defined: {t}")
+        raise TypeError(f"The type of the rule is not defined: {t}.")
