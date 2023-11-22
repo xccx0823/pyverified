@@ -10,7 +10,7 @@ import phonenumbers
 from pyverify import msg
 from pyverify._unset import Unset, unset
 from pyverify.exc import ValidationError
-from pyverify.rule.base import RuleBase
+from pyverify.rules.base import RuleBase
 
 
 @dataclass

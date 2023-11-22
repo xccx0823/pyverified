@@ -1,8 +1,8 @@
 from typing import Union, Dict
 
 from pyverify._unset import unset
-from pyverify.rule.base import RuleBase
-from pyverify.rule.underlying import Flat
+from pyverify.rules.base import RuleBase
+from pyverify.rules.underlying import Struct
 
 
 class Verify:
@@ -34,11 +34,11 @@ class Verify:
                 value = getattr(data, key, unset)
 
             # 嵌套结构处理，触发递归解析结果
-            if isinstance(rule, Flat):
+            if isinstance(rule, Struct):
 
                 # TODO:处理flat类型的规则
 
-                if Flat.multi:
+                if rule.multi:
                     for _value in value:
                         verify_data[key] = self.verify(_value, rule.subset)
                 else:

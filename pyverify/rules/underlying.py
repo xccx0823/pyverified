@@ -3,7 +3,7 @@ from datetime import datetime, date
 from typing import Union, List
 
 from pyverify._unset import Unset, unset
-from pyverify.rule.base import RuleBase
+from pyverify.rules.base import RuleBase
 
 
 @dataclass
@@ -139,7 +139,7 @@ class Date(RuleBase):
 
 
 @dataclass
-class Flat(RuleBase):
+class Struct(RuleBase):
     """
     dict/list
 
@@ -164,4 +164,4 @@ num = Number
 bol = Bool
 dtime = DateTime
 dt = Date
-flat = Flat
+struct = Struct

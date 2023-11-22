@@ -1,8 +1,8 @@
 from datetime import date, datetime
 from typing import Dict, Any, Callable
 
-from pyverify.rule.special import email, ipv4, ipv6, tel, js, addr
-from pyverify.rule.underlying import char, num, bol, dtime, dt, flat
+from pyverify.rules.special import email, ipv4, ipv6, tel, js, addr
+from pyverify.rules.underlying import char, num, bol, dtime, dt, struct
 
 TYPE_MAPPING: Dict[Any, Callable] = {
     str: char,
@@ -11,7 +11,7 @@ TYPE_MAPPING: Dict[Any, Callable] = {
     bool: bol,
     date: dt,
     datetime: dtime,
-    'flat': flat,
+    'struct': struct,
     'email': email,
     'ipv4': ipv4,
     'ipv6': ipv6,
@@ -20,7 +20,7 @@ TYPE_MAPPING: Dict[Any, Callable] = {
 }
 
 
-def F(t, **kwargs):  # noqa
+def rule(t, **kwargs):
     if t in TYPE_MAPPING:
         return TYPE_MAPPING[t](**kwargs)
     else:
