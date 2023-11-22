@@ -11,10 +11,10 @@ class Bool(RuleBase):
     """
     bool
 
-    :param default: indicates the default value
-    :param required: Whether it is required
-    :param allow_none: indicates whether None is allowed
-    :param convert: Whether to convert true, false The string is of Boolean type
+    :param default: indicates the default value.
+    :param required: Whether it is required.
+    :param allow_none: indicates whether None is allowed.
+    :param convert: Whether to convert true, false The string is of Boolean type.
     """
     default: Union[bool, Unset] = unset
     required: bool = False
@@ -27,12 +27,12 @@ class Number(RuleBase):
     """
     int/float
 
-    :param default: indicates the default value
-    :param required: Whether it is required
-    :param allow_none: indicates whether None is allowed
-    :param ge/gte/lt/lte: Compares the value size
-    :param enum: enumeration
-    :param digits: indicates the number of digits reserved
+    :param default: indicates the default value.
+    :param required: Whether it is required.
+    :param allow_none: indicates whether None is allowed.
+    :param ge/gte/lt/lte: Compares the value size.
+    :param enum: enumeration.
+    :param digits: indicates the number of digits reserved.
     """
     default: Union[int, float, Unset] = unset
     required: bool = False
@@ -50,20 +50,20 @@ class String(RuleBase):
     """
     str
 
-    :param default: indicates the default value
-    :param required: Whether it is required
-    :param allow_none: indicates whether None is allowed
-    :param minLength/maxLength: indicates the string length limit
-    :param regex: matches the string regular rule
-    :param enum: enumeration
-    :param trim: Removes the Spaces on the left and right sides of the string
-    :param split: Split the string according to the specified character or string
-    :param startswith: The string must start with the specified character or string
-    :param endswith: The string must end with the specified character or string
-    :param unStartswith: The string cannot end with a specified character or string
-    :param unEndswith: The string cannot end with a specified character or string
-    :param include: The string must contain the specified character or string
-    :param exclude: The character string must exclude the specified character or string
+    :param default: indicates the default value.
+    :param required: Whether it is required.
+    :param allow_none: indicates whether None is allowed.
+    :param minLength/maxLength: indicates the string length limit.
+    :param regex: matches the string regular rule.
+    :param enum: enumeration.
+    :param trim: Removes the Spaces on the left and right sides of the string.
+    :param split: Split the string according to the specified character or string.
+    :param startswith: The string must start with the specified character or string.
+    :param endswith: The string must end with the specified character or string.
+    :param unStartswith: The string cannot end with a specified character or string.
+    :param unEndswith: The string cannot end with a specified character or string.
+    :param include: The string must contain the specified character or string.
+    :param exclude: The character string must exclude the specified character or string.
     """
     default: Union[str, Unset] = unset
     required: bool = False
@@ -87,12 +87,12 @@ class DateTime(RuleBase):
     """
     datetime
 
-    :param default: indicates the default value
-    :param required: Whether it is required
-    :param allow_none: indicates whether None is allowed
-    :param fmt: date format
-    :param ge/gte/lt/lte: date size comparison
-    :param enum: Date enumeration
+    :param default: indicates the default value.
+    :param required: Whether it is required.
+    :param allow_none: indicates whether None is allowed.
+    :param fmt: date format.
+    :param ge/gte/lt/lte: date size comparison.
+    :param enum: Date enumeration.
     """
     default: Union[datetime, Unset] = unset
     required: bool = False
@@ -110,12 +110,12 @@ class Date(RuleBase):
     """
     date
 
-    :param default: indicates the default value
-    :param required: Whether it is required
-    :param allow_none: indicates whether None is allowed
-    :param fmt: date format
-    :param ge/gte/lt/lte: date size comparison
-    :param enum: Date enumeration
+    :param default: indicates the default value.
+    :param required: Whether it is required.
+    :param allow_none: indicates whether None is allowed.
+    :param fmt: date format.
+    :param ge/gte/lt/lte: date size comparison.
+    :param enum: Date enumeration.
     """
     default: Union[date, Unset] = unset
     required: bool = False
@@ -133,11 +133,11 @@ class Struct(RuleBase):
     """
     dict/list
 
-    :param required: Whether it is required
-    :param allow_none: indicates whether None is allowed
-    :param subset: rule structure
-    :param multi: When True, the validation data is a list nested dictionary, when False, a single dictionary
-    :param dest: indicates that all information about a subordinate structure is obtained without verification
+    :param required: Whether it is required.
+    :param allow_none: indicates whether None is allowed.
+    :param subset: rule structure.
+    :param multi: When True, the validation data is a list nested dictionary, when False, a single dictionary.
+    :param dest: indicates that all information about a subordinate structure is obtained without verification.
     """
     subset: dict
     default: Union[date, Unset] = unset

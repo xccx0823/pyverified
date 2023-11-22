@@ -1,3 +1,3 @@
 class ValidationError(Exception):
-    """Rule check failure exception class"""
+    """Rule check failure exception class."""
     pass

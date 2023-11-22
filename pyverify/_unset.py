@@ -1,5 +1,5 @@
 class Unset:
-    """Unset value"""
+    """Unset value."""
 
     def __bool__(self):
         return False

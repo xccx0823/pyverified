@@ -2,19 +2,18 @@ from typing import Union, Dict
 
 from pyverify._unset import unset
 from pyverify.exc import ValidationError
+from pyverify.msg import VerifyMessage
 from pyverify.rules.base import RuleBase
 from pyverify.rules.underlying import Struct
-from pyverify.msg import VerifyMessage
 
 
 class Verify:
-    """校验"""
 
     def __init__(self, data: Union[dict, list, set, tuple], rules: Dict[str, RuleBase], *, many: bool = False):
         self.data = data
         self.rules = rules
 
-        #: 如果设置为True，则标识需要校验的数据是forloop的数据
+        # If set to True, the data to be verified is cyclic data.
         if many:
             verify_data = []
 
@@ -33,13 +32,13 @@ class Verify:
         verify_data = {}
 
         for key, rule in rules.items():
-            # 不为字典时，通过反射获取对应的值
+            # If it is not a dictionary, the corresponding value is obtained by reflection.
             if isinstance(data, dict):
                 value = data.get(key, unset)
             else:
                 value = getattr(data, key, unset)
 
-            # 嵌套结构处理，触发递归解析结果
+            # Nested structure processing, triggering recursive parsing results.
             if isinstance(rule, Struct):
 
                 # TODO:处理flat类型的规则
@@ -54,7 +53,7 @@ class Verify:
                 else:
                     verify_data[key] = self.verify(value, rule.subset)
 
-            # 数据规则解析
+            # Data rule analysis.
             else:
                 verify_data[key] = rule.parse(key, value)
 
