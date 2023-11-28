@@ -147,9 +147,48 @@ class Struct(RuleBase):
     dest: bool = False
 
 
+@dataclass
+class Dict(Struct):
+    """
+    dict
+
+    :param required: Whether it is required.
+    :param allow_none: indicates whether None is allowed.
+    :param subset: rule structure.
+    :param multi: When True, the validation data is a list nested dictionary, when False, a single dictionary.
+    :param dest: indicates that all information about a subordinate structure is obtained without verification.
+    """
+    subset: dict
+    default: Union[date, Unset] = unset
+    required: bool = False
+    allow_none: bool = True
+    multi: bool = False
+    dest: bool = False
+
+
+@dataclass
+class List(Struct):
+    """
+    list
+
+    :param required: Whether it is required.
+    :param allow_none: indicates whether None is allowed.
+    :param subset: rule structure.
+    :param multi: When True, the validation data is a list nested dictionary, when False, a single dictionary.
+    :param dest: indicates that all information about a subordinate structure is obtained without verification.
+    """
+    subset: dict
+    default: Union[date, Unset] = unset
+    required: bool = False
+    allow_none: bool = True
+    multi: bool = True
+    dest: bool = False
+
+
 char = String
 num = Number
 bol = Bool
 dtime = DateTime
 dt = Date
-struct = Struct
+dic = Dict
+lis = List

@@ -1,5 +1,4 @@
 import ipaddress
-import json
 from dataclasses import dataclass
 from email.utils import parseaddr
 from typing import Union
@@ -104,20 +103,6 @@ class Tel(RuleBase):
             return phonenumbers.is_valid_number(parsed_number)
         except phonenumbers.NumberParseException:
             return False
-
-
-@dataclass
-class Json(RuleBase):
-    """
-    json
-    """
-    default: Union[str, Unset] = unset
-    required: bool = False
-    allow_none: bool = True
-    cls = None
-
-    def json_loads(self, json_string):
-        json.loads(json_string, cls=self.cls)
 
 
 @dataclass

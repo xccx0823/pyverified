@@ -1,15 +1,15 @@
-from typing import Union, Dict
+from typing import Union, Dict as Dic
 
 from pyverify._unset import unset
 from pyverify.exc import ValidationError
 from pyverify.msg import VerifyMessage
 from pyverify.rules.base import RuleBase
-from pyverify.rules.underlying import Struct
+from pyverify.rules.underlying import List, Dict
 
 
 class Verify:
 
-    def __init__(self, data: Union[dict, list, set, tuple], rules: Dict[str, RuleBase], *, many: bool = False):
+    def __init__(self, data: Union[dict, list, set, tuple], rules: Dic[str, RuleBase], *, many: bool = False):
         self.data = data
         self.rules = rules
 
@@ -27,7 +27,7 @@ class Verify:
 
         self.params = verify_data
 
-    def verify(self, data: Union[dict, list, set, tuple], rules: Dict[str, RuleBase]):
+    def verify(self, data: Union[dict, list, set, tuple], rules: Dic[str, RuleBase]):
 
         verify_data = {}
 
@@ -39,7 +39,7 @@ class Verify:
                 value = getattr(data, key, unset)
 
             # Nested structure processing, triggering recursive parsing results.
-            if isinstance(rule, Struct):
+            if isinstance(rule, (List, Dict)):
 
                 # TODO:处理flat类型的规则
 
