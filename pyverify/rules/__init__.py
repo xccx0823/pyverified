@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from typing import Dict, Any, Callable
 
-from pyverify.rules.special import email, ipv4, ipv6, tel, js, addr
+from pyverify.rules.special import email, ipv4, ipv6, tel, addr
 from pyverify.rules.underlying import char, num, bol, dtime, dt, dic, lis
 
 TYPE_MAPPING: Dict[Any, Callable] = {

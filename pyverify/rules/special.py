@@ -133,5 +133,4 @@ email = Email
 ipv4 = IPv4
 ipv6 = IPv6
 tel = Tel
-js = Json
 addr = Addr
