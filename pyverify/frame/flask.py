@@ -5,14 +5,14 @@ from pyverify import msg
 from pyverify.exc import ValidationError
 
 
-def patch(rules: dict):
+def assign(rules: dict):
     """Parameter check decorator for flask.
 
     How to use?
 
         from flask import Flask, request
 
-        from pyverify.frame.flask import patch
+        from pyverify.frame.flask import assign
         from pyverify.verify import rule, phone
 
         app = Flask(__name__)
@@ -22,8 +22,8 @@ def patch(rules: dict):
             'isEo': rule(bool),
         }
 
-        @patch(params)
         @app.route("/index")
+        @assign(params)
         def index():
             ...
 
