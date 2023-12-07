@@ -40,27 +40,22 @@ class Verify:
                 value = getattr(data, key, unset)
 
             # Nested structure processing, triggering recursive parsing results.
-            if isinstance(rule, (List, Dict)):
-
-                #: rule dest
+            if isinstance(rule, List):
+                if not isinstance(value, (list, set, tuple)):
+                    raise ValidationError(Message.multi.format(key=key, value=value))
                 if rule.dest is True:
                     verify_data[key] = value
                     continue
-
-                #: blanket rules
-                #: - required
-                #: - allow_none
-                #: - default
                 rule.common_rules_verify(key, value)
+                for _value in value:
+                    verify_data[key] = self.verify(_value, rule.subset)
 
-                #: rule multi: Used to distinguish Dict from List.
-                if rule.multi:
-                    if isinstance(value, (list, set, tuple)):
-                        raise ValidationError(Message.multi.format(key=key, value=value))
-                    for _value in value:
-                        verify_data[key] = self.verify(_value, rule.subset)
-                else:
-                    verify_data[key] = self.verify(value, rule.subset)
+            elif isinstance(rule, Dict):
+                if rule.dest is True:
+                    verify_data[key] = value
+                    continue
+                rule.common_rules_verify(key, value)
+                verify_data[key] = self.verify(value, rule.subset)
 
             # Data rule analysis.
             else:
