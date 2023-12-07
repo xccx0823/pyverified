@@ -13,6 +13,8 @@ class Message:
     multi = 'The data type of the data to be verified is not list or set or tuple.'
     convert = 'The string value cannot be converted to bool.'
 
+    typeBool = 'The value is not of bool type.'
+
     @classmethod
     def reload(cls, clss):
         msgs = dict(filter(lambda x: not x[0].startswith('__'), vars(clss).items()))

@@ -23,8 +23,9 @@ class Bool(RuleBase):
     allow_none: bool = True
     convert: bool = True
 
-    def parse(self, key: str, value: Union[str, bool]) -> str:
+    def parse(self, key: str, value: Union[str, bool]) -> bool:
         value = self.common_rules_verify(key, value)
+
         if self.convert and isinstance(value, str):
             upper_value = value.upper()
             if upper_value in 'TRUE':
@@ -33,6 +34,10 @@ class Bool(RuleBase):
                 value = False
             else:
                 raise ValidationError(msg.Message.convert.format(key=key, value=value))
+
+        if not isinstance(value, bool):
+            raise ValidationError(msg.Message.typeBool.format(key=key, value=value))
+
         return value
 
 
