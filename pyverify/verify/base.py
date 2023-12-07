@@ -21,7 +21,7 @@ class RuleBase:
         if not self.allow_none and value in (None, unset, ''):  # noqa
             raise ValidationError(msg.Message.allow_none.format(key=key, value=value))
 
-        # 当allow_none为True时，value如果时unset，则替换为None
+        # When allow_none is True, value is replaced with None if it is unset.
         if isinstance(value, Unset):
             value = None
 
