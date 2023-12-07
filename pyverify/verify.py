@@ -47,8 +47,10 @@ class Verify:
                     verify_data[key] = value
                     continue
                 rule.common_rules_verify(key, value)
+                verify_values = []
                 for _value in value:
-                    verify_data[key] = self.verify(_value, rule.subset)
+                    verify_values.append(self.verify(_value, rule.subset))
+                verify_data[key] = verify_values
 
             elif isinstance(rule, Dict):
                 if rule.dest is True:
