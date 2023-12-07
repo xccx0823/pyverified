@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime, date
-from typing import Union, List
+from typing import Union, List, Any
 
 from pyverify import msg
 from pyverify.exc import ValidationError
@@ -23,7 +23,7 @@ class Bool(RuleBase):
     allow_none: bool = True
     convert: bool = True
 
-    def parse(self, key: str, value: Union[str, bool]) -> bool:
+    def parse(self, key: str, value: Any) -> bool:
         value = self.common_rules_verify(key, value)
         if value is not None and not self.allow_none:
             if self.convert and isinstance(value, str):
