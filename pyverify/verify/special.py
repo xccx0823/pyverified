@@ -1,7 +1,7 @@
 import ipaddress
 from dataclasses import dataclass
 from email.utils import parseaddr
-from typing import Union
+from typing import Union, Any
 from urllib.parse import urlparse
 
 import phonenumbers
@@ -21,15 +21,15 @@ class Email(RuleBase):
     required: bool = False
     allow_none: bool = True
 
-    def parse(self, key: str, value: str) -> str:
+    def parse(self, key: str, value: Any) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.is_email(value):
             raise ValidationError(msg.Message.email.format(key=key, value=value))
         return value
 
     @staticmethod
-    def is_email(e_mail: str):
-        _, email_address = parseaddr(e_mail)
+    def is_email(e_mail: Any):
+        _, email_address = parseaddr(str(e_mail))
         return '@' in email_address
 
 
@@ -42,16 +42,16 @@ class IPv4(RuleBase):
     required: bool = False
     allow_none: bool = True
 
-    def parse(self, key: str, value: str) -> str:
+    def parse(self, key: str, value: Any) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.allow_none and not self.is_ipv4(value):
             raise ValidationError(msg.Message.ipv4.format(key=key, value=value))
         return value
 
     @staticmethod
-    def is_ipv4(address: str) -> bool:
+    def is_ipv4(address: Any) -> bool:
         try:
-            ipaddress.IPv4Address(address)
+            ipaddress.IPv4Address(str(address))
             return True
         except ipaddress.AddressValueError:
             return False
@@ -66,16 +66,16 @@ class IPv6(RuleBase):
     required: bool = False
     allow_none: bool = True
 
-    def parse(self, key: str, value: str) -> str:
+    def parse(self, key: str, value: Any) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.is_ipv6(value):
             raise ValidationError(msg.Message.ipv6.format(key=key, value=value))
         return value
 
     @staticmethod
-    def is_ipv6(address: str) -> bool:
+    def is_ipv6(address: Any) -> bool:
         try:
-            ipaddress.IPv6Address(address)
+            ipaddress.IPv6Address(str(address))
             return True
         except ipaddress.AddressValueError:
             return False
@@ -91,15 +91,15 @@ class Phone(RuleBase):
     allow_none: bool = True
     region: str = 'CN'
 
-    def parse(self, key: str, value: str) -> str:
+    def parse(self, key: str, value: Any) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.is_tel(value):
             raise ValidationError(msg.Message.phone.format(key=key, value=value, region=self.region))
         return value
 
-    def is_tel(self, telephone_number: str):
+    def is_tel(self, telephone_number: Any):
         try:
-            parsed_number = phonenumbers.parse(telephone_number, self.region)
+            parsed_number = phonenumbers.parse(str(telephone_number), self.region)
             return phonenumbers.is_valid_number(parsed_number)
         except phonenumbers.NumberParseException:
             return False
@@ -114,16 +114,16 @@ class Addr(RuleBase):
     required: bool = False
     allow_none: bool = True
 
-    def parse(self, key: str, value: str) -> str:
+    def parse(self, key: str, value: Any) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.is_addr(value):
             raise ValidationError(msg.Message.address.format(key=key, value=value))
         return value
 
     @staticmethod
-    def is_addr(address):
+    def is_addr(address: Any):
         try:
-            parsed_url = urlparse(address)
+            parsed_url = urlparse(str(address))
             return all([parsed_url.scheme, parsed_url.netloc])
         except ValueError:
             return False
