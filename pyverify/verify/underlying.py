@@ -40,16 +40,36 @@ class Bool(RuleBase):
 
 
 @dataclass
-class Num(RuleBase):
+class Int(RuleBase):
     """
-    int/float
+    int
 
     :param default: indicates the default value.
     :param required: Whether it is required.
     :param allow_none: indicates whether None is allowed.
     :param ge/gte/lt/lte: Compares the value size.
     :param enum: enumeration.
-    :param digits: indicates the number of digits reserved.
+    """
+    default: Union[int, Unset] = unset
+    required: bool = False
+    allow_none: bool = True
+    ge: Union[int, float, None] = None
+    gte: Union[int, float, None] = None
+    lt: Union[int, float, None] = None
+    lte: Union[int, float, None] = None
+    enum: Union[List[Union[int, float]], None] = None
+
+
+@dataclass
+class Float(RuleBase):
+    """
+    float
+
+    :param default: indicates the default value.
+    :param required: Whether it is required.
+    :param allow_none: indicates whether None is allowed.
+    :param ge/gte/lt/lte: Compares the value size.
+    :param enum: enumeration.
     """
     default: Union[int, float, Unset] = unset
     required: bool = False
