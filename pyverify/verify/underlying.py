@@ -40,7 +40,7 @@ class Bool(RuleBase):
 
 
 @dataclass
-class Number(RuleBase):
+class Num(RuleBase):
     """
     int/float
 
@@ -63,7 +63,7 @@ class Number(RuleBase):
 
 
 @dataclass
-class String(RuleBase):
+class Str(RuleBase):
     """
     str
 
