@@ -2,7 +2,9 @@ from dataclasses import dataclass
 from datetime import datetime, date
 from typing import Union, List
 
+from pyverify import msg
 from pyverify._unset import Unset, unset
+from pyverify.exc import ValidationError
 from pyverify.rules.base import RuleBase
 
 
@@ -20,6 +22,18 @@ class Bool(RuleBase):
     required: bool = False
     allow_none: bool = True
     convert: bool = True
+
+    def parse(self, key: str, value: Union[str, bool]) -> str:
+        value = self.common_rules_verify(key, value)
+        if self.convert and isinstance(value, str):
+            upper_value = value.upper()
+            if upper_value in 'TRUE':
+                value = True
+            elif upper_value == "FALSE":
+                value = False
+            else:
+                raise ValidationError(msg.Message.convert.format(key=key, value=value))
+        return value
 
 
 @dataclass

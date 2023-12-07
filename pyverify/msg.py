@@ -11,6 +11,7 @@ class Message:
     allow_none = 'The current argument cannot be an empty string or None value.'
     many = 'You set mang to True, but the type of the check data is not list or set or tuple.'
     multi = 'The data type of the data to be verified is not list or set or tuple.'
+    convert = 'The string value cannot be converted to bool.'
 
     @classmethod
     def reload(cls, clss):
