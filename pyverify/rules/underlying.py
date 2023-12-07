@@ -25,7 +25,6 @@ class Bool(RuleBase):
 
     def parse(self, key: str, value: Union[str, bool]) -> bool:
         value = self.common_rules_verify(key, value)
-
         if value is not None and not self.allow_none:
             if self.convert and isinstance(value, str):
                 upper_value = value.upper()
@@ -35,10 +34,8 @@ class Bool(RuleBase):
                     value = False
                 else:
                     raise ValidationError(msg.Message.convert.format(key=key, value=value))
-
             if not isinstance(value, bool):
                 raise ValidationError(msg.Message.typeBool.format(key=key, value=value))
-
         return value
 
 
