@@ -2,7 +2,7 @@ class Message:
     """Define check exception information."""
 
     email = 'The current parameter string is not a mailbox.'
-    telephone = 'The current parameter string is not a phone number.'
+    phone = 'The current parameter string is not a phone number.'
     ipv4 = 'The current parameter string is not an ipv4 address.'
     ipv6 = 'The current parameter string is not an ipv6 address.'
     address = 'The current parameter string is not the link address.'

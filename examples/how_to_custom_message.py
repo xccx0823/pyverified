@@ -1,11 +1,11 @@
 from pyverify import msg
-from pyverify.rules.special import Tel
+from pyverify.rules.special import Phone
 
 
 class NewMsg:
-    telephone = '{key}的值{value}并不是电话号码'
+    phone = '{key}的值{value}并不是电话号码'
 
 
 msg.Message.reload(NewMsg)
 
-Tel().parse('tel', '123456')
+Phone().parse('tel', '123456')

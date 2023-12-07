@@ -1,10 +1,10 @@
 from typing import Union, Dict as Dic
 
-from pyverify._unset import unset
 from pyverify.exc import ValidationError
 from pyverify.msg import Message
-from pyverify.rules.base import RuleBase
-from pyverify.rules.underlying import List, Dict
+from pyverify.verify._unset import unset
+from pyverify.verify.base import RuleBase
+from pyverify.verify.underlying import List, Dict
 
 
 class Verify:

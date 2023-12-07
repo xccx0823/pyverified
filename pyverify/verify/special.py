@@ -7,9 +7,9 @@ from urllib.parse import urlparse
 import phonenumbers
 
 from pyverify import msg
-from pyverify._unset import Unset, unset
 from pyverify.exc import ValidationError
-from pyverify.rules.base import RuleBase
+from pyverify.verify._unset import Unset, unset
+from pyverify.verify.base import RuleBase
 
 
 @dataclass
@@ -82,9 +82,9 @@ class IPv6(RuleBase):
 
 
 @dataclass
-class Tel(RuleBase):
+class Phone(RuleBase):
     """
-    telephone
+    phone
     """
     default: Union[str, Unset] = unset
     required: bool = False
@@ -94,7 +94,7 @@ class Tel(RuleBase):
     def parse(self, key: str, value: str) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.is_tel(value):
-            raise ValidationError(msg.Message.telephone.format(key=key, value=value, region=self.region))
+            raise ValidationError(msg.Message.phone.format(key=key, value=value, region=self.region))
         return value
 
     def is_tel(self, telephone_number: str):
@@ -132,5 +132,5 @@ class Addr(RuleBase):
 email = Email
 ipv4 = IPv4
 ipv6 = IPv6
-tel = Tel
+phone = Phone
 addr = Addr

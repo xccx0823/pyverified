@@ -1,1 +1,1 @@
-from pyverify.verify import Verify
+from pyverify.verify.verify import Verify

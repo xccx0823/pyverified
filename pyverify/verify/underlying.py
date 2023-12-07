@@ -3,9 +3,9 @@ from datetime import datetime, date
 from typing import Union, List
 
 from pyverify import msg
-from pyverify._unset import Unset, unset
 from pyverify.exc import ValidationError
-from pyverify.rules.base import RuleBase
+from pyverify.verify._unset import Unset, unset
+from pyverify.verify.base import RuleBase
 
 
 @dataclass
@@ -181,12 +181,3 @@ class List(RuleBase):
     allow_none: bool = True
     multi: bool = True
     dest: bool = False
-
-
-char = String
-num = Number
-bol = Bool
-dtime = DateTime
-dt = Date
-dic = Dict
-lis = List
