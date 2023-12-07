@@ -14,12 +14,12 @@ class RuleBase:
     def verify_required(self, key: str, value: Any):
         """Check whether parameters are missing."""
         if self.required and isinstance(value, Unset):  # noqa
-            raise ValidationError(msg.VerifyMessage.required.format(key=key, value=value))
+            raise ValidationError(msg.Message.required.format(key=key, value=value))
 
     def verify_allow_none(self, key: str, value: Any):
         """Check whether the parameter can be None."""
         if not self.allow_none and value in (None, unset, ''):  # noqa
-            raise ValidationError(msg.VerifyMessage.allow_none.format(key=key, value=value))
+            raise ValidationError(msg.Message.allow_none.format(key=key, value=value))
 
         # 当allow_none为True时，value如果时unset，则替换为None
         if isinstance(value, Unset):

@@ -129,26 +129,7 @@ class Date(RuleBase):
 
 
 @dataclass
-class Struct(RuleBase):
-    """
-    dict/list
-
-    :param required: Whether it is required.
-    :param allow_none: indicates whether None is allowed.
-    :param subset: rule structure.
-    :param multi: When True, the validation data is a list nested dictionary, when False, a single dictionary.
-    :param dest: indicates that all information about a subordinate structure is obtained without verification.
-    """
-    subset: dict
-    default: Union[date, Unset] = unset
-    required: bool = False
-    allow_none: bool = True
-    multi: bool = False
-    dest: bool = False
-
-
-@dataclass
-class Dict(Struct):
+class Dict(RuleBase):
     """
     dict
 
@@ -167,7 +148,7 @@ class Dict(Struct):
 
 
 @dataclass
-class List(Struct):
+class List(RuleBase):
     """
     list
 

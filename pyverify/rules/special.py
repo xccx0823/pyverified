@@ -24,7 +24,7 @@ class Email(RuleBase):
     def parse(self, key: str, value: str) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.is_email(value):
-            raise ValidationError(msg.VerifyMessage.email.format(key=key, value=value))
+            raise ValidationError(msg.Message.email.format(key=key, value=value))
         return value
 
     @staticmethod
@@ -45,7 +45,7 @@ class IPv4(RuleBase):
     def parse(self, key: str, value: str) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.allow_none and not self.is_ipv4(value):
-            raise ValidationError(msg.VerifyMessage.ipv4.format(key=key, value=value))
+            raise ValidationError(msg.Message.ipv4.format(key=key, value=value))
         return value
 
     @staticmethod
@@ -69,7 +69,7 @@ class IPv6(RuleBase):
     def parse(self, key: str, value: str) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.is_ipv6(value):
-            raise ValidationError(msg.VerifyMessage.ipv6.format(key=key, value=value))
+            raise ValidationError(msg.Message.ipv6.format(key=key, value=value))
         return value
 
     @staticmethod
@@ -94,7 +94,7 @@ class Tel(RuleBase):
     def parse(self, key: str, value: str) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.is_tel(value):
-            raise ValidationError(msg.VerifyMessage.telephone.format(key=key, value=value, region=self.region))
+            raise ValidationError(msg.Message.telephone.format(key=key, value=value, region=self.region))
         return value
 
     def is_tel(self, telephone_number: str):
@@ -117,7 +117,7 @@ class Addr(RuleBase):
     def parse(self, key: str, value: str) -> str:
         value = self.common_rules_verify(key, value)
         if value and not self.is_addr(value):
-            raise ValidationError(msg.VerifyMessage.address.format(key=key, value=value))
+            raise ValidationError(msg.Message.address.format(key=key, value=value))
         return value
 
     @staticmethod

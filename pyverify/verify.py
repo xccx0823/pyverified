@@ -2,7 +2,7 @@ from typing import Union, Dict as Dic
 
 from pyverify._unset import unset
 from pyverify.exc import ValidationError
-from pyverify.msg import VerifyMessage
+from pyverify.msg import Message
 from pyverify.rules.base import RuleBase
 from pyverify.rules.underlying import List, Dict
 
@@ -18,7 +18,7 @@ class Verify:
             verify_data = []
 
             if not isinstance(data, (list, set, tuple)):
-                raise ValidationError(VerifyMessage.many)
+                raise ValidationError(Message.many)
 
             for _data in data:
                 verify_data.append(self.verify(_data, rules))
@@ -32,6 +32,7 @@ class Verify:
         verify_data = {}
 
         for key, rule in rules.items():
+
             # If it is not a dictionary, the corresponding value is obtained by reflection.
             if isinstance(data, dict):
                 value = data.get(key, unset)
@@ -41,13 +42,21 @@ class Verify:
             # Nested structure processing, triggering recursive parsing results.
             if isinstance(rule, (List, Dict)):
 
-                # TODO:处理flat类型的规则
+                #: rule dest
+                if rule.dest is True:
+                    verify_data[key] = value
+                    continue
 
+                #: blanket rules
+                #: - required
+                #: - allow_none
+                #: - default
+                rule.common_rules_verify(key, value)
+
+                #: rule multi: Used to distinguish Dict from List.
                 if rule.multi:
-
                     if isinstance(value, (list, set, tuple)):
-                        raise ValidationError(VerifyMessage.many)
-
+                        raise ValidationError(Message.multi.format(key=key, value=value))
                     for _value in value:
                         verify_data[key] = self.verify(_value, rule.subset)
                 else:
