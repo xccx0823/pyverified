@@ -8,6 +8,8 @@ from pyverify.verify._unset import Unset, unset
 class RuleBase:
     """Rule base class."""
 
+    null_values = (unset, None, '')
+
     def parse(self, key: str, value: Any):
         raise NotImplementedError("parse hasn't been implemented yet.")
 
@@ -18,7 +20,7 @@ class RuleBase:
 
     def verify_allow_none(self, key: str, value: Any):
         """Check whether the parameter can be None."""
-        if not self.allow_none and value in (None, unset, ''):  # noqa
+        if not self.allow_none and value in self.null_values:  # noqa
             raise ValidationError(msg.Message.allow_none.format(key=key, value=value))
 
         # When allow_none is True, value is replaced with None if it is unset.
@@ -29,7 +31,7 @@ class RuleBase:
 
     def set_default_value(self, value: Any):
         """Set a default value."""
-        if value in (unset, None, '') and self.default is not unset:  # noqa
+        if value in self.null_values and self.default is not unset:  # noqa
             value = self.default  # noqa
         return value
 

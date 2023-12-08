@@ -23,7 +23,7 @@ class Email(RuleBase):
 
     def parse(self, key: str, value: Any) -> str:
         value = self.common_rules_verify(key, value)
-        if value and not self.is_email(value):
+        if value not in self.null_values and not self.is_email(value):
             raise ValidationError(msg.Message.email.format(key=key, value=value))
         return value
 
@@ -44,7 +44,7 @@ class IPv4(RuleBase):
 
     def parse(self, key: str, value: Any) -> str:
         value = self.common_rules_verify(key, value)
-        if value and not self.allow_none and not self.is_ipv4(value):
+        if value not in self.null_values and not self.allow_none and not self.is_ipv4(value):
             raise ValidationError(msg.Message.ipv4.format(key=key, value=value))
         return value
 
@@ -68,7 +68,7 @@ class IPv6(RuleBase):
 
     def parse(self, key: str, value: Any) -> str:
         value = self.common_rules_verify(key, value)
-        if value and not self.is_ipv6(value):
+        if value not in self.null_values and not self.is_ipv6(value):
             raise ValidationError(msg.Message.ipv6.format(key=key, value=value))
         return value
 
@@ -93,7 +93,7 @@ class Phone(RuleBase):
 
     def parse(self, key: str, value: Any) -> str:
         value = self.common_rules_verify(key, value)
-        if value and not self.is_tel(value):
+        if value not in self.null_values and not self.is_tel(value):
             raise ValidationError(msg.Message.phone.format(key=key, value=value, region=self.region))
         return value
 
@@ -116,7 +116,7 @@ class Addr(RuleBase):
 
     def parse(self, key: str, value: Any) -> str:
         value = self.common_rules_verify(key, value)
-        if value and not self.is_addr(value):
+        if value not in self.null_values and not self.is_addr(value):
             raise ValidationError(msg.Message.address.format(key=key, value=value))
         return value
 

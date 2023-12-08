@@ -10,7 +10,14 @@ class Message:
     many = 'You set mang to True, but the type of the check data is not list or set or tuple.'
     multi = 'The data type of the data to be verified is not list or set or tuple.'
     convert = 'The string value cannot be converted to bool.'
+    enum = 'The value is not in the enumeration range.'
+    ge = 'The value of {key} must be greater than {ge}'
+    gte = 'The value of {key} must be at least {gte}'
+    lt = 'The value of {key} must be less than {lt}'
+    lte = 'The value of {key} must be less than or equal to {lte}'
+
     typeBool = 'The value is not of bool type.'
+    typeInt = 'The value is not of int type.'
 
     params = 'The request parameter must be dict.'
 

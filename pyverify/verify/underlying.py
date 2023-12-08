@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime, date
-from typing import Union, List, Any
+from typing import Union, List, Any, Dict as typingDict
 
 from pyverify import msg
 from pyverify.exc import ValidationError
@@ -25,7 +25,7 @@ class Bool(RuleBase):
 
     def parse(self, key: str, value: Any) -> bool:
         value = self.common_rules_verify(key, value)
-        if value is not None and not self.allow_none:
+        if value not in self.null_values:
             if self.convert and isinstance(value, str):
                 upper_value = value.upper()
                 if upper_value == 'TRUE':
@@ -57,7 +57,42 @@ class Int(RuleBase):
     gte: Union[int, float, None] = None
     lt: Union[int, float, None] = None
     lte: Union[int, float, None] = None
-    enum: Union[List[Union[int, float]], None] = None
+    enum: Union[typingDict[int, Any], List[Union[int, float]], None] = None
+
+    def parse(self, key: str, value: Any):
+        value = self.common_rules_verify(key, value)
+        if value not in self.null_values:
+            # Attempts to convert the value to type int, intercepts
+            # ValueError and returns ValidationError.
+            try:
+                value = int(value)
+            except ValueError:
+                raise ValidationError(msg.Message.typeInt.format(key=key, value=value))
+
+            # scope
+            if self.ge is not None and value <= self.ge:
+                raise ValidationError(msg.Message.ge.format(key=key, value=value, ge=self.ge))
+            if self.gte is not None and value < self.gte:
+                raise ValidationError(msg.Message.gte.format(key=key, value=value, gte=self.gte))
+            if self.lt is not None and value >= self.lt:
+                raise ValidationError(msg.Message.lt.format(key=key, value=value, lt=self.lt))
+            if self.lte is not None and value > self.lte:
+                raise ValidationError(msg.Message.lte.format(key=key, value=value, lte=self.lte))
+
+        # There are two types of enum parameters. When the parameter is
+        # dict, the corresponding value is mapped. When the parameter
+        # is list, the parameter is checked only for whether it exists
+        # in the enumeration.
+        if isinstance(self.enum, dict):
+            try:
+                value = self.enum[value]
+            except KeyError:
+                raise ValidationError(msg.Message.enum.format(key=key, value=value, enum=self.enum))
+        elif isinstance(self.enum, list):
+            if value not in self.enum:
+                raise ValidationError(msg.Message.enum.format(key=key, value=value, enum=self.enum))
+
+        return value
 
 
 @dataclass
@@ -69,7 +104,6 @@ class Float(RuleBase):
     :param required: Whether it is required.
     :param allow_none: indicates whether None is allowed.
     :param ge/gte/lt/lte: Compares the value size.
-    :param enum: enumeration.
     """
     default: Union[int, float, Unset] = unset
     required: bool = False
@@ -78,8 +112,10 @@ class Float(RuleBase):
     gte: Union[int, float, None] = None
     lt: Union[int, float, None] = None
     lte: Union[int, float, None] = None
-    enum: Union[List[Union[int, float]], None] = None
     digits: Union[int, None] = None
+
+    def parse(self, key: str, value: Any):
+        pass
 
 
 @dataclass
@@ -118,6 +154,9 @@ class Str(RuleBase):
     include: Union[str, None] = None
     exclude: Union[str, None] = None
 
+    def parse(self, key: str, value: Any):
+        pass
+
 
 @dataclass
 class DateTime(RuleBase):
@@ -141,6 +180,9 @@ class DateTime(RuleBase):
     lte: Union[datetime, str, None] = None
     enum: Union[List[datetime], List[str], None] = None
 
+    def parse(self, key: str, value: Any):
+        pass
+
 
 @dataclass
 class Date(RuleBase):
@@ -163,6 +205,9 @@ class Date(RuleBase):
     lt: Union[date, str, None] = None
     lte: Union[date, str, None] = None
     enum: Union[List[date], List[str], None] = None
+
+    def parse(self, key: str, value: Any):
+        pass
 
 
 @dataclass
