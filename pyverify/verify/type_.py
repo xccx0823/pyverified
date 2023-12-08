@@ -515,10 +515,3 @@ class Addr(RuleBase):
             return all([parsed_url.scheme, parsed_url.netloc])
         except ValueError:
             return False
-
-
-email = Email
-ipv4 = IPv4
-ipv6 = IPv6
-phone = Phone
-addr = Addr
