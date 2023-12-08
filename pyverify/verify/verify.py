@@ -4,7 +4,7 @@ from pyverify.exc import ValidationError
 from pyverify.msg import Message
 from pyverify.verify._unset import unset
 from pyverify.verify.base import RuleBase
-from pyverify.verify.base_type import List, Dict
+from pyverify.verify.type_ import List, Dict
 
 
 class Verify:
