@@ -16,20 +16,17 @@ from pyverify.verify.base import RuleBase
 
 @dataclass
 class Bool(RuleBase):
-    """
-    bool
-
-    :param default: indicates the default value.
-    :param required: Whether it is required.
-    :param allow_none: indicates whether None is allowed.
-    :param convert: Whether to convert true, false The string is of Boolean type.
-    :param func: user-defined function.
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # func: user-defined function.
     default: Union[bool, Unset] = unset
     required: bool = False
     allow_none: bool = True
-    convert: bool = True
     func: Union[Callable, None] = None
+
+    # convert: Whether to convert true, false The string is of Boolean type.
+    convert: bool = True
 
     def parse(self, key: str, value: Any) -> bool:
         if value not in self.null_values:
@@ -48,30 +45,26 @@ class Bool(RuleBase):
 
 @dataclass
 class Int(RuleBase):
-    """
-    int
-
-    :param default: indicates the default value.
-    :param required: Whether it is required.
-    :param allow_none: indicates whether None is allowed.
-    :param gt/gte/lt/lte: Compares the value size.
-    :param enum: enumeration.
-    :param func: user-defined function.
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # func: user-defined function.
     default: Union[int, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    func: Union[Callable, None] = None
+
+    # gt/gte/lt/lte: Compares the value size.
     gt: Union[int, float, None] = None
     gte: Union[int, float, None] = None
     lt: Union[int, float, None] = None
     lte: Union[int, float, None] = None
+
+    # enum: enumeration.
     enum: Union[typingDict[int, Any], List[Union[int, float]], None] = None
-    func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any):
         if value not in self.null_values:
-            # Attempts to convert the value to type int, intercepts
-            # ValueError and returns ValidationError.
             try:
                 value = int(value)
             except ValueError:
@@ -98,29 +91,26 @@ class Int(RuleBase):
 
 @dataclass
 class Float(RuleBase):
-    """
-    float
-
-    :param default: indicates the default value.
-    :param required: Whether it is required.
-    :param allow_none: indicates whether None is allowed.
-    :param gt/gte/lt/lte: Compares the value size.
-    :param func: user-defined function.
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # func: user-defined function.
     default: Union[int, float, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    func: Union[Callable, None] = None
+
+    # gt/gte/lt/lte: Compares the value size.
     gt: Union[int, float, None] = None
     gte: Union[int, float, None] = None
     lt: Union[int, float, None] = None
     lte: Union[int, float, None] = None
+
+    # digits: Reserved decimal places
     digits: Union[int, None] = None
-    func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any):
         if value not in self.null_values:
-            # Attempts to convert the value to type int, intercepts
-            # ValueError and returns ValidationError.
             try:
                 value = float(value)
             except ValueError:
@@ -138,33 +128,28 @@ class Float(RuleBase):
 
 @dataclass
 class Str(RuleBase):
-    """
-    str
-
-    :param default: indicates the default value.
-    :param required: Whether it is required.
-    :param allow_none: indicates whether None is allowed.
-    :param minLength/maxLength: indicates the string length limit.
-    :param regex: matches the string regular rule.
-    :param enum: enumeration.
-    :param trim: Removes the Spaces on the left and right sides of the string.
-    :param split: Split the string according to the specified character or string.
-    :param startswith: The string must start with the specified character or string.
-    :param endswith: The string must end with the specified character or string.
-    :param unStartswith: The string cannot end with a specified character or string.
-    :param unEndswith: The string cannot end with a specified character or string.
-    :param include: The string must contain the specified character or string.
-    :param exclude: The character string must exclude the specified character or string.
-    :param func: user-defined function.
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
     default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+
     minLength: Union[int, None] = None
     maxLength: Union[int, None] = None
     regex: Union[str, None] = None
     enum: Union[List[str], None] = None
-    trim: bool = False
+
+    # Pruning of the string
+    # strip lstrip rstrip Functions corresponding to python string operations;
+    # strip_chars lstrip_chars rstrip_chars corresponds to the parameters of the above three functions.
+    strip: bool = False
+    lstrip: bool = False
+    rstrip: bool = False
+    strip_chars: Union[str, None] = None
+    lstrip_chars: Union[str, None] = None
+    rstrip_chars: Union[str, None] = None
+
     split: Union[str, None] = None
     startswith: Union[str, None] = None
     endswith: Union[str, None] = None
@@ -175,32 +160,42 @@ class Str(RuleBase):
     func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any):
-        pass
+        if value not in self.null_values:
+            # All types can be converted by str, so there is
+            # no need to catch conversion failure exceptions.
+            value = str(value)
+
+            # Remove Spaces at the beginning and end of the string.
+            if self.strip:
+                value = value.strip(self.strip_chars) if self.strip_chars is not None else value.strip()
+            if self.lstrip:
+                value = value.lstrip(self.lstrip_chars) if self.lstrip_chars is not None else value.lstrip()
+            if self.rstrip:
+                value = value.rstrip(self.rstrip_chars) if self.rstrip_chars is not None else value.rstrip()
 
 
 @dataclass
 class DateTime(RuleBase):
-    """
-    datetime
-
-    :param default: indicates the default value.
-    :param required: Whether it is required.
-    :param allow_none: indicates whether None is allowed.
-    :param fmt: date format.
-    :param gt/gte/lt/lte: date size comparison.
-    :param enum: Date enumeration.
-    :param func: user-defined function.
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # func: user-defined function.
     default: Union[datetime, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    func: Union[Callable, None] = None
+
+    # fmt: date format.
     fmt: str = '%Y-%m-%d %H:%M:%S'
+
+    # gt/gte/lt/lte: date size comparison.
     gt: Union[datetime, str, None] = None
     gte: Union[datetime, str, None] = None
     lt: Union[datetime, str, None] = None
     lte: Union[datetime, str, None] = None
+
+    # enum: Date enumeration.
     enum: Union[List[datetime], List[str], None] = None
-    func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any):
         pass
@@ -208,27 +203,26 @@ class DateTime(RuleBase):
 
 @dataclass
 class Date(RuleBase):
-    """
-    date
-
-    :param default: indicates the default value.
-    :param required: Whether it is required.
-    :param allow_none: indicates whether None is allowed.
-    :param fmt: date format.
-    :param gt/gte/lt/lte: date size comparison.
-    :param enum: Date enumeration.
-    :param func: user-defined function.
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # func: user-defined function.
     default: Union[date, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    func: Union[Callable, None] = None
+
+    # fmt: date format.
     fmt: str = '%Y-%m-%d'
+
+    # gt/gte/lt/lte: date size comparison.
     gt: Union[date, str, None] = None
     gte: Union[date, str, None] = None
     lt: Union[date, str, None] = None
     lte: Union[date, str, None] = None
+
+    # enum: Date enumeration.
     enum: Union[List[date], List[str], None] = None
-    func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any):
         pass
@@ -236,39 +230,33 @@ class Date(RuleBase):
 
 @dataclass
 class Dict(RuleBase):
-    """
-    dict
-
-    :param required: Whether it is required.
-    :param allow_none: indicates whether None is allowed.
-    :param subset: rule structure.
-    :param multi: When True, the validation data is a list nested dictionary, when False, a single dictionary.
-    :param dest: indicates that all information about a subordinate structure is obtained without verification.
-    """
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # subset: rule structure.
+    # multi: When True, the validation data is a list nested dictionary, when False, a single dictionary.
     subset: dict
     default: Union[date, Unset] = unset
     required: bool = False
     allow_none: bool = True
     multi: bool = False
+
+    # dest: indicates that all information about a subordinate structure is obtained without verification.
     dest: bool = False
 
 
 @dataclass
 class List(RuleBase):
-    """
-    list
-
-    :param required: Whether it is required.
-    :param allow_none: indicates whether None is allowed.
-    :param subset: rule structure.
-    :param multi: When True, the validation data is a list nested dictionary, when False, a single dictionary.
-    :param dest: indicates that all information about a subordinate structure is obtained without verification.
-    """
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # subset: rule structure.
+    # multi: When True, the validation data is a list nested dictionary, when False, a single dictionary.
     subset: dict
     default: Union[date, Unset] = unset
     required: bool = False
     allow_none: bool = True
     multi: bool = True
+
+    # dest: indicates that all information about a subordinate structure is obtained without verification.
     dest: bool = False
 
 
