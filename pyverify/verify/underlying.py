@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime, date
-from typing import Union, List, Any, Dict as typingDict
+from typing import Union, List, Any, Dict as typingDict, Callable
 
 from pyverify import msg
 from pyverify.exc import ValidationError
@@ -17,14 +17,15 @@ class Bool(RuleBase):
     :param required: Whether it is required.
     :param allow_none: indicates whether None is allowed.
     :param convert: Whether to convert true, false The string is of Boolean type.
+    :param func: user-defined function.
     """
     default: Union[bool, Unset] = unset
     required: bool = False
     allow_none: bool = True
     convert: bool = True
+    func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any) -> bool:
-        value = self.common_rules_verify(key, value)
         if value not in self.null_values:
             if self.convert and isinstance(value, str):
                 upper_value = value.upper()
@@ -49,6 +50,7 @@ class Int(RuleBase):
     :param allow_none: indicates whether None is allowed.
     :param gt/gte/lt/lte: Compares the value size.
     :param enum: enumeration.
+    :param func: user-defined function.
     """
     default: Union[int, Unset] = unset
     required: bool = False
@@ -58,9 +60,9 @@ class Int(RuleBase):
     lt: Union[int, float, None] = None
     lte: Union[int, float, None] = None
     enum: Union[typingDict[int, Any], List[Union[int, float]], None] = None
+    func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any):
-        value = self.common_rules_verify(key, value)
         if value not in self.null_values:
             # Attempts to convert the value to type int, intercepts
             # ValueError and returns ValidationError.
@@ -97,6 +99,7 @@ class Float(RuleBase):
     :param required: Whether it is required.
     :param allow_none: indicates whether None is allowed.
     :param gt/gte/lt/lte: Compares the value size.
+    :param func: user-defined function.
     """
     default: Union[int, float, Unset] = unset
     required: bool = False
@@ -106,9 +109,9 @@ class Float(RuleBase):
     lt: Union[int, float, None] = None
     lte: Union[int, float, None] = None
     digits: Union[int, None] = None
+    func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any):
-        value = self.common_rules_verify(key, value)
         if value not in self.null_values:
             # Attempts to convert the value to type int, intercepts
             # ValueError and returns ValidationError.
@@ -146,6 +149,7 @@ class Str(RuleBase):
     :param unEndswith: The string cannot end with a specified character or string.
     :param include: The string must contain the specified character or string.
     :param exclude: The character string must exclude the specified character or string.
+    :param func: user-defined function.
     """
     default: Union[str, Unset] = unset
     required: bool = False
@@ -162,6 +166,7 @@ class Str(RuleBase):
     unEndswith: Union[str, None] = None
     include: Union[str, None] = None
     exclude: Union[str, None] = None
+    func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any):
         pass
@@ -178,6 +183,7 @@ class DateTime(RuleBase):
     :param fmt: date format.
     :param gt/gte/lt/lte: date size comparison.
     :param enum: Date enumeration.
+    :param func: user-defined function.
     """
     default: Union[datetime, Unset] = unset
     required: bool = False
@@ -188,6 +194,7 @@ class DateTime(RuleBase):
     lt: Union[datetime, str, None] = None
     lte: Union[datetime, str, None] = None
     enum: Union[List[datetime], List[str], None] = None
+    func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any):
         pass
@@ -204,6 +211,7 @@ class Date(RuleBase):
     :param fmt: date format.
     :param gt/gte/lt/lte: date size comparison.
     :param enum: Date enumeration.
+    :param func: user-defined function.
     """
     default: Union[date, Unset] = unset
     required: bool = False
@@ -214,6 +222,7 @@ class Date(RuleBase):
     lt: Union[date, str, None] = None
     lte: Union[date, str, None] = None
     enum: Union[List[date], List[str], None] = None
+    func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any):
         pass

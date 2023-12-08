@@ -13,6 +13,13 @@ class RuleBase:
     def parse(self, key: str, value: Any):
         raise NotImplementedError("parse hasn't been implemented yet.")
 
+    def execute_parse(self, key: str, value: Any):
+        value = self.common_rules_verify(key, value)
+        value = self.parse(key, value)
+        if self.func:  # noqa
+            value = self.func(key, value)  # noqa
+        return value
+
     def verify_required(self, key: str, value: Any):
         """Check whether parameters are missing."""
         if self.required and isinstance(value, Unset):  # noqa

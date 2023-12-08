@@ -61,6 +61,6 @@ class Verify:
 
             # Data rule analysis.
             else:
-                verify_data[key] = rule.parse(key, value)
+                verify_data[key] = rule.execute_parse(key, value)
 
         return verify_data
