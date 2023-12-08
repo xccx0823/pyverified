@@ -16,7 +16,20 @@ TYPE_MAPPING: dict = {
     ipv4: ipv4,
     ipv6: ipv6,
     phone: phone,
-    addr: addr
+    addr: addr,
+    'str': Str,
+    'int': Int,
+    'float': Float,
+    'bool': Bool,
+    'dict': Dict,
+    'list': List,
+    'date': Date,
+    'datetime': DateTime,
+    'email': email,
+    'ipv4': ipv4,
+    'ipv6': ipv6,
+    'phone': phone,
+    'addr': addr
 }
 
 
