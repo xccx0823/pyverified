@@ -11,7 +11,7 @@ class Message:
     multi = 'The data type of the data to be verified is not list or set or tuple.'
     convert = 'The string value cannot be converted to bool.'
     enum = 'The value is not in the enumeration range.'
-    ge = 'The value of {key} must be greater than {ge}'
+    gt = 'The value of {key} must be greater than {gt}'
     gte = 'The value of {key} must be at least {gte}'
     lt = 'The value of {key} must be less than {lt}'
     lte = 'The value of {key} must be less than or equal to {lte}'

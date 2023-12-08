@@ -47,13 +47,13 @@ class Int(RuleBase):
     :param default: indicates the default value.
     :param required: Whether it is required.
     :param allow_none: indicates whether None is allowed.
-    :param ge/gte/lt/lte: Compares the value size.
+    :param gt/gte/lt/lte: Compares the value size.
     :param enum: enumeration.
     """
     default: Union[int, Unset] = unset
     required: bool = False
     allow_none: bool = True
-    ge: Union[int, float, None] = None
+    gt: Union[int, float, None] = None
     gte: Union[int, float, None] = None
     lt: Union[int, float, None] = None
     lte: Union[int, float, None] = None
@@ -70,8 +70,8 @@ class Int(RuleBase):
                 raise ValidationError(msg.Message.typeInt.format(key=key, value=value))
 
             # scope
-            if self.ge is not None and value <= self.ge:
-                raise ValidationError(msg.Message.ge.format(key=key, value=value, ge=self.ge))
+            if self.gt is not None and value <= self.gt:
+                raise ValidationError(msg.Message.gt.format(key=key, value=value, gt=self.gt))
             if self.gte is not None and value < self.gte:
                 raise ValidationError(msg.Message.gte.format(key=key, value=value, gte=self.gte))
             if self.lt is not None and value >= self.lt:
@@ -103,12 +103,12 @@ class Float(RuleBase):
     :param default: indicates the default value.
     :param required: Whether it is required.
     :param allow_none: indicates whether None is allowed.
-    :param ge/gte/lt/lte: Compares the value size.
+    :param gt/gte/lt/lte: Compares the value size.
     """
     default: Union[int, float, Unset] = unset
     required: bool = False
     allow_none: bool = True
-    ge: Union[int, float, None] = None
+    gt: Union[int, float, None] = None
     gte: Union[int, float, None] = None
     lt: Union[int, float, None] = None
     lte: Union[int, float, None] = None
@@ -167,14 +167,14 @@ class DateTime(RuleBase):
     :param required: Whether it is required.
     :param allow_none: indicates whether None is allowed.
     :param fmt: date format.
-    :param ge/gte/lt/lte: date size comparison.
+    :param gt/gte/lt/lte: date size comparison.
     :param enum: Date enumeration.
     """
     default: Union[datetime, Unset] = unset
     required: bool = False
     allow_none: bool = True
     fmt: str = '%Y-%m-%d %H:%M:%S'
-    ge: Union[datetime, str, None] = None
+    gt: Union[datetime, str, None] = None
     gte: Union[datetime, str, None] = None
     lt: Union[datetime, str, None] = None
     lte: Union[datetime, str, None] = None
@@ -193,14 +193,14 @@ class Date(RuleBase):
     :param required: Whether it is required.
     :param allow_none: indicates whether None is allowed.
     :param fmt: date format.
-    :param ge/gte/lt/lte: date size comparison.
+    :param gt/gte/lt/lte: date size comparison.
     :param enum: Date enumeration.
     """
     default: Union[date, Unset] = unset
     required: bool = False
     allow_none: bool = True
     fmt: str = '%Y-%m-%d'
-    ge: Union[date, str, None] = None
+    gt: Union[date, str, None] = None
     gte: Union[date, str, None] = None
     lt: Union[date, str, None] = None
     lte: Union[date, str, None] = None
