@@ -73,18 +73,8 @@ class Int(RuleBase):
             # range
             self.verify_range(key, value)
 
-        # There are two types of enum parameters. When the parameter is
-        # dict, the corresponding value is mapped. When the parameter
-        # is list, the parameter is checked only for whether it exists
-        # in the enumeration.
-        if isinstance(self.enum, dict):
-            try:
-                value = self.enum[value]
-            except KeyError:
-                raise ValidationError(msg.Message.enum.format(key=key, value=value, enum=self.enum))
-        elif isinstance(self.enum, list):
-            if value not in self.enum:
-                raise ValidationError(msg.Message.enum.format(key=key, value=value, enum=self.enum))
+        # enum
+        value = self.verify_enum(key, value)
 
         return value
 
@@ -135,9 +125,11 @@ class Str(RuleBase):
     required: bool = False
     allow_none: bool = True
 
+    # Length
     minLength: Union[int, None] = None
     maxLength: Union[int, None] = None
-    regex: Union[str, None] = None
+
+    # Enum
     enum: Union[List[str], None] = None
 
     # Pruning of the string
@@ -150,7 +142,7 @@ class Str(RuleBase):
     lstrip_chars: Union[str, None] = None
     rstrip_chars: Union[str, None] = None
 
-    split: Union[str, None] = None
+    regex: Union[str, None] = None
     startswith: Union[str, None] = None
     endswith: Union[str, None] = None
     unStartswith: Union[str, None] = None
@@ -165,6 +157,13 @@ class Str(RuleBase):
             # no need to catch conversion failure exceptions.
             value = str(value)
 
+            # Determine the length of the string.
+            length = len(value)
+            if self.minLength is not None and length < self.minLength:
+                raise
+            if self.maxLength is not None and length > self.maxLength:
+                raise
+
             # Remove Spaces at the beginning and end of the string.
             if self.strip:
                 value = value.strip(self.strip_chars) if self.strip_chars is not None else value.strip()
@@ -172,6 +171,11 @@ class Str(RuleBase):
                 value = value.lstrip(self.lstrip_chars) if self.lstrip_chars is not None else value.lstrip()
             if self.rstrip:
                 value = value.rstrip(self.rstrip_chars) if self.rstrip_chars is not None else value.rstrip()
+
+        # enum
+        value = self.verify_enum(key, value)
+
+        return value
 
 
 @dataclass

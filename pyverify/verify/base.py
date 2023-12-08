@@ -36,6 +36,23 @@ class RuleBase:
 
         return value
 
+    def verify_enum(self, key, value):
+        """
+        There are two types of enum parameters. When the parameter is
+        dict, the corresponding value is mapped. When the parameter
+        is list, the parameter is checked only for whether it exists
+        in the enumeration.
+        """
+        if isinstance(self.enum, dict):  # noqa
+            try:
+                value = self.enum[value]  # noqa
+            except KeyError:
+                raise ValidationError(msg.Message.enum.format(key=key, value=value, enum=self.enum))  # noqa
+        elif isinstance(self.enum, list):  # noqa
+            if value not in self.enum:  # noqa
+                raise ValidationError(msg.Message.enum.format(key=key, value=value, enum=self.enum))  # noqa
+        return value
+
     def verify_range(self, key: str, value: Any):
         """The range of the check value."""
         if self.gt is not None and value <= self.gt:  # noqa
