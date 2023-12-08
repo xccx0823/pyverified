@@ -14,10 +14,22 @@ class RuleBase:
         raise NotImplementedError("parse hasn't been implemented yet.")
 
     def execute_parse(self, key: str, value: Any):
-        value = self.common_rules_verify(key, value)
-        value = self.parse(key, value)
-        if self.func:  # noqa
-            value = self.func(key, value)  # noqa
+        if self.multi:  # noqa
+            if not isinstance(value, (list, set, tuple)):
+                raise ValidationError(msg.Message.multi.format(key=key, value=value))
+            _values = []
+            for _value in value:
+                _value = self.common_rules_verify(key, _value)
+                _value = self.parse(key, _value)
+                if self.func:  # noqa
+                    _value = self.func(key, _value)  # noqa
+                _values.append(_value)
+            value = _values
+        else:
+            value = self.common_rules_verify(key, value)
+            value = self.parse(key, value)
+            if self.func:  # noqa
+                value = self.func(key, value)  # noqa
         return value
 
     def verify_required(self, key: str, value: Any):

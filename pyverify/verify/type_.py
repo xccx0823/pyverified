@@ -19,10 +19,12 @@ class Bool(RuleBase):
     # default: indicates the default value.
     # required: Whether it is required.
     # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
     # func: user-defined function.
-    default: Union[bool, Unset] = unset
+    default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    multi: bool = False
     func: Union[Callable, None] = None
 
     # convert: Whether to convert true, false The string is of Boolean type.
@@ -48,10 +50,12 @@ class Int(RuleBase):
     # default: indicates the default value.
     # required: Whether it is required.
     # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
     # func: user-defined function.
-    default: Union[int, Unset] = unset
+    default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    multi: bool = False
     func: Union[Callable, None] = None
 
     # gt/gte/lt/lte: Compares the value size.
@@ -84,10 +88,12 @@ class Float(RuleBase):
     # default: indicates the default value.
     # required: Whether it is required.
     # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
     # func: user-defined function.
-    default: Union[int, float, Unset] = unset
+    default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    multi: bool = False
     func: Union[Callable, None] = None
 
     # gt/gte/lt/lte: Compares the value size.
@@ -121,10 +127,12 @@ class Str(RuleBase):
     # default: indicates the default value.
     # required: Whether it is required.
     # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
     # func: user-defined function.
     default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    multi: bool = False
     func: Union[Callable, None] = None
 
     # Length
@@ -241,10 +249,12 @@ class DateTime(RuleBase):
     # default: indicates the default value.
     # required: Whether it is required.
     # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
     # func: user-defined function.
-    default: Union[datetime, Unset] = unset
+    default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    multi: bool = False
     func: Union[Callable, None] = None
 
     # fmt: date format.
@@ -268,10 +278,12 @@ class Date(RuleBase):
     # default: indicates the default value.
     # required: Whether it is required.
     # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
     # func: user-defined function.
-    default: Union[date, Unset] = unset
+    default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    multi: bool = False
     func: Union[Callable, None] = None
 
     # fmt: date format.
@@ -324,12 +336,15 @@ class List(RuleBase):
 
 @dataclass
 class Email(RuleBase):
-    """
-    email
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
+    # func: user-defined function.
     default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    multi: bool = False
     func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any) -> str:
@@ -345,12 +360,15 @@ class Email(RuleBase):
 
 @dataclass
 class IPv4(RuleBase):
-    """
-    ipv4
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
+    # func: user-defined function.
     default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    multi: bool = False
     func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any) -> str:
@@ -369,12 +387,15 @@ class IPv4(RuleBase):
 
 @dataclass
 class IPv6(RuleBase):
-    """
-    ipv6
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
+    # func: user-defined function.
     default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    multi: bool = False
     func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any) -> str:
@@ -393,14 +414,17 @@ class IPv6(RuleBase):
 
 @dataclass
 class Phone(RuleBase):
-    """
-    phone
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
+    # func: user-defined function.
     default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
-    region: str = 'CN'
+    multi: bool = False
     func: Union[Callable, None] = None
+    region: str = 'CN'
 
     def parse(self, key: str, value: Any) -> str:
         if value not in self.null_values and not self.is_tel(value):
@@ -417,12 +441,15 @@ class Phone(RuleBase):
 
 @dataclass
 class Addr(RuleBase):
-    """
-    address
-    """
+    # default: indicates the default value.
+    # required: Whether it is required.
+    # allow_none: indicates whether None is allowed.
+    # multi: Check whether multiple values exist
+    # func: user-defined function.
     default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    multi: bool = False
     func: Union[Callable, None] = None
 
     def parse(self, key: str, value: Any) -> str:

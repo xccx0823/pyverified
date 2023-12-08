@@ -1,7 +1,7 @@
 from typing import Union, Dict as Dic
 
+from pyverify import msg
 from pyverify.exc import ValidationError
-from pyverify.msg import Message
 from pyverify.verify._unset import unset
 from pyverify.verify.base import RuleBase
 from pyverify.verify.type_ import List, Dict
@@ -18,7 +18,7 @@ class Verify:
             verify_data = []
 
             if not isinstance(data, (list, set, tuple)):
-                raise ValidationError(Message.many)
+                raise ValidationError(msg.Message.many)
 
             for _data in data:
                 verify_data.append(self.verify(_data, rules))
@@ -42,7 +42,7 @@ class Verify:
             # Nested structure processing, triggering recursive parsing results.
             if isinstance(rule, List):
                 if not isinstance(value, (list, set, tuple)):
-                    raise ValidationError(Message.multi.format(key=key, value=value))
+                    raise ValidationError(msg.Message.multi.format(key=key, value=value))
                 if rule.dest is True:
                     verify_data[key] = value
                     continue
