@@ -285,9 +285,21 @@ class Str(RuleBase):
                 # TODO:错误信息
                 raise
 
-            # replace
+            # rewriting
             if self.replace:
                 value = value.replace(*self.replace_args)
+            if self.capitalize:
+                value = value.capitalize()
+            if self.title:
+                value = value.title()
+            if self.swapcase:
+                value = value.swapcase()
+            if self.lower:
+                value = value.lower()
+            if self.upper:
+                value = value.upper()
+            if self.casefold:
+                value = value.casefold()
 
         # enum
         value = self.verify_enum(key, value)
