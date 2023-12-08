@@ -18,6 +18,7 @@ class Message:
 
     typeBool = 'The value is not of bool type.'
     typeInt = 'The value is not of int type.'
+    typeFloat = 'The value is not of float type.'
 
     params = 'The request parameter must be dict.'
 

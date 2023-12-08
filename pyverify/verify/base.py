@@ -29,6 +29,17 @@ class RuleBase:
 
         return value
 
+    def verify_range(self, key: str, value: Any):
+        """The range of the check value."""
+        if self.gt is not None and value <= self.gt:  # noqa
+            raise ValidationError(msg.Message.gt.format(key=key, value=value, gt=self.gt))  # noqa
+        if self.gte is not None and value < self.gte:  # noqa
+            raise ValidationError(msg.Message.gte.format(key=key, value=value, gte=self.gte))  # noqa
+        if self.lt is not None and value >= self.lt:  # noqa
+            raise ValidationError(msg.Message.lt.format(key=key, value=value, lt=self.lt))  # noqa
+        if self.lte is not None and value > self.lte:  # noqa
+            raise ValidationError(msg.Message.lte.format(key=key, value=value, lte=self.lte))  # noqa
+
     def set_default_value(self, value: Any):
         """Set a default value."""
         if value in self.null_values and self.default is not unset:  # noqa

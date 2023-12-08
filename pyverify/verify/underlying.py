@@ -69,15 +69,8 @@ class Int(RuleBase):
             except ValueError:
                 raise ValidationError(msg.Message.typeInt.format(key=key, value=value))
 
-            # scope
-            if self.gt is not None and value <= self.gt:
-                raise ValidationError(msg.Message.gt.format(key=key, value=value, gt=self.gt))
-            if self.gte is not None and value < self.gte:
-                raise ValidationError(msg.Message.gte.format(key=key, value=value, gte=self.gte))
-            if self.lt is not None and value >= self.lt:
-                raise ValidationError(msg.Message.lt.format(key=key, value=value, lt=self.lt))
-            if self.lte is not None and value > self.lte:
-                raise ValidationError(msg.Message.lte.format(key=key, value=value, lte=self.lte))
+            # range
+            self.verify_range(key, value)
 
         # There are two types of enum parameters. When the parameter is
         # dict, the corresponding value is mapped. When the parameter
@@ -115,7 +108,23 @@ class Float(RuleBase):
     digits: Union[int, None] = None
 
     def parse(self, key: str, value: Any):
-        pass
+        value = self.common_rules_verify(key, value)
+        if value not in self.null_values:
+            # Attempts to convert the value to type int, intercepts
+            # ValueError and returns ValidationError.
+            try:
+                value = float(value)
+            except ValueError:
+                raise ValidationError(msg.Message.typeFloat.format(key=key, value=value))
+
+            # range
+            self.verify_range(key, value)
+
+        # Reserve the specified number of decimal places.
+        if self.digits is not None:
+            value = round(value, self.digits)
+
+        return value
 
 
 @dataclass
