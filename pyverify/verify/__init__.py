@@ -1,7 +1,7 @@
 from datetime import date, datetime
 
-from pyverify.verify.special import email, ipv4, ipv6, phone, addr
-from pyverify.verify.underlying import Str, Int, Float, Bool, DateTime, Date, Dict, List
+from pyverify.verify.special_type import email, ipv4, ipv6, phone, addr
+from pyverify.verify.base_type import Str, Int, Float, Bool, DateTime, Date, Dict, List
 
 TYPE_MAPPING: dict = {
     str: Str,

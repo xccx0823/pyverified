@@ -1,5 +1,5 @@
 from pyverify import msg
-from pyverify.verify.special import Phone
+from pyverify.verify import phone
 
 
 class NewMsg:
@@ -8,4 +8,4 @@ class NewMsg:
 
 msg.Message.reload(NewMsg)
 
-Phone().parse('tel', '123456')
+phone().parse('tel', '123456')
