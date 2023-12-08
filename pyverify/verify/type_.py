@@ -121,9 +121,11 @@ class Str(RuleBase):
     # default: indicates the default value.
     # required: Whether it is required.
     # allow_none: indicates whether None is allowed.
+    # func: user-defined function.
     default: Union[str, Unset] = unset
     required: bool = False
     allow_none: bool = True
+    func: Union[Callable, None] = None
 
     # Length
     minLength: Union[int, None] = None
@@ -142,14 +144,24 @@ class Str(RuleBase):
     lstrip_chars: Union[str, None] = None
     rstrip_chars: Union[str, None] = None
 
-    regex: Union[str, None] = None
+    # Judge
     startswith: Union[str, None] = None
     endswith: Union[str, None] = None
-    unStartswith: Union[str, None] = None
-    unEndswith: Union[str, None] = None
+    isalnum: bool = False
+    isalpha: bool = False
+    isdecimal: bool = False
+    isdigit: bool = False
+    isidentifier: bool = False
+    islower: bool = False
+    isupper: bool = False
+    isprintable: bool = False
+    isspace: bool = False
+    istitle: bool = False
     include: Union[str, None] = None
     exclude: Union[str, None] = None
-    func: Union[Callable, None] = None
+
+    # re
+    regex: Union[str, None] = None
 
     def parse(self, key: str, value: Any):
         if value not in self.null_values:
@@ -160,8 +172,10 @@ class Str(RuleBase):
             # Determine the length of the string.
             length = len(value)
             if self.minLength is not None and length < self.minLength:
+                # TODO:错误信息
                 raise
             if self.maxLength is not None and length > self.maxLength:
+                # TODO:错误信息
                 raise
 
             # Remove Spaces at the beginning and end of the string.
@@ -171,6 +185,50 @@ class Str(RuleBase):
                 value = value.lstrip(self.lstrip_chars) if self.lstrip_chars is not None else value.lstrip()
             if self.rstrip:
                 value = value.rstrip(self.rstrip_chars) if self.rstrip_chars is not None else value.rstrip()
+
+            # String rule judgment.
+            if self.startswith is not None and not value.startswith(self.startswith):
+                # TODO:错误信息
+                raise
+            if self.endswith is not None and not value.endswith(self.endswith):
+                # TODO:错误信息
+                raise
+            if self.include is not None and value not in self.include:
+                # TODO:错误信息
+                raise
+            if self.exclude is not None and value in self.exclude:
+                # TODO:错误信息
+                raise
+            if self.isalnum and not value.isalnum():
+                # TODO:错误信息
+                raise
+            if self.isalpha and not value.isalpha():
+                # TODO:错误信息
+                raise
+            if self.isdecimal and not value.isdecimal():
+                # TODO:错误信息
+                raise
+            if self.isdigit and not value.isdigit():
+                # TODO:错误信息
+                raise
+            if self.isidentifier and not value.isidentifier():
+                # TODO:错误信息
+                raise
+            if self.islower and not value.islower():
+                # TODO:错误信息
+                raise
+            if self.isupper and not value.isupper():
+                # TODO:错误信息
+                raise
+            if self.isprintable and not value.isprintable():
+                # TODO:错误信息
+                raise
+            if self.isspace and not value.isspace():
+                # TODO:错误信息
+                raise
+            if self.istitle and not value.istitle():
+                # TODO:错误信息
+                raise
 
         # enum
         value = self.verify_enum(key, value)
