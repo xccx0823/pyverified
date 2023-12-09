@@ -227,11 +227,9 @@ class Str(RuleBase):
             # Determine the length of the string.
             length = len(value)
             if self.minLength is not None and length < self.minLength:
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.minLength.format(key=key, value=value, minLength=self.minLength))
             if self.maxLength is not None and length > self.maxLength:
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.maxLength.format(key=key, value=value, maxLength=self.maxLength))
 
             # Remove Spaces at the beginning and end of the string.
             if self.strip:
@@ -243,47 +241,33 @@ class Str(RuleBase):
 
             # String rule judgment.
             if self.startswith is not None and not value.startswith(self.startswith):
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.startswith.format(key=key, value=value, startswith=self.startswith))
             if self.endswith is not None and not value.endswith(self.endswith):
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.endswith.format(key=key, value=value, endswith=self.endswith))
             if self.include is not None and value not in self.include:
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.include.format(key=key, value=value, include=self.include))
             if self.exclude is not None and value in self.exclude:
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.exclude.format(key=key, value=value, exclude=self.exclude))
             if self.isalnum and not value.isalnum():
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.isalnum.format(key=key, value=value))
             if self.isalpha and not value.isalpha():
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.isalpha.format(key=key, value=value))
             if self.isdecimal and not value.isdecimal():
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.isdecimal.format(key=key, value=value))
             if self.isdigit and not value.isdigit():
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.isdigit.format(key=key, value=value))
             if self.isidentifier and not value.isidentifier():
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.isidentifier.format(key=key, value=value))
             if self.islower and not value.islower():
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.islower.format(key=key, value=value))
             if self.isupper and not value.isupper():
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.isupper.format(key=key, value=value))
             if self.isprintable and not value.isprintable():
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.isprintable.format(key=key, value=value))
             if self.isspace and not value.isspace():
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.isspace.format(key=key, value=value))
             if self.istitle and not value.istitle():
-                # TODO:错误信息
-                raise
+                raise ValidationError(msg.Message.istitle.format(key=key, value=value))
 
             # rewriting
             if self.replace:
