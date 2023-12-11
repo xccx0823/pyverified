@@ -49,7 +49,8 @@ rule.phone().parse('tel', '123456')
 from flask import Flask, jsonify
 
 from pyverify import rule, message, ValidationError
-from pyverify.frame.flask import assign, Params
+from pyverify.frame.base import Params
+from pyverify.frame.flask import assign
 
 app = Flask(__name__)
 message.english()
