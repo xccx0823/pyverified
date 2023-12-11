@@ -2,14 +2,7 @@ from functools import wraps
 from typing import Optional
 
 from pyverify import Verify
-
-
-class Params:
-
-    def __init__(self):
-        self.query = None
-        self.form = None
-        self.json = None
+from pyverify.frame.base import Params
 
 
 def assign(*, query: Optional[dict] = None, form: Optional[dict] = None, json: Optional[dict] = None,
