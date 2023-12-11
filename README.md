@@ -108,3 +108,36 @@ def index(params: Params):
 
 ...
 ```
+
+4.也支持多次解析不同的规则，但是解析相同类型的参数的化，后者会覆盖前者的解析结果
+
+写法上可以这样写
+
+```python
+...
+
+
+@app.route('/index', methods=['POST'])
+@assign(query=query_rules, json=json_rules)
+def index(params: Params):
+    return {'query': params.query, 'json': params.json}
+
+
+...
+```
+
+也可以这样写
+
+```python
+...
+
+
+@app.route('/index', methods=['POST'])
+@assign(query=query_rules)
+@assign(json=json_rules)
+def index(params: Params):
+    return {'query': params.query, 'json': params.json}
+
+
+...
+```
