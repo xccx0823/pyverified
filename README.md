@@ -8,7 +8,7 @@
 pip install pyverify
 ```
 
-## 使用
+## 交易失败消息支持
 
 ### 如何改变报错返回的信息
 
@@ -39,7 +39,9 @@ message.reload(NewMsg)
 rule.phone().parse('tel', '123456')
 ```
 
-### Flask框架支持
+## 框架支持
+
+### Flask
 
 1.获取form参数并解析
 
