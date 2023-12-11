@@ -12,7 +12,7 @@ pip install pyverify
 
 ### 如何改变报错返回的信息
 
-1.默认为中文报错信息，如果想使用英文，则使用`message.english()`方法设置。
+1.默认为中文报错信息，如果想使用英文，则使用`message.english()`方法设置[](https://)。
 
 ```python
 from pyverify import rule
@@ -40,6 +40,8 @@ rule.phone().parse('tel', '123456')
 ```
 
 ### Flask框架支持
+
+如果你传递的数据是`application/json`或者`application/*+json`，那么`pyverify`将不会校验请求地址上携带的`?`后的参数
 
 ```python
 from flask import Flask, jsonify
