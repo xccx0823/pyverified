@@ -1,46 +1,50 @@
 from functools import wraps
+from typing import Optional
 
 from pyverify import Verify
 
 
-def assign(rules: dict):
+class Params:
+
+    def __init__(self):
+        self.query = None
+        self.form = None
+        self.json = None
+
+
+def assign(*, query: Optional[dict] = None, form: Optional[dict] = None, json: Optional[dict] = None,
+           many: bool = False):
     """Parameter check decorator for flask.
 
-    How to use?
-
-        from flask import Flask, request
-
-        from pyverify.frame.flask import assign
-        from pyverify.verify import rule, phone
-
-        app = Flask(__name__)
-
-        params = {
-            'telephone': rule(phone),
-            'isEo': rule(bool),
-        }
-
-        @app.route("/index")
-        @assign(params)
-        def index():
-            ...
-
+    :param query: Validation rules for query string parameters.
+    :param form: Validation rules for form parameters.
+    :param json: Validation rules for JSON parameters.
+    :param many: Used in conjunction with the defined JSON validation rules.
     """
 
     def wrapper(func):
         @wraps(func)
         def inner(*args, **kwargs):
             from flask import request  # noqa
-            if request.is_json:
-                data = request.json
-                many = True if isinstance(data, list) else False
-            else:
-                data = dict()
-                data.update(request.args.to_dict())
-                data.update(request.form.to_dict())
-                many = False
-            verified = Verify(data=data, rules=rules, many=many)
-            result = func(*args, **kwargs, params=verified.params)
+            params = Params()
+
+            # json
+            if json and request.is_json:
+                data = request.get_json(silent=True) or {}
+                verified = Verify(data=data, rules=json, many=many)
+                params.json = verified.params
+
+            # query
+            if query:
+                verified = Verify(data=request.args.to_dict(), rules=query)
+                params.query = verified.params
+
+            # form
+            if form:
+                verified = Verify(data=request.form.to_dict(), rules=query)
+                params.form = verified.params
+
+            result = func(*args, **kwargs, params=params)
             return result
 
         return inner

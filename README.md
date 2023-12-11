@@ -1,6 +1,6 @@
 # pyverify
 
-基于Python实现的优秀的参数校验框架
+基于Python实现的参数校验框架
 
 ## 安装
 
@@ -12,7 +12,7 @@ pip install pyverify
 
 ### 如何改变报错返回的信息
 
-1.默认为中文报错信息，如果想使用英文，则使用`message.english()`方法设置[](https://)。
+1.默认为中文报错信息，如果想使用英文，则使用`message.english()`方法设置。
 
 ```python
 from pyverify import rule
@@ -41,13 +41,13 @@ rule.phone().parse('tel', '123456')
 
 ### Flask框架支持
 
-如果你传递的数据是`application/json`或者`application/*+json`，那么`pyverify`将不会校验请求地址上携带的`?`后的参数
+1.获取form参数并解析
 
 ```python
 from flask import Flask, jsonify
 
 from pyverify import rule, message, ValidationError
-from pyverify.frame.flask import assign
+from pyverify.frame.flask import assign, Params
 
 app = Flask(__name__)
 message.english()
@@ -58,7 +58,7 @@ relus = dict(
 )
 
 
-# 拦截 pyverify 的 ValidationError 异常，定制返回消息格式
+# 拦截 pyverify 的 ValidationError 异常，定制返回消息格式。
 @app.errorhandler(ValidationError)
 def handler_exception(error):
     response = jsonify({'error': error.msg})
@@ -66,13 +66,42 @@ def handler_exception(error):
     return response
 
 
-@app.route('/login', methods=['POST'])
-@assign(relus)  # 必须在 app.route 装饰器下面
-def login(params):
-    print(params)
-    return "success"
+@app.route('/index', methods=['POST'])
+@assign(form=relus)  # 必须在 app.route 装饰器下面
+def index(params: Params):
+    return params.form
 
 
 if __name__ == '__main__':
     app.run()
+```
+
+2.获取json参数并解析，当设置`many=True`时，json参数应该为`[]`格式。
+
+```python
+...
+
+
+@app.route('/index', methods=['POST'])
+@assign(json=relus, many=True)
+def index(params: Params):
+    return params.json
+
+
+...
+```
+
+3.获取query参数并解析。
+
+```python
+...
+
+
+@app.route('/index', methods=['POST'])
+@assign(query=relus, many=True)
+def index(params: Params):
+    return params.query
+
+
+...
 ```
