@@ -19,7 +19,11 @@ def assign(*, query: Optional[dict] = None, form: Optional[dict] = None, json: O
         @wraps(func)
         def inner(*args, **kwargs):
             from flask import request  # noqa
-            params = Params()
+
+            # Try to get the Params object
+            params = kwargs.get('params')
+            if not (params and isinstance(params, Params)):
+                params = Params()
 
             # json
             if json and request.is_json:
