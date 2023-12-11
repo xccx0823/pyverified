@@ -1,8 +1,6 @@
 from functools import wraps
 
 from pyverify import Verify
-from pyverify import msg
-from pyverify.exc import ValidationError
 
 
 def assign(rules: dict):
@@ -33,14 +31,15 @@ def assign(rules: dict):
         @wraps(func)
         def inner(*args, **kwargs):
             from flask import request  # noqa
-            data = dict()
-            data.update(request.args.to_dict())
-            data.update(request.form.to_dict())
             if request.is_json:
                 data = request.json
-                if not isinstance(data, dict):
-                    raise ValidationError(msg.message.params.format(data=data, func_name=func.__name__))
-            verified = Verify(data=data, rules=rules)
+                many = True if isinstance(data, list) else False
+            else:
+                data = dict()
+                data.update(request.args.to_dict())
+                data.update(request.form.to_dict())
+                many = False
+            verified = Verify(data=data, rules=rules, many=many)
             result = func(*args, **kwargs, params=verified.params)
             return result
 
