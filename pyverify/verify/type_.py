@@ -39,9 +39,9 @@ class Bool(RuleBase):
                 elif upper_value == "FALSE":
                     value = False
                 else:
-                    raise ValidationError(msg.Message.convert.format(key=key, value=value))
+                    raise ValidationError(msg.message.convert.format(key=key, value=value))
             if not isinstance(value, bool):
-                raise ValidationError(msg.Message.typeBool.format(key=key, value=value))
+                raise ValidationError(msg.message.typeBool.format(key=key, value=value))
         return value
 
 
@@ -72,7 +72,7 @@ class Int(RuleBase):
             try:
                 value = int(value)
             except ValueError:
-                raise ValidationError(msg.Message.typeInt.format(key=key, value=value))
+                raise ValidationError(msg.message.typeInt.format(key=key, value=value))
 
             # range
             self.verify_range(key, value)
@@ -110,7 +110,7 @@ class Float(RuleBase):
             try:
                 value = float(value)
             except ValueError:
-                raise ValidationError(msg.Message.typeFloat.format(key=key, value=value))
+                raise ValidationError(msg.message.typeFloat.format(key=key, value=value))
 
             # range
             self.verify_range(key, value)
@@ -227,9 +227,9 @@ class Str(RuleBase):
             # Determine the length of the string.
             length = len(value)
             if self.minLength is not None and length < self.minLength:
-                raise ValidationError(msg.Message.minLength.format(key=key, value=value, minLength=self.minLength))
+                raise ValidationError(msg.message.minLength.format(key=key, value=value, minLength=self.minLength))
             if self.maxLength is not None and length > self.maxLength:
-                raise ValidationError(msg.Message.maxLength.format(key=key, value=value, maxLength=self.maxLength))
+                raise ValidationError(msg.message.maxLength.format(key=key, value=value, maxLength=self.maxLength))
 
             # rewriting
             if self.replace:
@@ -257,33 +257,33 @@ class Str(RuleBase):
 
             # String rule judgment.
             if self.startswith is not None and not value.startswith(self.startswith):
-                raise ValidationError(msg.Message.startswith.format(key=key, value=value, startswith=self.startswith))
+                raise ValidationError(msg.message.startswith.format(key=key, value=value, startswith=self.startswith))
             if self.endswith is not None and not value.endswith(self.endswith):
-                raise ValidationError(msg.Message.endswith.format(key=key, value=value, endswith=self.endswith))
+                raise ValidationError(msg.message.endswith.format(key=key, value=value, endswith=self.endswith))
             if self.include is not None and value not in self.include:
-                raise ValidationError(msg.Message.include.format(key=key, value=value, include=self.include))
+                raise ValidationError(msg.message.include.format(key=key, value=value, include=self.include))
             if self.exclude is not None and value in self.exclude:
-                raise ValidationError(msg.Message.exclude.format(key=key, value=value, exclude=self.exclude))
+                raise ValidationError(msg.message.exclude.format(key=key, value=value, exclude=self.exclude))
             if self.isalnum and not value.isalnum():
-                raise ValidationError(msg.Message.isalnum.format(key=key, value=value))
+                raise ValidationError(msg.message.isalnum.format(key=key, value=value))
             if self.isalpha and not value.isalpha():
-                raise ValidationError(msg.Message.isalpha.format(key=key, value=value))
+                raise ValidationError(msg.message.isalpha.format(key=key, value=value))
             if self.isdecimal and not value.isdecimal():
-                raise ValidationError(msg.Message.isdecimal.format(key=key, value=value))
+                raise ValidationError(msg.message.isdecimal.format(key=key, value=value))
             if self.isdigit and not value.isdigit():
-                raise ValidationError(msg.Message.isdigit.format(key=key, value=value))
+                raise ValidationError(msg.message.isdigit.format(key=key, value=value))
             if self.isidentifier and not value.isidentifier():
-                raise ValidationError(msg.Message.isidentifier.format(key=key, value=value))
+                raise ValidationError(msg.message.isidentifier.format(key=key, value=value))
             if self.islower and not value.islower():
-                raise ValidationError(msg.Message.islower.format(key=key, value=value))
+                raise ValidationError(msg.message.islower.format(key=key, value=value))
             if self.isupper and not value.isupper():
-                raise ValidationError(msg.Message.isupper.format(key=key, value=value))
+                raise ValidationError(msg.message.isupper.format(key=key, value=value))
             if self.isprintable and not value.isprintable():
-                raise ValidationError(msg.Message.isprintable.format(key=key, value=value))
+                raise ValidationError(msg.message.isprintable.format(key=key, value=value))
             if self.isspace and not value.isspace():
-                raise ValidationError(msg.Message.isspace.format(key=key, value=value))
+                raise ValidationError(msg.message.isspace.format(key=key, value=value))
             if self.istitle and not value.istitle():
-                raise ValidationError(msg.Message.istitle.format(key=key, value=value))
+                raise ValidationError(msg.message.istitle.format(key=key, value=value))
 
         # enum
         value = self.verify_enum(key, value)
@@ -396,7 +396,7 @@ class Email(RuleBase):
 
     def parse(self, key: str, value: Any) -> str:
         if value not in self.null_values and not self.is_email(value):
-            raise ValidationError(msg.Message.email.format(key=key, value=value))
+            raise ValidationError(msg.message.email.format(key=key, value=value))
         return value
 
     @staticmethod
@@ -420,7 +420,7 @@ class IPv4(RuleBase):
 
     def parse(self, key: str, value: Any) -> str:
         if value not in self.null_values and not self.allow_none and not self.is_ipv4(value):
-            raise ValidationError(msg.Message.ipv4.format(key=key, value=value))
+            raise ValidationError(msg.message.ipv4.format(key=key, value=value))
         return value
 
     @staticmethod
@@ -447,7 +447,7 @@ class IPv6(RuleBase):
 
     def parse(self, key: str, value: Any) -> str:
         if value not in self.null_values and not self.is_ipv6(value):
-            raise ValidationError(msg.Message.ipv6.format(key=key, value=value))
+            raise ValidationError(msg.message.ipv6.format(key=key, value=value))
         return value
 
     @staticmethod
@@ -475,7 +475,7 @@ class Phone(RuleBase):
 
     def parse(self, key: str, value: Any) -> str:
         if value not in self.null_values and not self.is_tel(value):
-            raise ValidationError(msg.Message.phone.format(key=key, value=value, region=self.region))
+            raise ValidationError(msg.message.phone.format(key=key, value=value, region=self.region))
         return value
 
     def is_tel(self, telephone_number: Any):
@@ -501,7 +501,7 @@ class Addr(RuleBase):
 
     def parse(self, key: str, value: Any) -> str:
         if value not in self.null_values and not self.is_addr(value):
-            raise ValidationError(msg.Message.address.format(key=key, value=value))
+            raise ValidationError(msg.message.address.format(key=key, value=value))
         return value
 
     @staticmethod

@@ -1,11 +1,11 @@
-class Message:
+class _Message:
     """Define check exception information."""
     # special type
-    email = '{key}不是邮箱格式。'
-    phone = '{key}不是电话号码格式。'
-    ipv4 = '{key}不是ipv4地址格式。'
-    ipv6 = '{key}不是ipv6地址格式。'
-    address = '{key}不是链接地址格式。'
+    email = '{key}的值{value}不是邮箱格式。'
+    phone = '{key}的值{value}不是电话号码格式。'
+    ipv4 = '{key}的值{value}不是ipv4地址格式。'
+    ipv6 = '{key}的值{value}不是ipv6地址格式。'
+    address = '{key}的值{value}不是链接地址格式。'
 
     # common
     required = '{key}是必须的。'
@@ -18,7 +18,7 @@ class Message:
     lt = '{key}的值{value}必须小于{lt}。'
     lte = '{key}的值{value}必须小于等于{lte}。'
 
-    # flask
+    # Flask
     params = '视图函数{func}的请求参数必须是字典。'
 
     # type
@@ -52,3 +52,60 @@ class Message:
         msgs = dict(filter(lambda x: not x[0].startswith('__'), vars(clss).items()))
         for key, msg in msgs.items():
             setattr(cls, key, msg)
+
+    @classmethod
+    def english(cls):
+        cls.reload(_MessageEn)
+
+
+message = _Message
+
+
+class _MessageEn:
+    """Define check exception information."""
+    # special type
+    email = 'The value {value} for {key} is not in email format.'
+    phone = 'The value {value} for {key} is not in phone number format.'
+    ipv4 = 'The value {value} for {key} is not in IPv4 address format.'
+    ipv6 = 'The value {value} for {key} is not in IPv6 address format.'
+    address = 'The value {value} for {key} is not in URL address format.'
+
+    # common
+    required = '{key} is required.'
+    allow_none = '{key} cannot be empty.'
+    many = 'Validation data must be an array.'
+    multi = '{key} must be an array.'
+    enum = 'The value {value} of {key} is not in the allowed values: {enum}.'
+    gt = 'The value {value} of {key} must be greater than {gt}.'
+    gte = 'The value {value} of {key} must be greater than or equal to {gte}.'
+    lt = 'The value {value} of {key} must be less than {lt}.'
+    lte = 'The value {value} of {key} must be less than or equal to {lte}.'
+
+    # Flask
+    params = 'Request parameters for the view function {func} must be a dictionary.'
+
+    # type
+    typeInt = 'The value {value} of {key} is not of numeric type.'
+    typeFloat = 'The value {value} of {key} is not of float type.'
+
+    # bool
+    typeBool = 'The value {value} of {key} is not of boolean type.'
+    convert = 'The value {value} of {key} cannot be converted to boolean type.'
+
+    # str
+    minLength = 'The length of {value} for {key} must not be less than {minLength}.'
+    maxLength = 'The length of {value} for {key} must not exceed {maxLength}.'
+    startswith = 'The value {value} for {key} must start with the string {startswith}.'
+    endswith = 'The value {value} for {key} must end with the string {endswith}.'
+    include = 'The value {value} for {key} must include the string {include}.'
+    exclude = 'The value {value} for {key} must not include the string {exclude}.'
+    isalnum = 'The value {value} for {key} must consist of letters and numbers.'
+    isalpha = 'The value {value} for {key} must consist of letters.'
+    isdecimal = 'The value {value} for {key} must consist of decimal numbers.'
+    isdigit = 'The value {value} for {key} must consist of numbers.'
+    isidentifier = 'The value {value} for {key} must be a valid identifier.'
+    islower = 'The alphabetical part of {value} for {key} must be all in lowercase.'
+    isupper = 'The alphabetical part of {value} for {key} must be all in uppercase.'
+    isprintable = 'The value {value} for {key} cannot be entirely printable.'
+    isspace = 'The value {value} for {key} must consist of whitespace characters.'
+    istitle = 'The value {value} for {key} must be in title case.'
