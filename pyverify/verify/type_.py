@@ -231,6 +231,22 @@ class Str(RuleBase):
             if self.maxLength is not None and length > self.maxLength:
                 raise ValidationError(msg.Message.maxLength.format(key=key, value=value, maxLength=self.maxLength))
 
+            # rewriting
+            if self.replace:
+                value = value.replace(*self.replace_args)
+            if self.capitalize:
+                value = value.capitalize()
+            if self.title:
+                value = value.title()
+            if self.swapcase:
+                value = value.swapcase()
+            if self.lower:
+                value = value.lower()
+            if self.upper:
+                value = value.upper()
+            if self.casefold:
+                value = value.casefold()
+
             # Remove Spaces at the beginning and end of the string.
             if self.strip:
                 value = value.strip(self.strip_chars) if self.strip_chars is not None else value.strip()
@@ -268,22 +284,6 @@ class Str(RuleBase):
                 raise ValidationError(msg.Message.isspace.format(key=key, value=value))
             if self.istitle and not value.istitle():
                 raise ValidationError(msg.Message.istitle.format(key=key, value=value))
-
-            # rewriting
-            if self.replace:
-                value = value.replace(*self.replace_args)
-            if self.capitalize:
-                value = value.capitalize()
-            if self.title:
-                value = value.title()
-            if self.swapcase:
-                value = value.swapcase()
-            if self.lower:
-                value = value.lower()
-            if self.upper:
-                value = value.upper()
-            if self.casefold:
-                value = value.casefold()
 
         # enum
         value = self.verify_enum(key, value)
