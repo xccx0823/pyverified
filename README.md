@@ -98,7 +98,7 @@ def index(params: Params):
 
 
 @app.route('/index', methods=['POST'])
-@assign(query=relus, many=True)
+@assign(query=relus)
 def index(params: Params):
     return params.query
 
