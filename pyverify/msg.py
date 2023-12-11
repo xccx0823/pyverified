@@ -19,7 +19,7 @@ class _Message:
     lte = '{key}的值{value}必须小于等于{lte}。'
 
     # Flask
-    params = '视图函数{func}的请求参数必须是字典。'
+    params = '视图函数{func_name}的请求参数必须是字典。'
 
     # type
     typeInt = '{key}的值{value}不是数值类型。'
@@ -82,7 +82,7 @@ class _MessageEn:
     lte = 'The value {value} of {key} must be less than or equal to {lte}.'
 
     # Flask
-    params = 'Request parameters for the view function {func} must be a dictionary.'
+    params = 'Request parameters for the view function {func_name} must be a dictionary.'
 
     # type
     typeInt = 'The value {value} of {key} is not of numeric type.'

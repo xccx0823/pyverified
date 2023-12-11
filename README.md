@@ -38,3 +38,39 @@ message.reload(NewMsg)
 
 rule.phone().parse('tel', '123456')
 ```
+
+### Flask框架支持
+
+```python
+from flask import Flask, jsonify
+
+from pyverify import rule, message, ValidationError
+from pyverify.frame.flask import assign
+
+app = Flask(__name__)
+message.english()
+
+relus = dict(
+    username=rule.str(required=True, isalnum=True, minLength=1, maxLength=20),
+    password=rule.str(required=True, isalnum=True, minLength=1, maxLength=20)
+)
+
+
+# 拦截 pyverify 的 ValidationError 异常，定制返回消息格式
+@app.errorhandler(ValidationError)
+def handler_exception(error):
+    response = jsonify({'error': error.msg})
+    response.status_code = 400
+    return response
+
+
+@app.route('/login', methods=['POST'])
+@assign(relus)  # 必须在 app.route 装饰器下面
+def login(params):
+    print(params)
+    return "success"
+
+
+if __name__ == '__main__':
+    app.run()
+```

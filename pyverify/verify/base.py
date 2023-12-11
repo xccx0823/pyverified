@@ -1,7 +1,6 @@
 from typing import Any
 
-from pyverify import msg
-from pyverify.exc import ValidationError
+from pyverify import msg, ValidationError
 from pyverify.verify._unset import Unset, unset
 
 

@@ -39,7 +39,7 @@ def assign(rules: dict):
             if request.is_json:
                 data = request.json
                 if not isinstance(data, dict):
-                    raise ValidationError(msg.Message.params.format(data=data, func_name=func.__name__))
+                    raise ValidationError(msg.message.params.format(data=data, func_name=func.__name__))
             verified = Verify(data=data, rules=rules)
             result = func(*args, **kwargs, params=verified.params)
             return result

@@ -8,8 +8,7 @@ from urllib.parse import urlparse
 
 import phonenumbers
 
-from pyverify import msg
-from pyverify.exc import ValidationError
+from pyverify import ValidationError, msg
 from pyverify.verify._unset import Unset, unset
 from pyverify.verify.base import RuleBase
 
