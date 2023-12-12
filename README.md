@@ -1,5 +1,6 @@
 # pyverify
 
+![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)
 [![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![GitHub release](https://img.shields.io/github/v/release/xccx0823/pyverify)](https://github.com/xccx0823/pyverify/releases)
 
