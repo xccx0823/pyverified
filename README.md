@@ -15,7 +15,6 @@
         * [5\.1\.3 float类型](#513-float类型)
         * [5\.1\.4 bool类型](#514-bool类型)
         * [5\.1\.5 datetime类型](#515-datetime类型)
-        * [5\.1\.6 date类型](#516-date类型)
     * [5\.2 嵌套结构数据类型](#52-嵌套结构数据类型)
         * [5\.2\.1 dict类型](#521-dict类型)
         * [5\.2\.2 list类型](#522-list类型)
@@ -234,9 +233,18 @@ def index(params: Params):
 | func       | 自定义函数                                                      | None  |
 | convert    | 是否将字符串转化为bool类型，为True时会转化字符串的True，False转化为对应的bool类型，大小写不敏感 | True  |
 
-#### 5.1.5 datetime类型
+#### 5.1.5 datetime/date类型
 
-#### 5.1.6 date类型
+| 规则            | 释义          | 初始值                                          |
+|---------------|-------------|----------------------------------------------|
+| default       | 默认值         | False                                        |
+| required      | 是否时必须的      | False                                        |
+| allow_none    | 值是否允许为空     | True                                         |
+| multi         | 是否是多个值      | False                                        |
+| func          | 自定义函数       | None                                         |
+| fmt           | 日期格式化样式     | datetime为`%Y-%m-%d %H:%M:%S`，date为`%Y-%m-%d` |
+| gt/gte/lt/lte | 日期大小比较      | None                                         |
+| enum          | 日期是否在指定的枚举中 | None                                         |
 
 ### 5.2 嵌套结构数据类型
 

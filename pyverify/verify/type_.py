@@ -1,6 +1,6 @@
 import ipaddress
 from dataclasses import dataclass
-from datetime import datetime, date
+from datetime import date, datetime, time
 from decimal import Decimal
 from email.utils import parseaddr
 from typing import List as typingList, Dict as typingDict
@@ -329,7 +329,7 @@ class DateTime(RuleBase):
     # allow_none: indicates whether None is allowed.
     # multi: Check whether multiple values exist
     # func: user-defined function.
-    default: Union[str, Unset] = unset
+    default: Union[datetime, date, str, Unset] = unset
     required: bool = False
     allow_none: bool = True
     multi: bool = False
@@ -339,45 +339,96 @@ class DateTime(RuleBase):
     fmt: str = '%Y-%m-%d %H:%M:%S'
 
     # gt/gte/lt/lte: date size comparison.
-    gt: Union[datetime, str, None] = None
-    gte: Union[datetime, str, None] = None
-    lt: Union[datetime, str, None] = None
-    lte: Union[datetime, str, None] = None
+    gt: Union[datetime, date, str, None] = None
+    gte: Union[datetime, date, str, None] = None
+    lt: Union[datetime, date, str, None] = None
+    lte: Union[datetime, date, str, None] = None
 
     # enum: Date enumeration.
-    enum: Union[typingList[datetime], typingList[str], None] = None
+    enum: Union[typingList[str], typingList[datetime], typingList[date], None] = None
 
     def parse(self, key: str, value: Any):
-        pass
+        if value not in self.null_values:
+            try:
+                value = datetime.strptime(value, self.fmt)
+            except ValueError:
+                raise ValidationError(msg.message.type.format(key=key, value=value, type=self._get_type()))
+
+            # range
+            self.verify_range(key, value)
+
+        # enum
+        if value not in self.enum:
+            raise ValidationError(msg.message.enum.format(key=key, value=value, enum=tuple(self.enum)))
+
+        return value
+
+    def execute_parse(self, key: str, value: Any):
+        # Convert the data type before verifying the rule.
+        self.trans_rule_value_type()
+        return super().execute_parse(key, value)
+
+    @staticmethod
+    def _get_type():
+        return datetime
+
+    @staticmethod
+    def _get_other_type():
+        return date
+
+    @staticmethod
+    def _other_type_trans(dt: date):
+        return datetime.combine(dt, time())
+
+    def trans_rule_value_type(self):
+        """Converts the type of the comparison value."""
+        # The conversion error does not need to return a ValidationError after
+        # interception, because this is the result of the user defining the
+        # error value.
+
+        # default value
+        if self.default is not unset:
+            if isinstance(self.default, self._get_type()):
+                pass
+            elif isinstance(self.default, self._get_other_type()):
+                self.default = self._other_type_trans(self.default)
+            else:
+                self.default = datetime.strptime(self.default, self.fmt)
+
+        # compare value
+        self.gt = datetime.strptime(self.gt, self.fmt) if self.gt else ...
+        self.gte = datetime.strptime(self.gte, self.fmt) if self.gte else ...
+        self.lt = datetime.strptime(self.lt, self.fmt) if self.lt else ...
+        self.lte = datetime.strptime(self.lte, self.fmt) if self.lte else ...
+
+        # enum value
+        if self.enum:
+            fmt_enum = []
+            for item in self.enum:
+                if isinstance(item, self._get_type()):
+                    fmt_enum.append(item)
+                elif isinstance(item, self._get_other_type()):
+                    fmt_enum.append(self._other_type_trans(item))
+                else:
+                    fmt_enum.append(datetime.strptime(item, self.fmt))
+            self.enum = fmt_enum
 
 
 @dataclass
-class Date(RuleBase):
-    # default: indicates the default value.
-    # required: Whether it is required.
-    # allow_none: indicates whether None is allowed.
-    # multi: Check whether multiple values exist
-    # func: user-defined function.
-    default: Union[str, Unset] = unset
-    required: bool = False
-    allow_none: bool = True
-    multi: bool = False
-    func: Union[Callable, typingList[Callable], None] = None
-
-    # fmt: date format.
+class Date(DateTime):
     fmt: str = '%Y-%m-%d'
 
-    # gt/gte/lt/lte: date size comparison.
-    gt: Union[date, str, None] = None
-    gte: Union[date, str, None] = None
-    lt: Union[date, str, None] = None
-    lte: Union[date, str, None] = None
+    @staticmethod
+    def _get_type():
+        return date
 
-    # enum: Date enumeration.
-    enum: Union[typingList[date], typingList[str], None] = None
+    @staticmethod
+    def _get_other_type():
+        return datetime
 
-    def parse(self, key: str, value: Any):
-        pass
+    @staticmethod
+    def _other_type_trans(dt: datetime):
+        return dt.date()
 
 
 @dataclass
