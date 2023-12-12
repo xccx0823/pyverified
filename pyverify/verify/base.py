@@ -58,10 +58,10 @@ class RuleBase:
             try:
                 value = self.enum[value]  # noqa
             except KeyError:
-                raise ValidationError(msg.message.enum.format(key=key, value=value, enum=self.enum))  # noqa
+                raise ValidationError(msg.message.enum.format(key=key, value=value, enum=tuple(self.enum)))  # noqa
         elif isinstance(self.enum, list):  # noqa
             if value not in self.enum:  # noqa
-                raise ValidationError(msg.message.enum.format(key=key, value=value, enum=self.enum))  # noqa
+                raise ValidationError(msg.message.enum.format(key=key, value=value, enum=tuple(self.enum)))  # noqa
         return value
 
     def verify_range(self, key: str, value: Any):

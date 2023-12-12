@@ -41,7 +41,7 @@ class Bool(RuleBase):
                 else:
                     raise ValidationError(msg.message.convert.format(key=key, value=value))
             if not isinstance(value, bool):
-                raise ValidationError(msg.message.typeBool.format(key=key, value=value))
+                raise ValidationError(msg.message.type.format(key=key, value=value, type=bool))
         return value
 
 
@@ -72,7 +72,7 @@ class Int(RuleBase):
             try:
                 value = int(value)
             except ValueError:
-                raise ValidationError(msg.message.typeInt.format(key=key, value=value))
+                raise ValidationError(msg.message.type.format(key=key, value=value, type=int))
 
             # range
             self.verify_range(key, value)
@@ -113,7 +113,7 @@ class Float(RuleBase):
             try:
                 value = float(value)
             except ValueError:
-                raise ValidationError(msg.message.typeFloat.format(key=key, value=value))
+                raise ValidationError(msg.message.type.format(key=key, value=value, type=float))
 
             # range
             self.verify_range(key, value)
@@ -222,6 +222,11 @@ class Str(RuleBase):
     # languages.
     casefold: bool = False
 
+    # split: Cut the data according to the specified string, and can set
+    # the conversion type of the data.
+    split: Union[str, None] = None
+    split2type: Any = None
+
     # re
     regex: Union[str, None] = None
 
@@ -292,8 +297,27 @@ class Str(RuleBase):
             if self.istitle and not value.istitle():
                 raise ValidationError(msg.message.istitle.format(key=key, value=value))
 
+            # split
+            if self.split is not None:
+                value = value.split(self.split)
+                if self.split2type is not None:
+                    _value = []
+                    for _v in value:
+                        try:
+                            _v = self.split2type(_v)
+                        except ValueError:
+                            raise ValidationError(msg.message.type.format(key=key, value=_v, type=self.split2type))
+                        _value.append(_v)
+                    value = _value
+
         # enum
-        value = self.verify_enum(key, value)
+        if isinstance(value, list):
+            _value = []
+            for _v in value:
+                _value.append(self.verify_enum(key, _v))
+            value = _value
+        else:
+            value = self.verify_enum(key, value)
 
         return value
 

@@ -19,11 +19,9 @@ class _Message:
     lte = '{key}的值{value}必须小于等于{lte}。'
 
     # type
-    typeInt = '{key}的值{value}不是数值类型。'
-    typeFloat = '{key}的值{value}不是浮点类型。'
+    type = '{key}的值{value}无法转化为{type}类型'
 
     # bool
-    typeBool = '{key}的值{value}不是布尔类型。'
     convert = '{key}的值{value}不能转化为布尔类型。'
 
     # str
@@ -77,13 +75,9 @@ class _MessageEn:
     gte = 'The value {value} of {key} must be greater than or equal to {gte}.'
     lt = 'The value {value} of {key} must be less than {lt}.'
     lte = 'The value {value} of {key} must be less than or equal to {lte}.'
-
-    # type
-    typeInt = 'The value {value} of {key} is not of numeric type.'
-    typeFloat = 'The value {value} of {key} is not of float type.'
+    type = 'The value {value} of {key} cannot be converted to type {type}'
 
     # bool
-    typeBool = 'The value {value} of {key} is not of boolean type.'
     convert = 'The value {value} of {key} cannot be converted to boolean type.'
 
     # str
