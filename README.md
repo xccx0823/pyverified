@@ -49,7 +49,7 @@ rule.phone().parse('tel', '123456')
 - 自定义报错信息
 
 ```python
-    from pyverify import rule
+from pyverify import rule
 from pyverify.msg import message
 
 
