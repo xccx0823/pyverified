@@ -276,6 +276,7 @@ def index(params: Params):
 | allow_none | 值是否允许为空 | True  |
 | multi      | 是否是多个值  | False |
 | func       | 自定义函数   | None  |
+| region     | 电话号码地区  | CN    |
 
 #### 4.3.5 addr: 校验字符串是否为链接地址
 
