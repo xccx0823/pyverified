@@ -132,6 +132,21 @@ def index(params: Params):
 ...
 ```
 
+- 获取headers对应值并解析。
+
+```python
+...
+
+
+@app.route('/index', methods=['POST'])
+@assign(headers=relus)
+def index(params: Params):
+    return params.headers
+
+
+...
+```
+
 - 也支持多次解析不同的规则，但是解析相同类型的参数的化，后者会覆盖前者的解析结果
     - 写法上可以这样写
 
