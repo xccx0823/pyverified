@@ -368,6 +368,10 @@ class DateTime(RuleBase):
             if self.enum and value not in self.enum:
                 raise ValidationError(msg.message.enum.format(key=key, value=value, enum=tuple(self.enum)))
 
+            # Converts the result to the type defined by the current class
+            if type(value) is not self._get_type():
+                value = value.date()
+
         return value
 
     def execute_parse(self, key: str, value: Any):
