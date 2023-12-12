@@ -41,7 +41,7 @@ class Bool(RuleBase):
                 else:
                     raise ValidationError(msg.message.convert.format(key=key, value=value))
             if not isinstance(value, bool):
-                raise ValidationError(msg.message.type.format(key=key, value=value, type=bool))
+                raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(bool)))
         return value
 
 
@@ -72,7 +72,7 @@ class Int(RuleBase):
             try:
                 value = int(value)
             except ValueError:
-                raise ValidationError(msg.message.type.format(key=key, value=value, type=int))
+                raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(int)))
 
             # range
             self.verify_range(key, value)
@@ -113,7 +113,7 @@ class Float(RuleBase):
             try:
                 value = float(value)
             except ValueError:
-                raise ValidationError(msg.message.type.format(key=key, value=value, type=float))
+                raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(float)))
 
             # range
             self.verify_range(key, value)
@@ -306,7 +306,8 @@ class Str(RuleBase):
                         try:
                             _v = self.split2type(_v)
                         except ValueError:
-                            raise ValidationError(msg.message.type.format(key=key, value=_v, type=self.split2type))
+                            raise ValidationError(msg.message.type.format(
+                                key=key, value=_v, type=self.get_type_name(self.split2type)))
                         _value.append(_v)
                     value = _value
 
@@ -349,10 +350,11 @@ class DateTime(RuleBase):
 
     def parse(self, key: str, value: Any):
         if value not in self.null_values:
+            # Either date or datetime or str is converted to datetime for validation.
             try:
-                value = self._try_trans_date_type(value)
+                value = self._try_trans_datetime(value)
             except ValueError:
-                raise ValidationError(msg.message.type.format(key=key, value=value, type=self._get_type()))
+                raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(datetime)))
 
             # range
             self.verify_range(key, value)
@@ -372,51 +374,41 @@ class DateTime(RuleBase):
     def _get_type():
         return datetime
 
-    @staticmethod
-    def _get_other_type():
-        return date
-
-    @staticmethod
-    def _other_type_trans(dt: date):
-        return datetime.combine(dt, time())
-
     def trans_rule_value_type(self):
         """Converts the type of the comparison value."""
+
         # The conversion error does not need to return a ValidationError after
         # interception, because this is the result of the user defining the
         # error value.
 
         # default value
         if self.default is not unset:
-            self.default = self._try_trans_date_type(self.default)
+            self.default = self._try_trans_datetime(self.default)
 
         # compare value
         if self.gt:
-            self.gt = self._try_trans_date_type(self.gt)
+            self.gt = self._try_trans_datetime(self.gt)
         if self.gte:
-            self.gte = self._try_trans_date_type(self.gte)
+            self.gte = self._try_trans_datetime(self.gte)
         if self.lt:
-            self.lt = self._try_trans_date_type(self.lt)
+            self.lt = self._try_trans_datetime(self.lt)
         if self.lte:
-            self.lte = self._try_trans_date_type(self.lte)
+            self.lte = self._try_trans_datetime(self.lte)
 
         # enum value
         if self.enum:
             fmt_enum = []
             for item in self.enum:
-                fmt_enum.append(self._try_trans_date_type(item))
+                fmt_enum.append(self._try_trans_datetime(item))
             self.enum = fmt_enum
 
-    def _try_trans_date_type(self, value):
-        if type(value) is self._get_type():
+    def _try_trans_datetime(self, value):
+        if type(value) is date:
+            value = datetime.combine(value, time())
+        elif type(value) is datetime:
             pass
-        elif type(value) is self._get_other_type():
-            value = self._other_type_trans(value)
         else:
             value = datetime.strptime(value, self.fmt)
-            if not type(value) is self._get_type():
-                value = self._try_trans_date_type(value)
-
         return value
 
 
@@ -427,14 +419,6 @@ class Date(DateTime):
     @staticmethod
     def _get_type():
         return date
-
-    @staticmethod
-    def _get_other_type():
-        return datetime
-
-    @staticmethod
-    def _other_type_trans(dt: datetime):
-        return dt.date()
 
 
 @dataclass

@@ -94,3 +94,11 @@ class RuleBase:
         value = self.verify_allow_none(key, value)
         value = self.set_default_value(value)
         return value
+
+    @staticmethod
+    def get_type_name(type_obj):
+        try:
+            type_name = type_obj.__name__
+        except (Exception,):
+            type_name = type_obj
+        return type_name
