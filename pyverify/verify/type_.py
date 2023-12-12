@@ -1,4 +1,5 @@
 import ipaddress
+import re
 from dataclasses import dataclass
 from datetime import date, datetime, time
 from decimal import Decimal
@@ -311,16 +312,29 @@ class Str(RuleBase):
                         _value.append(_v)
                     value = _value
 
+            # re
+            if self.regex is not None:
+                if isinstance(value, list):
+                    for _v in value:
+                        self.verify_regex(key, _v)
+                else:
+                    self.verify_regex(key, value)
+
             # enum
-            if isinstance(value, list):
-                _value = []
-                for _v in value:
-                    _value.append(self.verify_enum(key, _v))
-                value = _value
-            else:
-                value = self.verify_enum(key, value)
+            if self.enum is not None:
+                if isinstance(value, list):
+                    _value = []
+                    for _v in value:
+                        _value.append(self.verify_enum(key, _v))
+                    value = _value
+                else:
+                    value = self.verify_enum(key, value)
 
         return value
+
+    def verify_regex(self, key, value):
+        if not bool(re.match(self.regex, value)):
+            raise ValidationError(msg.message.regex.format(key=key, value=value, regex=self.regex))
 
 
 @dataclass
@@ -365,7 +379,7 @@ class DateTime(RuleBase):
             self.verify_range(key, value)
 
             # enum
-            if self.enum and value not in self.enum:
+            if self.enum is not None and value not in self.enum:
                 raise ValidationError(msg.message.enum.format(key=key, value=value, enum=tuple(self.enum)))
 
             # Converts the result to the type defined by the current class

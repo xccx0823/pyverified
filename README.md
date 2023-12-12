@@ -197,6 +197,48 @@ def index(params: Params):
 
 #### 5.1.1 str类型
 
+| 规则           | 释义                                                                                            | 初始值   |
+|--------------|-----------------------------------------------------------------------------------------------|-------|
+| default      | 默认值                                                                                           | False |
+| required     | 是否时必须的                                                                                        | False |
+| allow_none   | 值是否允许为空                                                                                       | True  |
+| multi        | 是否是多个值                                                                                        | False |
+| func         | 自定义函数                                                                                         | None  |
+| minLength    | 字符串最小长度                                                                                       | None  |
+| maxLength    | 字符串最大长度                                                                                       | None  |
+| enum         | 字符串枚举，传入list规则时，则判断是否在枚举范围内，传入dict规则之后会对在其中的枚举进行映射                                            | None  |
+| strip        | 是否去除左右两边指定字符串                                                                                 | False |
+| lstrip       | 是否去除左两边空指定字符串                                                                                 | False |
+| rstrip       | 是否去除右两边空指定字符串                                                                                 | False |
+| strip_chars  | 配合strip使用，为指定的字符串                                                                             | None  |
+| lstrip_chars | 配合lstrip使用，为指定的字符串                                                                            | None  |
+| rstrip_chars | 配合rstrip使用，为指定的字符串                                                                            | None  |
+| startswith   | 检字符串是否以指定字符串开头                                                                                | None  |
+| endswith     | 检字符串是否以定字符串结尾                                                                                 | None  |
+| isalnum      | 检查字符串是否由字母和数字组成                                                                               | False |
+| isalpha      | 检查字符串是否仅由字母组成                                                                                 | False |
+| isdecimal    | 检查字符串是否只包含十进制数字字符                                                                             | False |
+| isdigit      | 检查字符串是否只包含数字字符                                                                                | False |
+| isidentifier | 检查字符串是否是一个合法的标识符                                                                              | False |
+| islower      | 检查字符串中的字母是否都为小写字母                                                                             | False |
+| isupper      | 检查字符串中的字母是否都为大写字母                                                                             | False |
+| isprintable  | 检查字符串是否是可打印的                                                                                  | False |
+| isspace      | 检查字符串是否只包含空白字符                                                                                | False |
+| istitle      | 检查字符串中的单词是否都以大写字母开头，并且后续的字母都是小写字母                                                             | False |
+| include      | 检查字符串是否包含指定字符串                                                                                | None  |
+| exclude      | 检查字符串是否不包含指定字符串                                                                               | None  |
+| replace      | 是否替换字符串中的指定字符串为其他字符串                                                                          | False |
+| replace_args | 配合replace使用                                                                                   | ()    |
+| capitalize   | 将字符串的第一个字符转换为大写，而将字符串中的其余字符转换为小写                                                              | False |
+| title        | 将字符串中每个单词的第一个字母转换为大写，而将单词中的其余字母转换为小写                                                          | False |
+| swapcase     | 交换字符串中每个字母的大小写                                                                                | False |
+| lower        | 将字符串中的所有字母转换为小写                                                                               | False |
+| upper        | 将字符串中的所有字母转换为大写                                                                               | False |
+| casefold     | 字符串的casefold()方法与lower()方法类似，但是更加强大。casefold()方法将字符串中的所有字符转换为小写，并且还处理了一些特殊字符，使其更适合用于不区分大小写的比较 | False |
+| split        | 将字符串按照指定字符切割，注意！使用此功能后获取的返回结果是list类型的数据                                                       | None  |
+| split2type   | 将切割后的数据中的元素都转化为指定的数据类型                                                                        | None  |
+| regex        | 将字符串进行正则匹配                                                                                    | None  |
+
 #### 5.1.2 int类型
 
 | 规则            | 释义                                                | 初始值   |
