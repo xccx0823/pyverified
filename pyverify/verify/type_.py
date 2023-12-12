@@ -350,7 +350,7 @@ class DateTime(RuleBase):
     def parse(self, key: str, value: Any):
         if value not in self.null_values:
             try:
-                value = datetime.strptime(value, self.fmt)
+                value = self._try_trans_date_type(value)
             except ValueError:
                 raise ValidationError(msg.message.type.format(key=key, value=value, type=self._get_type()))
 
@@ -358,7 +358,7 @@ class DateTime(RuleBase):
             self.verify_range(key, value)
 
         # enum
-        if value not in self.enum:
+        if self.enum and value not in self.enum:
             raise ValidationError(msg.message.enum.format(key=key, value=value, enum=tuple(self.enum)))
 
         return value
@@ -388,30 +388,36 @@ class DateTime(RuleBase):
 
         # default value
         if self.default is not unset:
-            if isinstance(self.default, self._get_type()):
-                pass
-            elif isinstance(self.default, self._get_other_type()):
-                self.default = self._other_type_trans(self.default)
-            else:
-                self.default = datetime.strptime(self.default, self.fmt)
+            self.default = self._try_trans_date_type(self.default)
 
         # compare value
-        self.gt = datetime.strptime(self.gt, self.fmt) if self.gt else ...
-        self.gte = datetime.strptime(self.gte, self.fmt) if self.gte else ...
-        self.lt = datetime.strptime(self.lt, self.fmt) if self.lt else ...
-        self.lte = datetime.strptime(self.lte, self.fmt) if self.lte else ...
+        if self.gt:
+            self.gt = self._try_trans_date_type(self.gt)
+        if self.gte:
+            self.gte = self._try_trans_date_type(self.gte)
+        if self.lt:
+            self.lt = self._try_trans_date_type(self.lt)
+        if self.lte:
+            self.lte = self._try_trans_date_type(self.lte)
 
         # enum value
         if self.enum:
             fmt_enum = []
             for item in self.enum:
-                if isinstance(item, self._get_type()):
-                    fmt_enum.append(item)
-                elif isinstance(item, self._get_other_type()):
-                    fmt_enum.append(self._other_type_trans(item))
-                else:
-                    fmt_enum.append(datetime.strptime(item, self.fmt))
+                fmt_enum.append(self._try_trans_date_type(item))
             self.enum = fmt_enum
+
+    def _try_trans_date_type(self, value):
+        if type(value) is self._get_type():
+            pass
+        elif type(value) is self._get_other_type():
+            value = self._other_type_trans(value)
+        else:
+            value = datetime.strptime(value, self.fmt)
+            if not type(value) is self._get_type():
+                value = self._try_trans_date_type(value)
+
+        return value
 
 
 @dataclass
