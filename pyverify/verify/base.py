@@ -20,14 +20,22 @@ class RuleBase:
             for _value in value:
                 _value = self.common_rules_verify(key, _value)
                 _value = self.parse(key, _value)
-                if self.func:  # noqa
-                    _value = self.func(key, _value)  # noqa
+                _value = self.execute_custom_func(key, _value)
                 _values.append(_value)
             value = _values
         else:
             value = self.common_rules_verify(key, value)
             value = self.parse(key, value)
-            if self.func:  # noqa
+            value = self.execute_custom_func(key, value)
+        return value
+
+    def execute_custom_func(self, key, value):
+        """Execute custom functions."""
+        if self.func:  # noqa
+            if isinstance(self.func, list):  # noqa
+                for _func in self.func:  # noqa
+                    value = _func(key, value)
+            else:
                 value = self.func(key, value)  # noqa
         return value
 

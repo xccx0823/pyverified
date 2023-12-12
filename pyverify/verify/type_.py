@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import datetime, date
 from decimal import Decimal
 from email.utils import parseaddr
-from typing import List, Dict as typingDict
+from typing import List as typingList, Dict as typingDict
 from typing import Union, Any, Callable
 from urllib.parse import urlparse
 
@@ -25,7 +25,7 @@ class Bool(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
 
     # convert: Whether to convert true, false The string is of Boolean type.
     convert: bool = True
@@ -56,7 +56,7 @@ class Int(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
 
     # gt/gte/lt/lte: Compares the value size.
     gt: Union[int, float, None] = None
@@ -65,7 +65,7 @@ class Int(RuleBase):
     lte: Union[int, float, None] = None
 
     # enum: enumeration.
-    enum: Union[typingDict[int, Any], List[Union[int, float]], None] = None
+    enum: Union[typingDict[int, Any], typingList[Union[int, float]], None] = None
 
     def parse(self, key: str, value: Any):
         if value not in self.null_values:
@@ -94,7 +94,7 @@ class Float(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
 
     # gt/gte/lt/lte: Compares the value size.
     gt: Union[int, float, None] = None
@@ -140,14 +140,14 @@ class Str(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
 
     # length
     minLength: Union[int, None] = None
     maxLength: Union[int, None] = None
 
     # enum
-    enum: Union[List[str], None] = None
+    enum: Union[typingList[str], None] = None
 
     # pruning of the string
     # strip lstrip rstrip Functions corresponding to python string operations;
@@ -333,7 +333,7 @@ class DateTime(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
 
     # fmt: date format.
     fmt: str = '%Y-%m-%d %H:%M:%S'
@@ -345,7 +345,7 @@ class DateTime(RuleBase):
     lte: Union[datetime, str, None] = None
 
     # enum: Date enumeration.
-    enum: Union[List[datetime], List[str], None] = None
+    enum: Union[typingList[datetime], typingList[str], None] = None
 
     def parse(self, key: str, value: Any):
         pass
@@ -362,7 +362,7 @@ class Date(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
 
     # fmt: date format.
     fmt: str = '%Y-%m-%d'
@@ -374,7 +374,7 @@ class Date(RuleBase):
     lte: Union[date, str, None] = None
 
     # enum: Date enumeration.
-    enum: Union[List[date], List[str], None] = None
+    enum: Union[typingList[date], typingList[str], None] = None
 
     def parse(self, key: str, value: Any):
         pass
@@ -423,7 +423,7 @@ class Email(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
 
     def parse(self, key: str, value: Any) -> str:
         if value not in self.null_values and not self.is_email(value):
@@ -447,7 +447,7 @@ class IPv4(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
 
     def parse(self, key: str, value: Any) -> str:
         if value not in self.null_values and not self.allow_none and not self.is_ipv4(value):
@@ -474,7 +474,7 @@ class IPv6(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
 
     def parse(self, key: str, value: Any) -> str:
         if value not in self.null_values and not self.is_ipv6(value):
@@ -501,7 +501,7 @@ class Phone(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
     region: str = 'CN'
 
     def parse(self, key: str, value: Any) -> str:
@@ -528,7 +528,7 @@ class Addr(RuleBase):
     required: bool = False
     allow_none: bool = True
     multi: bool = False
-    func: Union[Callable, None] = None
+    func: Union[Callable, typingList[Callable], None] = None
 
     def parse(self, key: str, value: Any) -> str:
         if value not in self.null_values and not self.is_addr(value):
