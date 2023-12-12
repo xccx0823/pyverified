@@ -118,13 +118,13 @@ class Float(RuleBase):
             # range
             self.verify_range(key, value)
 
-        # Reserve the specified number of decimal places.
-        if self.digits is not None:
-            value = round(value, self.digits)
+            # Reserve the specified number of decimal places.
+            if self.digits is not None:
+                value = round(value, self.digits)
 
-        # Convert to decimal.
-        if self.decimal:
-            value = Decimal(value)
+            # Convert to decimal.
+            if self.decimal:
+                value = Decimal(value)
 
         return value
 
