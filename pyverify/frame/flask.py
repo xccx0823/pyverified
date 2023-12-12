@@ -5,13 +5,18 @@ from pyverify import Verify
 from pyverify.frame.base import Params
 
 
-def assign(*, query: Optional[dict] = None, form: Optional[dict] = None, json: Optional[dict] = None,
+def assign(*,
+           query: Optional[dict] = None,
+           form: Optional[dict] = None,
+           json: Optional[dict] = None,
+           headers: Optional[dict] = None,
            many: bool = False):
     """Parameter check decorator for flask.
 
     :param query: Validation rules for query string parameters.
     :param form: Validation rules for form parameters.
     :param json: Validation rules for JSON parameters.
+    :param headers: Request headers check rule.
     :param many: Used in conjunction with the defined JSON validation rules.
     """
 
@@ -40,6 +45,11 @@ def assign(*, query: Optional[dict] = None, form: Optional[dict] = None, json: O
             if form:
                 verified = Verify(data=request.form.to_dict(), rules=query)
                 params.form = verified.params
+
+            # header:
+            if headers:
+                verified = Verify(data=dict(request.headers), rules=headers)
+                params.headers = verified.params
 
             result = func(*args, **kwargs, params=params)
             return result

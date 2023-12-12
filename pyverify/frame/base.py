@@ -4,3 +4,4 @@ class Params:
         self.query = None
         self.form = None
         self.json = None
+        self.headers = None
