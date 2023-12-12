@@ -1,5 +1,8 @@
 # pyverify
 
+[![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![GitHub release](https://img.shields.io/github/v/release/xccx0823/pyverify)](https://github.com/xccx0823/pyverify/releases)
+
 基于Python实现的参数校验框架
 
 * [1 安装](#1-安装)
