@@ -1,3 +1,5 @@
+[TOC]
+
 # pyverify
 
 基于Python实现的参数校验框架
@@ -8,7 +10,7 @@
 pip install pyverify
 ```
 
-## 交易失败消息支持
+## 校验失败消息支持
 
 ### 如何改变报错返回的信息
 
@@ -141,3 +143,127 @@ def index(params: Params):
 
 ...
 ```
+
+## 类型以及校验规则
+
+### 基本数据类型规则
+
+#### str类型
+
+#### int类型
+
+| 规则            | 释义                                                | 初始值   |
+|---------------|---------------------------------------------------|-------|
+| default       | 默认值                                               | False |
+| required      | 是否时必须的                                            | False |
+| allow_none    | 值是否允许为空                                           | True  |
+| multi         | 是否是多个值                                            | False |
+| func          | 自定义函数                                             | None  |
+| gt/gte/lt/lte | 数值大小比较                                            | None  |
+| enum          | 数字枚举，传入list规则时，则判断是否在枚举范围内，传入dict规则之后会对在其中的枚举进行映射 | None  |
+
+#### float类型
+
+| 规则            | 释义               | 初始值   |
+|---------------|------------------|-------|
+| default       | 默认值              | False |
+| required      | 是否时必须的           | False |
+| allow_none    | 值是否允许为空          | True  |
+| multi         | 是否是多个值           | False |
+| func          | 自定义函数            | None  |
+| gt/gte/lt/lte | 数值大小比较           | None  |
+| digits        | float类型保留小数位数    | None  |
+| decimal       | 是否转化为decimal数据类型 | False |
+
+#### bool类型
+
+| 规则         | 释义                                                         | 初始值   |
+|------------|------------------------------------------------------------|-------|
+| default    | 默认值                                                        | False |
+| required   | 是否时必须的                                                     | False |
+| allow_none | 值是否允许为空                                                    | True  |
+| multi      | 是否是多个值                                                     | False |
+| func       | 自定义函数                                                      | None  |
+| convert    | 是否将字符串转化为bool类型，为True时会转化字符串的True，False转化为对应的bool类型，大小写不敏感 | True  |
+
+#### datetime类型
+
+#### date类型
+
+### 嵌套结构数据类型
+
+#### dict类型
+
+| 规则         | 释义            | 初始值   |
+|------------|---------------|-------|
+| default    | 默认值           | False |
+| required   | 是否时必须的        | False |
+| allow_none | 值是否允许为空       | True  |
+| multi      | 是否是多个值        | False |
+| func       | 自定义函数         | None  |
+| subset     | 定义的嵌套规则       |       |
+| dest       | 忽略所有校验，直接获取原值 |       |
+
+#### list类型
+
+| 规则         | 释义            | 初始值   |
+|------------|---------------|-------|
+| default    | 默认值           | False |
+| required   | 是否时必须的        | False |
+| allow_none | 值是否允许为空       | True  |
+| multi      | 是否是多个值        | False |
+| func       | 自定义函数         | None  |
+| subset     | 定义的嵌套规则       |       |
+| dest       | 忽略所有校验，直接获取原值 |       |
+
+### 扩展数据类型
+
+#### email: 校验字符串是否为邮箱
+
+| 规则         | 释义      | 初始值   |
+|------------|---------|-------|
+| default    | 默认值     | False |
+| required   | 是否时必须的  | False |
+| allow_none | 值是否允许为空 | True  |
+| multi      | 是否是多个值  | False |
+| func       | 自定义函数   | None  |
+
+- ipv4: 校验字符串是否为ipv4地址
+
+| 规则         | 释义      | 初始值   |
+|------------|---------|-------|
+| default    | 默认值     | False |
+| required   | 是否时必须的  | False |
+| allow_none | 值是否允许为空 | True  |
+| multi      | 是否是多个值  | False |
+| func       | 自定义函数   | None  |
+
+#### ipv6: 校验字符串是否为ipv6地址
+
+| 规则         | 释义      | 初始值   |
+|------------|---------|-------|
+| default    | 默认值     | False |
+| required   | 是否时必须的  | False |
+| allow_none | 值是否允许为空 | True  |
+| multi      | 是否是多个值  | False |
+| func       | 自定义函数   | None  |
+
+#### phone: 校验字符串是否为电话号码
+
+| 规则         | 释义      | 初始值   |
+|------------|---------|-------|
+| default    | 默认值     | False |
+| required   | 是否时必须的  | False |
+| allow_none | 值是否允许为空 | True  |
+| multi      | 是否是多个值  | False |
+| func       | 自定义函数   | None  |
+
+#### addr: 校验字符串是否为链接地址
+
+| 规则         | 释义      | 初始值   |
+|------------|---------|-------|
+| default    | 默认值     | False |
+| required   | 是否时必须的  | False |
+| allow_none | 值是否允许为空 | True  |
+| multi      | 是否是多个值  | False |
+| func       | 自定义函数   | None  |

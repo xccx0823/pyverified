@@ -1,6 +1,7 @@
 import ipaddress
 from dataclasses import dataclass
 from datetime import datetime, date
+from decimal import Decimal
 from email.utils import parseaddr
 from typing import List, Dict as typingDict
 from typing import Union, Any, Callable
@@ -104,6 +105,9 @@ class Float(RuleBase):
     # digits: Reserved decimal places
     digits: Union[int, None] = None
 
+    # decimal: Whether to convert to decimal data type
+    decimal: bool = False
+
     def parse(self, key: str, value: Any):
         if value not in self.null_values:
             try:
@@ -117,6 +121,10 @@ class Float(RuleBase):
         # Reserve the specified number of decimal places.
         if self.digits is not None:
             value = round(value, self.digits)
+
+        # Convert to decimal.
+        if self.decimal:
+            value = Decimal(value)
 
         return value
 
