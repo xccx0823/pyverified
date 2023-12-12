@@ -204,7 +204,7 @@ def index(params: Params):
 | 规则           | 释义                                                                                            | 初始值   |
 |--------------|-----------------------------------------------------------------------------------------------|-------|
 | default      | 默认值                                                                                           | False |
-| required     | 是否时必须的                                                                                        | False |
+| required     | 是否是必须的                                                                                        | False |
 | allow_none   | 值是否允许为空                                                                                       | True  |
 | multi        | 是否是多个值                                                                                        | False |
 | func         | 自定义函数                                                                                         | None  |
@@ -248,7 +248,7 @@ def index(params: Params):
 | 规则            | 释义                                                | 初始值   |
 |---------------|---------------------------------------------------|-------|
 | default       | 默认值                                               | False |
-| required      | 是否时必须的                                            | False |
+| required      | 是否是必须的                                            | False |
 | allow_none    | 值是否允许为空                                           | True  |
 | multi         | 是否是多个值                                            | False |
 | func          | 自定义函数                                             | None  |
@@ -260,7 +260,7 @@ def index(params: Params):
 | 规则            | 释义               | 初始值   |
 |---------------|------------------|-------|
 | default       | 默认值              | False |
-| required      | 是否时必须的           | False |
+| required      | 是否是必须的           | False |
 | allow_none    | 值是否允许为空          | True  |
 | multi         | 是否是多个值           | False |
 | func          | 自定义函数            | None  |
@@ -273,7 +273,7 @@ def index(params: Params):
 | 规则         | 释义                                                         | 初始值   |
 |------------|------------------------------------------------------------|-------|
 | default    | 默认值                                                        | False |
-| required   | 是否时必须的                                                     | False |
+| required   | 是否是必须的                                                     | False |
 | allow_none | 值是否允许为空                                                    | True  |
 | multi      | 是否是多个值                                                     | False |
 | func       | 自定义函数                                                      | None  |
@@ -284,7 +284,7 @@ def index(params: Params):
 | 规则            | 释义          | 初始值                                          |
 |---------------|-------------|----------------------------------------------|
 | default       | 默认值         | False                                        |
-| required      | 是否时必须的      | False                                        |
+| required      | 是否是必须的      | False                                        |
 | allow_none    | 值是否允许为空     | True                                         |
 | multi         | 是否是多个值      | False                                        |
 | func          | 自定义函数       | None                                         |
@@ -299,7 +299,7 @@ def index(params: Params):
 | 规则         | 释义            | 初始值   |
 |------------|---------------|-------|
 | default    | 默认值           | False |
-| required   | 是否时必须的        | False |
+| required   | 是否是必须的        | False |
 | allow_none | 值是否允许为空       | True  |
 | multi      | 是否是多个值        | False |
 | func       | 自定义函数         | None  |
@@ -311,7 +311,7 @@ def index(params: Params):
 | 规则         | 释义            | 初始值   |
 |------------|---------------|-------|
 | default    | 默认值           | False |
-| required   | 是否时必须的        | False |
+| required   | 是否是必须的        | False |
 | allow_none | 值是否允许为空       | True  |
 | multi      | 是否是多个值        | False |
 | func       | 自定义函数         | None  |
@@ -325,7 +325,7 @@ def index(params: Params):
 | 规则         | 释义      | 初始值   |
 |------------|---------|-------|
 | default    | 默认值     | False |
-| required   | 是否时必须的  | False |
+| required   | 是否是必须的  | False |
 | allow_none | 值是否允许为空 | True  |
 | multi      | 是否是多个值  | False |
 | func       | 自定义函数   | None  |
@@ -335,7 +335,7 @@ def index(params: Params):
 | 规则         | 释义      | 初始值   |
 |------------|---------|-------|
 | default    | 默认值     | False |
-| required   | 是否时必须的  | False |
+| required   | 是否是必须的  | False |
 | allow_none | 值是否允许为空 | True  |
 | multi      | 是否是多个值  | False |
 | func       | 自定义函数   | None  |
@@ -345,7 +345,7 @@ def index(params: Params):
 | 规则         | 释义      | 初始值   |
 |------------|---------|-------|
 | default    | 默认值     | False |
-| required   | 是否时必须的  | False |
+| required   | 是否是必须的  | False |
 | allow_none | 值是否允许为空 | True  |
 | multi      | 是否是多个值  | False |
 | func       | 自定义函数   | None  |
@@ -355,7 +355,7 @@ def index(params: Params):
 | 规则         | 释义      | 初始值   |
 |------------|---------|-------|
 | default    | 默认值     | False |
-| required   | 是否时必须的  | False |
+| required   | 是否是必须的  | False |
 | allow_none | 值是否允许为空 | True  |
 | multi      | 是否是多个值  | False |
 | func       | 自定义函数   | None  |
@@ -366,7 +366,7 @@ def index(params: Params):
 | 规则         | 释义      | 初始值   |
 |------------|---------|-------|
 | default    | 默认值     | False |
-| required   | 是否时必须的  | False |
+| required   | 是否是必须的  | False |
 | allow_none | 值是否允许为空 | True  |
 | multi      | 是否是多个值  | False |
 | func       | 自定义函数   | None  |
