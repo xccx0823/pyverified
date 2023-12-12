@@ -1,8 +1,8 @@
 from functools import wraps
 from typing import Optional
 
-from pyverify import Verify
-from pyverify.frame.base import Params
+from pyverified import Verify
+from pyverified.frame.base import Params
 
 
 def assign(

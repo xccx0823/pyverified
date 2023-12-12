@@ -1,7 +1,7 @@
 from typing import Any
 
-from pyverify import msg, ValidationError
-from pyverify.verify._unset import Unset, unset
+from pyverified import msg, ValidationError
+from pyverified.verify._unset import Unset, unset
 
 
 class RuleBase:

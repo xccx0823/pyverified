@@ -5,18 +5,18 @@ with open("README.md", "r", encoding='utf-8') as fh:
 
 
 def get_version() -> str:
-    from pyverify import version
+    from pyverified import version
     return version.VERSION
 
 
 setup(
-    name='pyverify',
+    name='pyverified',
     version=get_version(),
     author='Ethan',
     author_email='cheerxiong0823@163.com',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/xccx0823/pyverify",
+    url="https://github.com/xccx0823/pyverified",
     description='Parameter verification framework based on Python.',
     packages=find_packages(),
     classifiers=[

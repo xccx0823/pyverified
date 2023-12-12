@@ -1,9 +1,9 @@
 from typing import Union, Dict as Dic
 
-from pyverify import ValidationError, msg
-from pyverify.verify._unset import unset
-from pyverify.verify.base import RuleBase
-from pyverify.verify.type_ import List, Dict
+from pyverified import ValidationError, msg
+from pyverified.verify._unset import unset
+from pyverified.verify.base import RuleBase
+from pyverified.verify.type_ import List, Dict
 
 
 class Verify:

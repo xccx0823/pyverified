@@ -1,7 +1,7 @@
-from pyverify.exc import ValidationError
-from pyverify.msg import message
-from pyverify.verify.type_ import Str, Int, Float, Bool, DateTime, Date, Dict, List, Email, IPv4, IPv6, Phone, Addr
-from pyverify.verify.verify import Verify
+from pyverified.exc import ValidationError
+from pyverified.msg import message
+from pyverified.verify.type_ import Str, Int, Float, Bool, DateTime, Date, Dict, List, Email, IPv4, IPv6, Phone, Addr
+from pyverified.verify.verify import Verify
 
 
 class rule:  # noqa

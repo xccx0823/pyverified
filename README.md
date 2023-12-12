@@ -1,8 +1,8 @@
-# pyverify
+# pyverified
 
 ![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)
 [![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-[![GitHub release](https://img.shields.io/github/v/release/xccx0823/pyverify)](https://github.com/xccx0823/pyverify/releases)
+[![GitHub release](https://img.shields.io/github/v/release/xccx0823/pyverified)](https://github.com/xccx0823/pyverified/releases)
 
 基于Python实现的参数校验框架
 
@@ -32,15 +32,15 @@
 ## 1 安装
 
 ```shell
-pip install pyverify
+pip install pyverified
 ```
 
 ## 2 使用
 
-如何使用`pyverify`校验数据
+如何使用`pyverified`校验数据
 
 ```python
-from pyverify import Verify, rule
+from pyverified import Verify, rule
 
 params = dict(aaa=rule.float(default=1.23, digits=1))
 data = {}
@@ -55,8 +55,8 @@ print(verified.params)
 - 默认为中文报错信息，如果想使用英文，则使用`message.english()`方法设置。
 
 ```python
-from pyverify import rule
-from pyverify.msg import message
+from pyverified import rule
+from pyverified.msg import message
 
 message.english()
 
@@ -66,8 +66,8 @@ rule.phone().parse('tel', '123456')
 - 自定义报错信息
 
 ```python
-from pyverify import rule
-from pyverify.msg import message
+from pyverified import rule
+from pyverified.msg import message
 
 
 class NewMsg:
@@ -88,9 +88,9 @@ rule.phone().parse('tel', '123456')
 ```python
 from flask import Flask, jsonify
 
-from pyverify import rule, message, ValidationError
-from pyverify.frame.base import Params
-from pyverify.frame.flask import assign
+from pyverified import rule, message, ValidationError
+from pyverified.frame.base import Params
+from pyverified.frame.flask import assign
 
 app = Flask(__name__)
 message.english()
@@ -101,7 +101,7 @@ relus = dict(
 )
 
 
-# 拦截 pyverify 的 ValidationError 异常，定制返回消息格式。
+# 拦截 pyverified 的 ValidationError 异常，定制返回消息格式。
 @app.errorhandler(ValidationError)
 def handler_exception(error):
     response = jsonify({'error': error.msg})
