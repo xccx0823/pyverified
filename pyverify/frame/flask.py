@@ -5,12 +5,13 @@ from pyverify import Verify
 from pyverify.frame.base import Params
 
 
-def assign(*,
-           query: Optional[dict] = None,
-           form: Optional[dict] = None,
-           json: Optional[dict] = None,
-           headers: Optional[dict] = None,
-           many: bool = False):
+def assign(
+        *,
+        query: Optional[dict] = None,
+        form: Optional[dict] = None,
+        json: Optional[dict] = None,
+        headers: Optional[dict] = None,
+        many: bool = False):
     """Parameter check decorator for flask.
 
     :param query: Validation rules for query string parameters.
