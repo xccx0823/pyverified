@@ -77,8 +77,8 @@ class Int(RuleBase):
             # range
             self.verify_range(key, value)
 
-        # enum
-        value = self.verify_enum(key, value)
+            # enum
+            value = self.verify_enum(key, value)
 
         return value
 
@@ -311,14 +311,14 @@ class Str(RuleBase):
                         _value.append(_v)
                     value = _value
 
-        # enum
-        if isinstance(value, list):
-            _value = []
-            for _v in value:
-                _value.append(self.verify_enum(key, _v))
-            value = _value
-        else:
-            value = self.verify_enum(key, value)
+            # enum
+            if isinstance(value, list):
+                _value = []
+                for _v in value:
+                    _value.append(self.verify_enum(key, _v))
+                value = _value
+            else:
+                value = self.verify_enum(key, value)
 
         return value
 
@@ -352,16 +352,21 @@ class DateTime(RuleBase):
         if value not in self.null_values:
             # Either date or datetime or str is converted to datetime for validation.
             try:
-                value = self._try_trans_datetime(value)
+                value = self._try_trans_data(value)
             except ValueError:
-                raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(datetime)))
+                raise ValidationError(msg.message.type.format(
+                    key=key, value=value, type=self.get_type_name(self._get_type())))
+
+            # After the data obtained through the set fmt conversion,
+            # the value is converted to the type processed internally
+            value = self._try_trans_datetime(value)
 
             # range
             self.verify_range(key, value)
 
-        # enum
-        if self.enum and value not in self.enum:
-            raise ValidationError(msg.message.enum.format(key=key, value=value, enum=tuple(self.enum)))
+            # enum
+            if self.enum and value not in self.enum:
+                raise ValidationError(msg.message.enum.format(key=key, value=value, enum=tuple(self.enum)))
 
         return value
 
@@ -402,7 +407,23 @@ class DateTime(RuleBase):
                 fmt_enum.append(self._try_trans_datetime(item))
             self.enum = fmt_enum
 
-    def _try_trans_datetime(self, value):
+    @staticmethod
+    def _try_trans_datetime(value):
+        if type(value) is date:
+            value = datetime.combine(value, time())
+        elif type(value) is datetime:
+            pass
+        else:
+            # Try to parse string dates in two formats.
+            # An error is reported only after both fail
+            try:
+                value = datetime.strptime(value, '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                value = datetime.strptime(value, '%Y-%m-%d')
+
+        return value
+
+    def _try_trans_data(self, value):
         if type(value) is date:
             value = datetime.combine(value, time())
         elif type(value) is datetime:
