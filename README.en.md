@@ -16,6 +16,8 @@
     </a>
 </p>
 
+<a href="https://github.com/xccx0823/pyverified/blob/main/README.md">ZH</a> | EN
+
 ## Index
 
 * [Validation Failure Message Support](#validation-failure-message-support)
