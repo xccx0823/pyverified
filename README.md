@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://github.com/xccx0823/pyverified/icon.png" alt="Pyverified">
+    <img src="https://github.com/xccx0823/pyverified/blob/main/icon.png" alt="Pyverified">
 </p>
 <p align="center">
     <em>基于Python实现的参数校验框架</em>
