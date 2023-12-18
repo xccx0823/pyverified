@@ -14,6 +14,8 @@
 </a>
 </p>
 
+ZH | <a href="https://github.com/xccx0823/pyverified/blob/main/README.en.md">EN</a>
+
 ## 索引
 
 * [校验失败消息支持](#校验失败消息支持)
