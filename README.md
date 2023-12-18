@@ -1,5 +1,5 @@
 <p align="center" style="font-size: 28px; color: aqua">
-    pyverified
+    Pyverified
 </p>
 <p align="center">
     <em>基于Python实现的参数校验框架</em>
