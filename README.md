@@ -1,4 +1,20 @@
-span
+<p align="center" style="font-size: 28px; color: aqua">
+    pyverified
+</p>
+<p align="center">
+    <em>基于Python实现的参数校验框架</em>
+</p>
+<p align="center">
+<a href="#" target="_blank">
+    <img src="https://img.shields.io/badge/python-3.6+-blue.svg" alt="Python 3.6+">
+</a>
+<a href="https://opensource.org/licenses/MIT" target="_blank">
+    <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT license">
+</a>
+<a href="https://github.com/xccx0823/pyverified/releases" target="_blank">
+    <img src="https://img.shields.io/github/v/release/xccx0823/pyverified" alt="GitHub release">
+</a>
+</p>
 
 ## 索引
 
