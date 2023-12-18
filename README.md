@@ -1,5 +1,7 @@
 <p align="center">
-    Pyverified
+    <a href="https://github.com/xccx0823/pyverified" target="_blank">
+        Pyverified
+    </a>
 </p>
 <p align="center">
     <em>基于Python实现的参数校验框架</em>
