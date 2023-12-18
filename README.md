@@ -1,4 +1,4 @@
-<p align="center" style="font-size: 28px; color: aqua">
+<p align="center">
     Pyverified
 </p>
 <p align="center">
