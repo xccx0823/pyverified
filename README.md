@@ -1,7 +1,5 @@
 <p align="center">
-    <a href="https://github.com/xccx0823/pyverified" target="_blank">
-        Pyverified
-    </a>
+    <img src="https://github.com/xccx0823/pyverified/icon.png" alt="Pyverified">
 </p>
 <p align="center">
     <em>基于Python实现的参数校验框架</em>
@@ -161,7 +159,7 @@ def index(params: Params):
 
 - 也支持多次解析不同的规则，但是解析相同类型的参数的话，后者会覆盖前者的解析结果
 
-  - 写法上可以这样写
+    - 写法上可以这样写
 
   ```python
   ...
@@ -176,7 +174,7 @@ def index(params: Params):
   ...
   ```
 
-  - 也可以这样写
+    - 也可以这样写
 
   ```python
   ...
@@ -198,184 +196,172 @@ def index(params: Params):
 
 #### str类型
 
-
-| 规则         | 释义                                                                                                                                                            | 初始值 |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| default      | 默认值                                                                                                                                                          | False  |
-| required     | 是否是必须的                                                                                                                                                    | False  |
-| allow_none   | 值是否允许为空                                                                                                                                                  | True   |
-| multi        | 是否是多个值                                                                                                                                                    | False  |
-| func         | 自定义函数                                                                                                                                                      | None   |
-| minLength    | 字符串最小长度                                                                                                                                                  | None   |
-| maxLength    | 字符串最大长度                                                                                                                                                  | None   |
-| enum         | 字符串枚举，传入list规则时，则判断是否在枚举范围内，传入dict规则之后会对在其中的枚举进行映射                                                                    | None   |
-| strip        | 是否去除左右两边指定字符串                                                                                                                                      | False  |
-| lstrip       | 是否去除左两边空指定字符串                                                                                                                                      | False  |
-| rstrip       | 是否去除右两边空指定字符串                                                                                                                                      | False  |
-| strip_chars  | 配合strip使用，为指定的字符串                                                                                                                                   | None   |
-| lstrip_chars | 配合lstrip使用，为指定的字符串                                                                                                                                  | None   |
-| rstrip_chars | 配合rstrip使用，为指定的字符串                                                                                                                                  | None   |
-| startswith   | 检字符串是否以指定字符串开头                                                                                                                                    | None   |
-| endswith     | 检字符串是否以定字符串结尾                                                                                                                                      | None   |
-| isalnum      | 检查字符串是否由字母和数字组成                                                                                                                                  | False  |
-| isalpha      | 检查字符串是否仅由字母组成                                                                                                                                      | False  |
-| isdecimal    | 检查字符串是否只包含十进制数字字符                                                                                                                              | False  |
-| isdigit      | 检查字符串是否只包含数字字符                                                                                                                                    | False  |
-| isidentifier | 检查字符串是否是一个合法的标识符                                                                                                                                | False  |
-| islower      | 检查字符串中的字母是否都为小写字母                                                                                                                              | False  |
-| isupper      | 检查字符串中的字母是否都为大写字母                                                                                                                              | False  |
-| isprintable  | 检查字符串是否是可打印的                                                                                                                                        | False  |
-| isspace      | 检查字符串是否只包含空白字符                                                                                                                                    | False  |
-| istitle      | 检查字符串中的单词是否都以大写字母开头，并且后续的字母都是小写字母                                                                                              | False  |
-| include      | 检查字符串是否包含指定字符串                                                                                                                                    | None   |
-| exclude      | 检查字符串是否不包含指定字符串                                                                                                                                  | None   |
-| replace      | 是否替换字符串中的指定字符串为其他字符串                                                                                                                        | False  |
-| replace_args | 配合replace使用                                                                                                                                                 | ()     |
-| capitalize   | 将字符串的第一个字符转换为大写，而将字符串中的其余字符转换为小写                                                                                                | False  |
-| title        | 将字符串中每个单词的第一个字母转换为大写，而将单词中的其余字母转换为小写                                                                                        | False  |
-| swapcase     | 交换字符串中每个字母的大小写                                                                                                                                    | False  |
-| lower        | 将字符串中的所有字母转换为小写                                                                                                                                  | False  |
-| upper        | 将字符串中的所有字母转换为大写                                                                                                                                  | False  |
-| casefold     | 字符串的casefold()方法与lower()方法类似，但是更加强大。casefold()方法将字符串中的所有字符转换为小写，并且还处理了一些特殊字符，使其更适合用于不区分大小写的比较 | False  |
-| split        | 将字符串按照指定字符切割，注意！使用此功能后获取的返回结果是list类型的数据                                                                                      | None   |
-| split2type   | 将切割后的数据中的元素都转化为指定的数据类型                                                                                                                    | None   |
-| regex        | 将字符串进行正则匹配                                                                                                                                            | None   |
+| 规则           | 释义                                                                                            | 初始值   |
+|--------------|-----------------------------------------------------------------------------------------------|-------|
+| default      | 默认值                                                                                           | False |
+| required     | 是否是必须的                                                                                        | False |
+| allow_none   | 值是否允许为空                                                                                       | True  |
+| multi        | 是否是多个值                                                                                        | False |
+| func         | 自定义函数                                                                                         | None  |
+| minLength    | 字符串最小长度                                                                                       | None  |
+| maxLength    | 字符串最大长度                                                                                       | None  |
+| enum         | 字符串枚举，传入list规则时，则判断是否在枚举范围内，传入dict规则之后会对在其中的枚举进行映射                                            | None  |
+| strip        | 是否去除左右两边指定字符串                                                                                 | False |
+| lstrip       | 是否去除左两边空指定字符串                                                                                 | False |
+| rstrip       | 是否去除右两边空指定字符串                                                                                 | False |
+| strip_chars  | 配合strip使用，为指定的字符串                                                                             | None  |
+| lstrip_chars | 配合lstrip使用，为指定的字符串                                                                            | None  |
+| rstrip_chars | 配合rstrip使用，为指定的字符串                                                                            | None  |
+| startswith   | 检字符串是否以指定字符串开头                                                                                | None  |
+| endswith     | 检字符串是否以定字符串结尾                                                                                 | None  |
+| isalnum      | 检查字符串是否由字母和数字组成                                                                               | False |
+| isalpha      | 检查字符串是否仅由字母组成                                                                                 | False |
+| isdecimal    | 检查字符串是否只包含十进制数字字符                                                                             | False |
+| isdigit      | 检查字符串是否只包含数字字符                                                                                | False |
+| isidentifier | 检查字符串是否是一个合法的标识符                                                                              | False |
+| islower      | 检查字符串中的字母是否都为小写字母                                                                             | False |
+| isupper      | 检查字符串中的字母是否都为大写字母                                                                             | False |
+| isprintable  | 检查字符串是否是可打印的                                                                                  | False |
+| isspace      | 检查字符串是否只包含空白字符                                                                                | False |
+| istitle      | 检查字符串中的单词是否都以大写字母开头，并且后续的字母都是小写字母                                                             | False |
+| include      | 检查字符串是否包含指定字符串                                                                                | None  |
+| exclude      | 检查字符串是否不包含指定字符串                                                                               | None  |
+| replace      | 是否替换字符串中的指定字符串为其他字符串                                                                          | False |
+| replace_args | 配合replace使用                                                                                   | ()    |
+| capitalize   | 将字符串的第一个字符转换为大写，而将字符串中的其余字符转换为小写                                                              | False |
+| title        | 将字符串中每个单词的第一个字母转换为大写，而将单词中的其余字母转换为小写                                                          | False |
+| swapcase     | 交换字符串中每个字母的大小写                                                                                | False |
+| lower        | 将字符串中的所有字母转换为小写                                                                               | False |
+| upper        | 将字符串中的所有字母转换为大写                                                                               | False |
+| casefold     | 字符串的casefold()方法与lower()方法类似，但是更加强大。casefold()方法将字符串中的所有字符转换为小写，并且还处理了一些特殊字符，使其更适合用于不区分大小写的比较 | False |
+| split        | 将字符串按照指定字符切割，注意！使用此功能后获取的返回结果是list类型的数据                                                       | None  |
+| split2type   | 将切割后的数据中的元素都转化为指定的数据类型                                                                        | None  |
+| regex        | 将字符串进行正则匹配                                                                                    | None  |
 
 #### int类型
 
-
-| 规则          | 释义                                                                                       | 初始值 |
-| ------------- | ------------------------------------------------------------------------------------------ | ------ |
-| default       | 默认值                                                                                     | False  |
-| required      | 是否是必须的                                                                               | False  |
-| allow_none    | 值是否允许为空                                                                             | True   |
-| multi         | 是否是多个值                                                                               | False  |
-| func          | 自定义函数                                                                                 | None   |
-| gt/gte/lt/lte | 数值大小比较                                                                               | None   |
-| enum          | 数字枚举，传入list规则时，则判断是否在枚举范围内，传入dict规则之后会对在其中的枚举进行映射 | None   |
+| 规则            | 释义                                                | 初始值   |
+|---------------|---------------------------------------------------|-------|
+| default       | 默认值                                               | False |
+| required      | 是否是必须的                                            | False |
+| allow_none    | 值是否允许为空                                           | True  |
+| multi         | 是否是多个值                                            | False |
+| func          | 自定义函数                                             | None  |
+| gt/gte/lt/lte | 数值大小比较                                            | None  |
+| enum          | 数字枚举，传入list规则时，则判断是否在枚举范围内，传入dict规则之后会对在其中的枚举进行映射 | None  |
 
 #### float类型
 
-
-| 规则          | 释义                      | 初始值 |
-| ------------- | ------------------------- | ------ |
-| default       | 默认值                    | False  |
-| required      | 是否是必须的              | False  |
-| allow_none    | 值是否允许为空            | True   |
-| multi         | 是否是多个值              | False  |
-| func          | 自定义函数                | None   |
-| gt/gte/lt/lte | 数值大小比较              | None   |
-| digits        | float类型保留小数位数     | None   |
-| decimal       | 是否转化为decimal数据类型 | False  |
+| 规则            | 释义               | 初始值   |
+|---------------|------------------|-------|
+| default       | 默认值              | False |
+| required      | 是否是必须的           | False |
+| allow_none    | 值是否允许为空          | True  |
+| multi         | 是否是多个值           | False |
+| func          | 自定义函数            | None  |
+| gt/gte/lt/lte | 数值大小比较           | None  |
+| digits        | float类型保留小数位数    | None  |
+| decimal       | 是否转化为decimal数据类型 | False |
 
 #### bool类型
 
-
-| 规则       | 释义                                                                                            | 初始值 |
-| ---------- | ----------------------------------------------------------------------------------------------- | ------ |
-| default    | 默认值                                                                                          | False  |
-| required   | 是否是必须的                                                                                    | False  |
-| allow_none | 值是否允许为空                                                                                  | True   |
-| multi      | 是否是多个值                                                                                    | False  |
-| func       | 自定义函数                                                                                      | None   |
-| convert    | 是否将字符串转化为bool类型，为True时会转化字符串的True，False转化为对应的bool类型，大小写不敏感 | True   |
+| 规则         | 释义                                                         | 初始值   |
+|------------|------------------------------------------------------------|-------|
+| default    | 默认值                                                        | False |
+| required   | 是否是必须的                                                     | False |
+| allow_none | 值是否允许为空                                                    | True  |
+| multi      | 是否是多个值                                                     | False |
+| func       | 自定义函数                                                      | None  |
+| convert    | 是否将字符串转化为bool类型，为True时会转化字符串的True，False转化为对应的bool类型，大小写不敏感 | True  |
 
 #### datetime/date类型
 
-
-| 规则          | 释义                   | 初始值                                          |
-| ------------- | ---------------------- | ----------------------------------------------- |
-| default       | 默认值                 | False                                           |
-| required      | 是否是必须的           | False                                           |
-| allow_none    | 值是否允许为空         | True                                            |
-| multi         | 是否是多个值           | False                                           |
-| func          | 自定义函数             | None                                            |
-| fmt           | 日期格式化样式         | datetime为`%Y-%m-%d %H:%M:%S`，date为`%Y-%m-%d` |
-| gt/gte/lt/lte | 日期大小比较           | None                                            |
-| enum          | 日期是否在指定的枚举中 | None                                            |
+| 规则            | 释义          | 初始值                                          |
+|---------------|-------------|----------------------------------------------|
+| default       | 默认值         | False                                        |
+| required      | 是否是必须的      | False                                        |
+| allow_none    | 值是否允许为空     | True                                         |
+| multi         | 是否是多个值      | False                                        |
+| func          | 自定义函数       | None                                         |
+| fmt           | 日期格式化样式     | datetime为`%Y-%m-%d %H:%M:%S`，date为`%Y-%m-%d` |
+| gt/gte/lt/lte | 日期大小比较      | None                                         |
+| enum          | 日期是否在指定的枚举中 | None                                         |
 
 ### 嵌套结构数据类型
 
 #### dict类型
 
-
-| 规则       | 释义                       | 初始值 |
-| ---------- | -------------------------- | ------ |
-| default    | 默认值                     | False  |
-| required   | 是否是必须的               | False  |
-| allow_none | 值是否允许为空             | True   |
-| multi      | 是否是多个值               | False  |
-| func       | 自定义函数                 | None   |
-| subset     | 定义的嵌套规则             |        |
-| dest       | 忽略所有校验，直接获取原值 |        |
+| 规则         | 释义            | 初始值   |
+|------------|---------------|-------|
+| default    | 默认值           | False |
+| required   | 是否是必须的        | False |
+| allow_none | 值是否允许为空       | True  |
+| multi      | 是否是多个值        | False |
+| func       | 自定义函数         | None  |
+| subset     | 定义的嵌套规则       |       |
+| dest       | 忽略所有校验，直接获取原值 |       |
 
 #### list类型
 
-
-| 规则       | 释义                       | 初始值 |
-| ---------- | -------------------------- | ------ |
-| default    | 默认值                     | False  |
-| required   | 是否是必须的               | False  |
-| allow_none | 值是否允许为空             | True   |
-| multi      | 是否是多个值               | False  |
-| func       | 自定义函数                 | None   |
-| subset     | 定义的嵌套规则             |        |
-| dest       | 忽略所有校验，直接获取原值 |        |
+| 规则         | 释义            | 初始值   |
+|------------|---------------|-------|
+| default    | 默认值           | False |
+| required   | 是否是必须的        | False |
+| allow_none | 值是否允许为空       | True  |
+| multi      | 是否是多个值        | False |
+| func       | 自定义函数         | None  |
+| subset     | 定义的嵌套规则       |       |
+| dest       | 忽略所有校验，直接获取原值 |       |
 
 ### 扩展数据类型
 
 #### email: 校验字符串是否为邮箱
 
-
-| 规则       | 释义           | 初始值 |
-| ---------- | -------------- | ------ |
-| default    | 默认值         | False  |
-| required   | 是否是必须的   | False  |
-| allow_none | 值是否允许为空 | True   |
-| multi      | 是否是多个值   | False  |
-| func       | 自定义函数     | None   |
+| 规则         | 释义      | 初始值   |
+|------------|---------|-------|
+| default    | 默认值     | False |
+| required   | 是否是必须的  | False |
+| allow_none | 值是否允许为空 | True  |
+| multi      | 是否是多个值  | False |
+| func       | 自定义函数   | None  |
 
 #### ipv4: 校验字符串是否为ipv4地址
 
-
-| 规则       | 释义           | 初始值 |
-| ---------- | -------------- | ------ |
-| default    | 默认值         | False  |
-| required   | 是否是必须的   | False  |
-| allow_none | 值是否允许为空 | True   |
-| multi      | 是否是多个值   | False  |
-| func       | 自定义函数     | None   |
+| 规则         | 释义      | 初始值   |
+|------------|---------|-------|
+| default    | 默认值     | False |
+| required   | 是否是必须的  | False |
+| allow_none | 值是否允许为空 | True  |
+| multi      | 是否是多个值  | False |
+| func       | 自定义函数   | None  |
 
 #### ipv6: 校验字符串是否为ipv6地址
 
-
-| 规则       | 释义           | 初始值 |
-| ---------- | -------------- | ------ |
-| default    | 默认值         | False  |
-| required   | 是否是必须的   | False  |
-| allow_none | 值是否允许为空 | True   |
-| multi      | 是否是多个值   | False  |
-| func       | 自定义函数     | None   |
+| 规则         | 释义      | 初始值   |
+|------------|---------|-------|
+| default    | 默认值     | False |
+| required   | 是否是必须的  | False |
+| allow_none | 值是否允许为空 | True  |
+| multi      | 是否是多个值  | False |
+| func       | 自定义函数   | None  |
 
 #### phone: 校验字符串是否为电话号码
 
-
-| 规则       | 释义           | 初始值 |
-| ---------- | -------------- | ------ |
-| default    | 默认值         | False  |
-| required   | 是否是必须的   | False  |
-| allow_none | 值是否允许为空 | True   |
-| multi      | 是否是多个值   | False  |
-| func       | 自定义函数     | None   |
-| region     | 电话号码地区   | CN     |
+| 规则         | 释义      | 初始值   |
+|------------|---------|-------|
+| default    | 默认值     | False |
+| required   | 是否是必须的  | False |
+| allow_none | 值是否允许为空 | True  |
+| multi      | 是否是多个值  | False |
+| func       | 自定义函数   | None  |
+| region     | 电话号码地区  | CN    |
 
 #### addr: 校验字符串是否为链接地址
 
-
-| 规则       | 释义           | 初始值 |
-| ---------- | -------------- | ------ |
-| default    | 默认值         | False  |
-| required   | 是否是必须的   | False  |
-| allow_none | 值是否允许为空 | True   |
-| multi      | 是否是多个值   | False  |
-| func       | 自定义函数     | None   |
+| 规则         | 释义      | 初始值   |
+|------------|---------|-------|
+| default    | 默认值     | False |
+| required   | 是否是必须的  | False |
+| allow_none | 值是否允许为空 | True  |
+| multi      | 是否是多个值  | False |
+| func       | 自定义函数   | None  |
