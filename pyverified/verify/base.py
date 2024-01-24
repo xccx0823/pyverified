@@ -7,7 +7,7 @@ from pyverified.verify._unset import Unset, unset
 class RuleBase:
     """Rule base class."""
 
-    null_values = (unset, None, '')
+    null_values = (unset, None)
 
     def parse(self, key: str, value: Any):
         raise NotImplementedError("parse hasn't been implemented yet.")
