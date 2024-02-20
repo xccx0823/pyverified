@@ -1,5 +1,3 @@
-<img src="https://github.com/xccx0823/pyverified/blob/main/icon.png" alt="Pyverified" style="width: 100%; display: block; margin: 0 auto;">
-
 <p align="center">
     <em>A parameter validation framework implemented in Python</em>
 </p>
