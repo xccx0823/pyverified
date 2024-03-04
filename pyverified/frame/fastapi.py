@@ -1,3 +1,4 @@
+import asyncio
 import json as pyjson
 from dataclasses import dataclass
 from functools import wraps
@@ -73,8 +74,10 @@ def with_request(
             # Pass the verified value using request.state
             request.state.params = params
             kwargs['request'] = request
-
-            return await func(*args, **kwargs)
+            if asyncio.iscoroutinefunction(func):
+                return await func(*args, **kwargs)
+            else:
+                return func(*args, **kwargs)
 
         return inner
 
