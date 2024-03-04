@@ -13,8 +13,6 @@
 </a>
 </p>
 
-ZH | <a href="https://github.com/xccx0823/pyverified/blob/main/README.en.md">EN</a>
-
 ## 索引
 
 * [校验失败消息支持](#校验失败消息支持)
@@ -81,8 +79,7 @@ rule.phone().execute_parse('tel', '123456')
 from flask import Flask, jsonify
 
 from pyverified import rule, message, ValidationError
-from pyverified.frame.base import Params
-from pyverified.frame.flask import with_request
+from pyverified.frame.flask import with_request, Params
 
 app = Flask(__name__)
 message.english()
@@ -114,7 +111,18 @@ if __name__ == '__main__':
 - 获取json参数并解析，当设置`many=True`时，json参数应该为`[]`格式。
 
 ```python
-...
+from flask import Flask, jsonify
+
+from pyverified import rule, message, ValidationError
+from pyverified.frame.flask import with_request, Params
+
+app = Flask(__name__)
+message.english()
+
+relus = dict(
+    username=rule.str(required=True, isalnum=True, minLength=1, maxLength=20),
+    password=rule.str(required=True, isalnum=True, minLength=1, maxLength=20)
+)
 
 
 @app.route('/index', methods=['POST'])
@@ -129,7 +137,18 @@ def index(params: Params):
 - 获取query参数并解析。
 
 ```python
-...
+from flask import Flask
+
+from pyverified import rule, message
+from pyverified.frame.flask import with_request, Params
+
+app = Flask(__name__)
+message.english()
+
+relus = dict(
+    username=rule.str(required=True, isalnum=True, minLength=1, maxLength=20),
+    password=rule.str(required=True, isalnum=True, minLength=1, maxLength=20)
+)
 
 
 @app.route('/index', methods=['POST'])
@@ -144,7 +163,18 @@ def index(params: Params):
 - 获取headers对应值并解析。
 
 ```python
-...
+from flask import Flask
+
+from pyverified import rule, message
+from pyverified.frame.flask import with_request, Params
+
+app = Flask(__name__)
+message.english()
+
+relus = dict(
+    username=rule.str(required=True, isalnum=True, minLength=1, maxLength=20),
+    password=rule.str(required=True, isalnum=True, minLength=1, maxLength=20)
+)
 
 
 @app.route('/index', methods=['POST'])
@@ -158,36 +188,96 @@ def index(params: Params):
 
 - 也支持多次解析不同的规则，但是解析相同类型的参数的话，后者会覆盖前者的解析结果
 
-    - 写法上可以这样写
+写法上可以这样写
 
-  ```python
-  ...
+```python
+from flask import Flask
 
+from pyverified import rule, message
+from pyverified.frame.flask import with_request, Params
 
-  @app.route('/index', methods=['POST'])
-  @with_request(query=query_rules, json=json_rules)
-  def index(params: Params):
-      return {'query': params.query, 'json': params.json}
+app = Flask(__name__)
+message.english()
 
-
-  ...
-  ```
-
-    - 也可以这样写
-
-  ```python
-  ...
+query_rules = dict(
+    username=rule.str(required=True, isalnum=True, minLength=1, maxLength=20),
+    password=rule.str(required=True, isalnum=True, minLength=1, maxLength=20)
+)
+json_rules = dict(age=rule.int(required=True))
 
 
-  @app.route('/index', methods=['POST'])
-  @with_request(query=query_rules)
-  @with_request(json=json_rules)
-  def index(params: Params):
-      return {'query': params.query, 'json': params.json}
+@app.route('/index', methods=['POST'])
+@with_request(query=query_rules, json=json_rules)
+def index(params: Params):
+    return {'query': params.query, 'json': params.json}
 
 
-  ...
-  ```
+...
+```
+
+也可以这样写
+
+```python
+from flask import Flask
+
+from pyverified import rule, message
+from pyverified.frame.flask import with_request, Params
+
+app = Flask(__name__)
+message.english()
+
+query_rules = dict(
+    username=rule.str(required=True, isalnum=True, minLength=1, maxLength=20),
+    password=rule.str(required=True, isalnum=True, minLength=1, maxLength=20)
+)
+json_rules = dict(age=rule.int(required=True))
+
+
+@app.route('/index', methods=['POST'])
+@with_request(query=query_rules)
+@with_request(json=json_rules)
+def index(params: Params):
+    return {'query': params.query, 'json': params.json}
+
+
+...
+```
+
+### Fastapi
+
+- 获取form参数并解析
+
+```python
+from fastapi import FastAPI, Request
+from starlette.responses import JSONResponse
+
+from pyverified import rule, message, ValidationError
+from pyverified.frame.fastapi import with_request
+
+message.english()
+
+relus = dict(
+    username=rule.str(required=True, isalnum=True, minLength=1, maxLength=20),
+    password=rule.str(required=True, isalnum=True, minLength=1, maxLength=20)
+)
+
+app = FastAPI()
+
+
+@app.exception_handler(ValidationError)
+async def http_exception_handler(request: Request, exc: ValidationError):
+    return JSONResponse(
+        status_code=400,
+        content={"message": exc.msg}
+    )
+
+
+@app.post("/index")
+@with_request(form=relus)
+def index(request: Request):
+    params = request.state.params
+    return params.form
+```
 
 ## 类型以及校验规则
 
