@@ -53,7 +53,7 @@ from pyverified.msg import message
 
 message.english()
 
-rule.phone().parse('tel', '123456')
+rule.phone().execute_parse('tel', '123456')
 ```
 
 - Custom error messages
@@ -69,7 +69,7 @@ class NewMsg:
 
 message.reload(NewMsg)
 
-rule.phone().parse('tel', '123456')
+rule.phone().execute_parse('tel', '123456')
 ```
 
 ## Framework Support

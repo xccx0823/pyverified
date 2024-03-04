@@ -52,7 +52,7 @@ from pyverified.msg import message
 
 message.english()
 
-rule.phone().parse('tel', '123456')
+rule.phone().execute_parse('tel', '123456')
 ```
 
 - 自定义报错信息
@@ -68,7 +68,7 @@ class NewMsg:
 
 message.reload(NewMsg)
 
-rule.phone().parse('tel', '123456')
+rule.phone().execute_parse('tel', '123456')
 ```
 
 ## 框架支持
