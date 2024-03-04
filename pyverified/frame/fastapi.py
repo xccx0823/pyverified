@@ -40,7 +40,7 @@ def with_request(
                 raise ValueError("Request object not found")
 
             # Try to get the Params object
-            params = kwargs.get('params')
+            params = getattr(request.state, "params", None)
             if not (params and isinstance(params, Params)):
                 params = Params()
 
