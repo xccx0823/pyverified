@@ -1,16 +1,17 @@
+import json as pyjson
+from dataclasses import dataclass
 from functools import wraps
 from typing import Optional
 
 from pyverified import Verify
 
 
+@dataclass
 class Params:
-
-    def __init__(self):
-        self.query = None
-        self.form = None
-        self.json = None
-        self.headers = None
+    query = None
+    form = None
+    json = None
+    headers = None
 
 
 def with_request(
@@ -20,7 +21,7 @@ def with_request(
         json: Optional[dict] = None,
         headers: Optional[dict] = None,
         many: bool = False):
-    """Parameter check decorator for flask.
+    """Parameter check decorator for fastapi.
 
     :param query: Validation rules for query string parameters.
     :param form: Validation rules for form parameters.
@@ -31,8 +32,11 @@ def with_request(
 
     def wrapper(func):
         @wraps(func)
-        def inner(*args, **kwargs):
-            from flask import request  # noqa
+        async def inner(*args, **kwargs):
+            # Get the request object from the view function.
+            request = kwargs.get("request")
+            if request is None:
+                raise ValueError("Request object not found")
 
             # Try to get the Params object
             params = kwargs.get('params')
@@ -40,19 +44,25 @@ def with_request(
                 params = Params()
 
             # json
-            if json and request.is_json:
-                data = request.get_json(silent=True) or {}
+            if json:
+                try:
+                    data = request.json()
+                except pyjson.JSONDecodeError:
+                    data = {}
                 verified = Verify(data=data, rules=json, many=many)
                 params.json = verified.params
 
             # query
             if query:
-                verified = Verify(data=request.args.to_dict(), rules=query)
+                verified = Verify(data=dict(request.query_params), rules=query)
                 params.query = verified.params
 
             # form
+            # !!! AssertionError: The `python-multipart` library must be installed to use form parsing.
+            # >> pip install python-multipart
             if form:
-                verified = Verify(data=request.form.to_dict(), rules=form)
+                data = await request.form()
+                verified = Verify(data=dict(data), rules=form)
                 params.form = verified.params
 
             # header:
@@ -60,8 +70,11 @@ def with_request(
                 verified = Verify(data=dict(request.headers), rules=headers)
                 params.headers = verified.params
 
-            result = func(*args, **kwargs, params=params)
-            return result
+            # Pass the verified value using request.state
+            request.state.params = params
+            kwargs['request'] = request
+
+            return await func(*args, **kwargs)
 
         return inner
 

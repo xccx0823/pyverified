@@ -82,7 +82,7 @@ from flask import Flask, jsonify
 
 from pyverified import rule, message, ValidationError
 from pyverified.frame.base import Params
-from pyverified.frame.flask import assign
+from pyverified.frame.flask import with_request
 
 app = Flask(__name__)
 message.english()
@@ -102,7 +102,7 @@ def handler_exception(error):
 
 
 @app.route('/index', methods=['POST'])
-@assign(form=relus)  # 必须在 app.route 装饰器下面
+@with_request(form=relus)  # 必须在 app.route 装饰器下面
 def index(params: Params):
     return params.form
 
@@ -118,7 +118,7 @@ if __name__ == '__main__':
 
 
 @app.route('/index', methods=['POST'])
-@assign(json=relus, many=True)
+@with_request(json=relus, many=True)
 def index(params: Params):
     return params.json
 
@@ -133,7 +133,7 @@ def index(params: Params):
 
 
 @app.route('/index', methods=['POST'])
-@assign(query=relus)
+@with_request(query=relus)
 def index(params: Params):
     return params.query
 
@@ -148,7 +148,7 @@ def index(params: Params):
 
 
 @app.route('/index', methods=['POST'])
-@assign(headers=relus)
+@with_request(headers=relus)
 def index(params: Params):
     return params.headers
 
@@ -165,7 +165,7 @@ def index(params: Params):
 
 
   @app.route('/index', methods=['POST'])
-  @assign(query=query_rules, json=json_rules)
+  @with_request(query=query_rules, json=json_rules)
   def index(params: Params):
       return {'query': params.query, 'json': params.json}
 
@@ -180,8 +180,8 @@ def index(params: Params):
 
 
   @app.route('/index', methods=['POST'])
-  @assign(query=query_rules)
-  @assign(json=json_rules)
+  @with_request(query=query_rules)
+  @with_request(json=json_rules)
   def index(params: Params):
       return {'query': params.query, 'json': params.json}
 
