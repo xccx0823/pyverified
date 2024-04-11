@@ -14,8 +14,14 @@ class RuleBase:
 
     def execute_parse(self, key: str, value: Any):
         if self.multi:  # noqa
+            value = self.common_rules_verify(key, value)
+
+            if self.allow_none and value is None:  # noqa
+                return value
+
             if not isinstance(value, (list, set, tuple)):
                 raise ValidationError(msg.message.multi.format(key=key, value=value))
+
             _values = []
             for _value in value:
                 _value = self.common_rules_verify(key, _value)
