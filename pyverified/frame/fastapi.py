@@ -47,7 +47,7 @@ def with_request(
             # json
             if json:
                 try:
-                    data = request.json()
+                    data = await request.json()
                 except pyjson.JSONDecodeError:
                     data = {}
                 verified = Verify(data=data, rules=json, many=many)
