@@ -52,14 +52,10 @@ class RuleBase:
 
     def verify_allow_none(self, key: str, value: Any):
         """Check whether the parameter can be None."""
-        if not self.allow_none and value in self.null_values:  # noqa
-            raise ValidationError(msg.message.allow_none.format(key=key, value=value))
-
-        # When allow_none is True, value is replaced with None if it is unset.
-        if isinstance(value, Unset):
-            value = None
-
-        return value
+        if not self.allow_none:  # noqa
+            if (isinstance(value, str) and value.strip() == '') or value in self.null_values:
+                raise ValidationError(msg.message.allow_none.format(key=key, value=value))
+        return None if isinstance(value, Unset) else value
 
     def verify_enum(self, key, value):
         """
