@@ -34,17 +34,18 @@ class Bool(RuleBase):
     null_values = (unset, None, '')
     
     def parse(self, key: str, value: Any) -> bool:
-        if value not in self.null_values:
-            if self.convert and isinstance(value, str):
-                upper_value = value.upper()
-                if upper_value == 'TRUE':
-                    value = True
-                elif upper_value == "FALSE":
-                    value = False
-                else:
-                    raise ValidationError(msg.message.convert.format(key=key, value=value))
-            if not isinstance(value, bool):
-                raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(bool)))
+        if (isinstance(value, str) and value.strip() == '') or value in self.null_values:
+            return value
+        if self.convert and isinstance(value, str):
+            upper_value = value.upper()
+            if upper_value == 'TRUE':
+                value = True
+            elif upper_value == "FALSE":
+                value = False
+            else:
+                raise ValidationError(msg.message.convert.format(key=key, value=value))
+        if not isinstance(value, bool):
+            raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(bool)))
         return value
 
 
@@ -71,17 +72,19 @@ class Int(RuleBase):
     enum: Union[typingDict[int, Any], typingList[Union[int, float]], None] = None
     
     def parse(self, key: str, value: Any):
-        if value not in self.null_values:
-            try:
-                value = int(value)
-            except ValueError:
-                raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(int)))
+        if (isinstance(value, str) and value.strip() == '') or value in self.null_values:
+            return value
 
-            # range
-            self.verify_range(key, value)
+        try:
+            value = int(value)
+        except ValueError:
+            raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(int)))
 
-            # enum
-            value = self.verify_enum(key, value)
+        # range
+        self.verify_range(key, value)
+
+        # enum
+        value = self.verify_enum(key, value)
 
         return value
 
@@ -112,22 +115,24 @@ class Float(RuleBase):
     decimal: bool = False
     
     def parse(self, key: str, value: Any):
-        if value not in self.null_values:
-            try:
-                value = float(value)
-            except ValueError:
-                raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(float)))
+        if (isinstance(value, str) and value.strip() == '') or value in self.null_values:
+            return value
 
-            # range
-            self.verify_range(key, value)
+        try:
+            value = float(value)
+        except ValueError:
+            raise ValidationError(msg.message.type.format(key=key, value=value, type=self.get_type_name(float)))
 
-            # Reserve the specified number of decimal places.
-            if self.digits is not None:
-                value = round(value, self.digits)
+        # range
+        self.verify_range(key, value)
 
-            # Convert to decimal.
-            if self.decimal:
-                value = Decimal(value)
+        # Reserve the specified number of decimal places.
+        if self.digits is not None:
+            value = round(value, self.digits)
+
+        # Convert to decimal.
+        if self.decimal:
+            value = Decimal(value)
 
         return value
 
@@ -365,28 +370,30 @@ class DateTime(RuleBase):
     enum: Union[typingList[str], typingList[datetime], typingList[date], None] = None
 
     def parse(self, key: str, value: Any):
-        if value not in self.null_values:
-            # Either date or datetime or str is converted to datetime for validation.
-            try:
-                value = self._try_trans_data(value)
-            except ValueError:
-                raise ValidationError(msg.message.type.format(
-                    key=key, value=value, type=self.get_type_name(self._get_type())))
+        if (isinstance(value, str) and value.strip() == '') or value in self.null_values:
+             return value
 
-            # After the data obtained through the set fmt conversion,
-            # the value is converted to the type processed internally
-            value = self._try_trans_datetime(value)
+        # Either date or datetime or str is converted to datetime for validation.
+        try:
+            value = self._try_trans_data(value)
+        except ValueError:
+            raise ValidationError(msg.message.type.format(
+                key=key, value=value, type=self.get_type_name(self._get_type())))
 
-            # range
-            self.verify_range(key, value)
+        # After the data obtained through the set fmt conversion,
+        # the value is converted to the type processed internally
+        value = self._try_trans_datetime(value)
 
-            # enum
-            if self.enum is not None and value not in self.enum:
-                raise ValidationError(msg.message.enum.format(key=key, value=value, enum=tuple(self.enum)))
+        # range
+        self.verify_range(key, value)
 
-            # Converts the result to the type defined by the current class
-            if type(value) is not self._get_type():
-                value = value.date()
+        # enum
+        if self.enum is not None and value not in self.enum:
+            raise ValidationError(msg.message.enum.format(key=key, value=value, enum=tuple(self.enum)))
+
+        # Converts the result to the type defined by the current class
+        if type(value) is not self._get_type():
+            value = value.date()
 
         return value
 
