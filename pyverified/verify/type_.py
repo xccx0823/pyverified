@@ -31,6 +31,8 @@ class Bool(RuleBase):
     # convert: Whether to convert true, false The string is of Boolean type.
     convert: bool = True
 
+    null_values = (unset, None, '')
+    
     def parse(self, key: str, value: Any) -> bool:
         if value not in self.null_values:
             if self.convert and isinstance(value, str):
@@ -67,7 +69,9 @@ class Int(RuleBase):
 
     # enum: enumeration.
     enum: Union[typingDict[int, Any], typingList[Union[int, float]], None] = None
-
+    
+    null_values = (unset, None, '')
+    
     def parse(self, key: str, value: Any):
         if value not in self.null_values:
             try:
@@ -108,7 +112,9 @@ class Float(RuleBase):
 
     # decimal: Whether to convert to decimal data type
     decimal: bool = False
-
+    
+    null_values = (unset, None, '')
+    
     def parse(self, key: str, value: Any):
         if value not in self.null_values:
             try:
@@ -361,6 +367,8 @@ class DateTime(RuleBase):
 
     # enum: Date enumeration.
     enum: Union[typingList[str], typingList[datetime], typingList[date], None] = None
+
+    null_values = (unset, None, '')
 
     def parse(self, key: str, value: Any):
         if value not in self.null_values:
