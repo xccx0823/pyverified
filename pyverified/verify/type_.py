@@ -31,9 +31,7 @@ class Bool(RuleBase):
     # convert: Whether to convert true, false The string is of Boolean type.
     convert: bool = True
 
-    null_values = (unset, None, '')
-    
-    def parse(self, key: str, value: Any) -> bool:
+    def parse(self, key: str, value: Any):
         if (isinstance(value, str) and value.strip() == '') or value in self.null_values:
             return value
         if self.convert and isinstance(value, str):
@@ -70,7 +68,7 @@ class Int(RuleBase):
 
     # enum: enumeration.
     enum: Union[typingDict[int, Any], typingList[Union[int, float]], None] = None
-    
+
     def parse(self, key: str, value: Any):
         if (isinstance(value, str) and value.strip() == '') or value in self.null_values:
             return value
@@ -113,7 +111,7 @@ class Float(RuleBase):
 
     # decimal: Whether to convert to decimal data type
     decimal: bool = False
-    
+
     def parse(self, key: str, value: Any):
         if (isinstance(value, str) and value.strip() == '') or value in self.null_values:
             return value
@@ -371,7 +369,7 @@ class DateTime(RuleBase):
 
     def parse(self, key: str, value: Any):
         if (isinstance(value, str) and value.strip() == '') or value in self.null_values:
-             return value
+            return value
 
         # Either date or datetime or str is converted to datetime for validation.
         try:
