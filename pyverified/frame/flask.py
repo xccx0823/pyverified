@@ -40,7 +40,7 @@ def with_request(
                 params = Params()
 
             # json
-            if json and request.is_json:
+            if json:
                 data = request.get_json(silent=True) or {}
                 verified = Verify(data=data, rules=json, many=many)
                 params.json = verified.params
