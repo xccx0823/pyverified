@@ -4,7 +4,7 @@ from pyverified.verify.type_ import Str, Int, Float, Bool, DateTime, Date, Dict,
 from pyverified.verify.verify import Verify
 
 
-class rule:  # noqa
+class _Rule:
     """Easy and neat to use."""
     str = Str
     int = Int
@@ -19,3 +19,6 @@ class rule:  # noqa
     ipv6 = IPv6
     phone = Phone
     addr = Addr
+
+
+rule = _Rule

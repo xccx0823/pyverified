@@ -8,8 +8,6 @@ from typing import List as typingList, Dict as typingDict
 from typing import Union, Any, Callable
 from urllib.parse import urlparse
 
-import phonenumbers
-
 from pyverified import ValidationError, msg
 from pyverified.verify._unset import Unset, unset
 from pyverified.verify.base import RuleBase
@@ -597,6 +595,10 @@ class Phone(RuleBase):
         return value
 
     def is_tel(self, telephone_number: Any):
+        try:
+            import phonenumbers
+        except ImportError:
+            raise ImportError('\n>> pip install phonenumbers')
         try:
             parsed_number = phonenumbers.parse(str(telephone_number), self.region)
             return phonenumbers.is_valid_number(parsed_number)
